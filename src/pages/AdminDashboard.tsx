@@ -1172,8 +1172,67 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
                       <input type="text" value={editItem.designation || ''} onChange={(e) => setEditItem({ ...editItem, designation: e.target.value })} style={{ width: '100%', padding: '8px' }} required />
                     </div>
                     <div style={{ marginBottom: '16px' }}>
+                      <label style={{ display: 'block', fontWeight: 600, marginBottom: '4px' }}>Experience (e.g. "12+ Years")</label>
+                      <input type="text" value={editItem.experience || ''} onChange={(e) => setEditItem({ ...editItem, experience: e.target.value })} style={{ width: '100%', padding: '8px' }} placeholder="e.g. 12+ Years" />
+                    </div>
+                    <div style={{ marginBottom: '16px' }}>
+                      <label style={{ display: 'block', fontWeight: 600, marginBottom: '4px' }}>Phone</label>
+                      <input type="text" value={editItem.phone || ''} onChange={(e) => setEditItem({ ...editItem, phone: e.target.value })} style={{ width: '100%', padding: '8px' }} placeholder="e.g. +91 9876543210" />
+                    </div>
+                    <div style={{ marginBottom: '16px' }}>
+                      <label style={{ display: 'block', fontWeight: 600, marginBottom: '4px' }}>Consultation Timings (one per line)</label>
+                      <textarea
+                        value={typeof editItem.consultationTimings === 'string' ? editItem.consultationTimings : (editItem.consultationTimings || []).join('\n')}
+                        onChange={(e) => setEditItem({ ...editItem, consultationTimings: e.target.value })}
+                        style={{ width: '100%', padding: '8px', minHeight: '70px' }}
+                        placeholder={'Mon-Fri: 10:00 AM - 01:00 PM\nSat: 10:00 AM - 12:00 PM'}
+                      />
+                    </div>
+                    <div style={{ marginBottom: '16px' }}>
                       <label style={{ display: 'block', fontWeight: 600, marginBottom: '4px' }}>Bio</label>
                       <textarea value={editItem.bio || ''} onChange={(e) => setEditItem({ ...editItem, bio: e.target.value })} style={{ width: '100%', padding: '8px', minHeight: '80px' }} />
+                    </div>
+                    {/* ── Status ── */}
+                    <div style={{ marginBottom: '16px', background: '#f8fafc', border: '1px solid var(--border-color)', borderRadius: '10px', padding: '16px' }}>
+                      <label style={{ display: 'block', fontWeight: 700, marginBottom: '10px', color: 'var(--primary)' }}>Doctor Availability Status</label>
+                      <div style={{ display: 'flex', gap: '16px' }}>
+                        <label style={{
+                          display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer',
+                          flex: 1, padding: '12px 16px', borderRadius: '8px', border: `2px solid ${editItem.status !== 'INACTIVE' ? '#16a34a' : '#e2e8f0'}`,
+                          background: editItem.status !== 'INACTIVE' ? '#f0fdf4' : 'white', transition: 'all 0.2s'
+                        }}>
+                          <input
+                            type="radio"
+                            name="doctorStatus"
+                            value="ACTIVE"
+                            checked={editItem.status !== 'INACTIVE'}
+                            onChange={() => setEditItem({ ...editItem, status: 'ACTIVE' })}
+                            style={{ accentColor: '#16a34a', width: '16px', height: '16px' }}
+                          />
+                          <div>
+                            <strong style={{ color: '#15803d', display: 'block', fontSize: '0.95rem' }}>✅ Active</strong>
+                            <span style={{ fontSize: '0.78rem', color: '#4b7a57' }}>Doctor is available for consultations</span>
+                          </div>
+                        </label>
+                        <label style={{
+                          display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer',
+                          flex: 1, padding: '12px 16px', borderRadius: '8px', border: `2px solid ${editItem.status === 'INACTIVE' ? '#dc2626' : '#e2e8f0'}`,
+                          background: editItem.status === 'INACTIVE' ? '#fef2f2' : 'white', transition: 'all 0.2s'
+                        }}>
+                          <input
+                            type="radio"
+                            name="doctorStatus"
+                            value="INACTIVE"
+                            checked={editItem.status === 'INACTIVE'}
+                            onChange={() => setEditItem({ ...editItem, status: 'INACTIVE' })}
+                            style={{ accentColor: '#dc2626', width: '16px', height: '16px' }}
+                          />
+                          <div>
+                            <strong style={{ color: '#b91c1c', display: 'block', fontSize: '0.95rem' }}>🔴 Inactive</strong>
+                            <span style={{ fontSize: '0.78rem', color: '#9b4444' }}>Doctor is on leave / not available</span>
+                          </div>
+                        </label>
+                      </div>
                     </div>
                   </>
                 )}
