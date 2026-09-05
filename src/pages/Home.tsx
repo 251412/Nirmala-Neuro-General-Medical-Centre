@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, PhoneCall, Stethoscope, Building2, MapPin, Award, ShieldCheck, HeartPulse, Sparkles, Navigation, ExternalLink } from 'lucide-react';
+import { Calendar, PhoneCall, Stethoscope, Building2, MapPin, Award, ShieldCheck, HeartPulse, Sparkles, Navigation, ExternalLink, Star, CheckCircle, Clock } from 'lucide-react';
 import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
 
 interface Department {
@@ -129,22 +129,49 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Hero Image */}
-            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+            {/* Hero Image with Floating Glass Trust Badges */}
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative' }}>
               <div style={{
                 position: 'relative',
                 borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden',
-                boxShadow: 'var(--shadow-premium)',
-                border: '4px solid white',
+                overflow: 'visible',
                 width: '100%',
                 maxWidth: '480px'
               }}>
-                <img
-                  src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800"
-                  alt="Nirmala Medical Facility"
-                  style={{ width: '100%', maxHeight: '420px', objectFit: 'cover' }}
-                />
+                {/* Top Floating Badge */}
+                <div className="hero-glass-pill hero-glass-pill-top float-element">
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Star size={16} fill="#d97706" />
+                  </div>
+                  <div>
+                    <strong style={{ fontSize: '0.85rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>15+ Years</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Clinical Excellence</span>
+                  </div>
+                </div>
+
+                <div style={{
+                  borderRadius: 'var(--radius-lg)',
+                  overflow: 'hidden',
+                  boxShadow: 'var(--shadow-premium)',
+                  border: '4px solid white'
+                }}>
+                  <img
+                    src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800"
+                    alt="Nirmala Medical Facility"
+                    style={{ width: '100%', maxHeight: '420px', objectFit: 'cover' }}
+                  />
+                </div>
+
+                {/* Bottom Floating Badge */}
+                <div className="hero-glass-pill hero-glass-pill-bottom float-element" style={{ animationDelay: '1.5s' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <HeartPulse size={16} />
+                  </div>
+                  <div>
+                    <strong style={{ fontSize: '0.85rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>50,000+</strong>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Happy Patients Treated</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -298,6 +325,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 5.5. PATIENT TESTIMONIALS & RECOVERY STORIES */}
+      <section className="section" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)' }}>
+        <div className="container">
+          <div className="section-title">
+            <span className="badge badge-primary" style={{ marginBottom: '12px' }}>
+              <Star size={14} fill="currentColor" style={{ marginRight: '6px' }} /> Patient Experiences
+            </span>
+            <h2>Words from Our Recovered Patients</h2>
+            <p>Real stories of healing and expert medical care at Nirmala Neuro & General Medical Centre.</p>
+          </div>
+
+          <div className="grid grid-3" style={{ gap: '24px' }}>
+            {/* Testimonial 1 */}
+            <div className="testimonial-card">
+              <div style={{ display: 'flex', gap: '4px', color: '#f59e0b', marginBottom: '8px' }}>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} fill="#f59e0b" />
+                ))}
+              </div>
+              <p className="testimonial-quote">
+                "The neurology doctors at Nirmala Hospital diagnosed my chronic vertigo and migraines accurately after months of struggle elsewhere. The care and attention from the nursing team was exceptional."
+              </p>
+              <div className="testimonial-user">
+                <div className="patient-avatar-circle">SV</div>
+                <div>
+                  <h4 style={{ fontSize: '1rem', color: '#0f172a', margin: 0, fontWeight: 700 }}>Srinivasa Varma</h4>
+                  <span style={{ fontSize: '0.8rem', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                    <CheckCircle size={13} /> Verified Patient (Neurology Care)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="testimonial-card">
+              <div style={{ display: 'flex', gap: '4px', color: '#f59e0b', marginBottom: '8px' }}>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} fill="#f59e0b" />
+                ))}
+              </div>
+              <p className="testimonial-quote">
+                "We rushed my father during late night with high blood pressure complications. The 24/7 emergency team stabilized him within minutes. We are eternally grateful for their prompt response and modern facilities."
+              </p>
+              <div className="testimonial-user">
+                <div className="patient-avatar-circle" style={{ background: 'linear-gradient(135deg, #0d9488 0%, #10b981 100%)' }}>RK</div>
+                <div>
+                  <h4 style={{ fontSize: '1rem', color: '#0f172a', margin: 0, fontWeight: 700 }}>Rama Krishna</h4>
+                  <span style={{ fontSize: '0.8rem', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                    <CheckCircle size={13} /> Verified Patient (Emergency Care)
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="testimonial-card">
+              <div style={{ display: 'flex', gap: '4px', color: '#f59e0b', marginBottom: '8px' }}>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} fill="#f59e0b" />
+                ))}
+              </div>
+              <p className="testimonial-quote">
+                "The online appointment booking and instant confirmation slip made the hospital visit completely hassle-free. Doctor explained everything with utmost patience and warmth."
+              </p>
+              <div className="testimonial-user">
+                <div className="patient-avatar-circle" style={{ background: 'linear-gradient(135deg, #e11d48 0%, #f59e0b 100%)' }}>LP</div>
+                <div>
+                  <h4 style={{ fontSize: '1rem', color: '#0f172a', margin: 0, fontWeight: 700 }}>Lakshmi Prasanna</h4>
+                  <span style={{ fontSize: '0.8rem', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                    <CheckCircle size={13} /> Verified Patient (General Medicine)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. FEATURED CLINICIANS */}
       <section className="section">
         <div className="container">
@@ -331,11 +436,25 @@ export default function Home() {
                     />
                   </div>
                   <h3 style={{ fontSize: '1.25rem', marginBottom: '4px' }}>{doctor.name}</h3>
-                  <span style={{ color: 'var(--secondary)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '12px' }}>
+                  <span style={{ color: 'var(--secondary)', fontSize: '0.85rem', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '8px' }}>
                     {doctor.designation}
                   </span>
-                  <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '8px' }}>{doctor.qualification}</p>
-                  <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontWeight: '500', marginBottom: '24px' }}>{doctor.specialization}</p>
+
+                  <div style={{ marginBottom: '14px' }}>
+                    <span className="doctor-opd-badge">
+                      <span className="live-status-dot" />
+                      Available for Consultation
+                    </span>
+                  </div>
+
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '6px' }}>{doctor.qualification}</p>
+                  <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '12px' }}>{doctor.specialization}</p>
+
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
+                    <Clock size={14} style={{ color: 'var(--secondary)' }} />
+                    <span>Mon – Sat: 10:00 AM – 7:00 PM</span>
+                  </div>
+
                   <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
                     <Link to={`/doctors/${doctor.id}`} className="btn btn-light" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>View Profile</Link>
                     <Link to="/appointment" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Book Now</Link>

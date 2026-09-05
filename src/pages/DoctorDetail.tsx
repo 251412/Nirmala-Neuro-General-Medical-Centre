@@ -118,8 +118,14 @@ export default function DoctorDetail() {
 
           {/* Col 2: Profile biography */}
           <div>
-            <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '12px' }}>
-              {deptName || 'Medical Officer'}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+              <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase' }}>
+                {deptName || 'Medical Officer'}
+              </div>
+              <span className="doctor-opd-badge">
+                <span className="live-status-dot" />
+                Available Today
+              </span>
             </div>
             <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '6px' }}>{doctor.name}</h1>
             <span style={{ fontSize: '1.15rem', color: 'var(--secondary)', fontWeight: '600', display: 'block', marginBottom: '20px' }}>

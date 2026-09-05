@@ -148,7 +148,7 @@ export default function Doctors() {
                 // Find department name matching ID
                 const deptName = departments.find((d) => d.id === doctor.departmentId)?.name || 'General Clinic';
                 return (
-                  <div key={doctor.id} className="card" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div key={doctor.id} className="card" style={{ display: 'flex', flexDirection: 'column', transition: 'all 0.4s ease' }}>
                     <div style={{
                       position: 'relative',
                       height: '280px',
@@ -164,13 +164,36 @@ export default function Doctors() {
                         alt={doctor.name}
                         style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '6px' }}
                       />
-                      <span className="badge badge-primary" style={{ position: 'absolute', bottom: '12px', right: '12px', boxShadow: 'var(--shadow-sm)' }}>
+                      <span className="badge badge-primary" style={{ position: 'absolute', top: '14px', right: '14px', boxShadow: 'var(--shadow-sm)' }}>
                         {deptName}
                       </span>
+                      {doctor.experience && (
+                        <span style={{
+                          position: 'absolute',
+                          bottom: '12px',
+                          left: '12px',
+                          background: 'rgba(15, 23, 42, 0.85)',
+                          backdropFilter: 'blur(8px)',
+                          color: 'white',
+                          padding: '4px 10px',
+                          borderRadius: 'var(--radius-full)',
+                          fontSize: '0.75rem',
+                          fontWeight: '600'
+                        }}>
+                          {doctor.experience} Exp
+                        </span>
+                      )}
                     </div>
 
                     <div style={{ padding: '24px', flex: '1', display: 'flex', flexDirection: 'column' }}>
-                      <span style={{ color: 'var(--secondary)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '6px', display: 'block' }}>
+                      <div style={{ marginBottom: '8px' }}>
+                        <span className="doctor-opd-badge">
+                          <span className="live-status-dot" />
+                          Available Today
+                        </span>
+                      </div>
+
+                      <span style={{ color: 'var(--secondary)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px', display: 'block' }}>
                         {doctor.designation}
                       </span>
                       <h3 style={{ fontSize: '1.35rem', marginBottom: '8px' }}>{doctor.name}</h3>

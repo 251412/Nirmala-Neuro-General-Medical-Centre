@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import EventPopup from './components/EventPopup';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import MobileActionBar from './components/MobileActionBar';
 
 // Public Pages
 import Home from './pages/Home';
@@ -77,6 +78,7 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
       <main key={location.pathname} className="page-transition" style={{ minHeight: '80vh', overflow: 'hidden' }}>
         {children}
       </main>
+      {!isAdminDashboard && <MobileActionBar />}
       {!isAdminDashboard && <Footer />}
     </>
   );
