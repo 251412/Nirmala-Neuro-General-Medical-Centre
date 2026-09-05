@@ -330,7 +330,7 @@ export default function Appointment() {
                 Your appointment request was cancelled.
               </h3>
               <p style={{ color: '#b91c1c', fontSize: '0.9rem', margin: 0 }}>
-                Please contact our reception desk at +91 40 1234 5678 for assistance or rescheduling.
+                Please contact our reception desk at <strong>+91 6305471147</strong> or <strong>+91 6302963312</strong> for assistance or rescheduling.
               </p>
             </div>
           </div>
