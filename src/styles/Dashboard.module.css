@@ -1,6 +1,8 @@
 .adminLayout {
   display: flex;
   min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: #f1f5f9;
   font-family: var(--font-body);
 }
@@ -99,14 +101,15 @@
 .mainContent {
   flex: 1;
   margin-left: 270px;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
 .topbar {
   height: 80px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #e2e8f0;
   display: flex;
@@ -117,6 +120,7 @@
   top: 0;
   z-index: 90;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  flex-shrink: 0;
 }
 
 .pageTitle {
@@ -383,6 +387,8 @@
   }
   .mainContent {
     margin-left: 64px;
+    height: 100vh;
+    overflow-y: auto;
   }
   .topbar {
     padding: 0 16px;
