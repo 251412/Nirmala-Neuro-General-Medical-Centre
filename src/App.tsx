@@ -29,6 +29,11 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
   const location = useLocation();
   const isAdminDashboard = location.pathname.startsWith('/admin/dashboard');
 
+  // Automatically scroll to the top of the page on every route transition
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <>
       {!isAdminDashboard && <Header />}
