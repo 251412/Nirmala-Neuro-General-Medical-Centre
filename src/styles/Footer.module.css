@@ -198,7 +198,17 @@
 }
 
 @media (max-width: 576px) {
+  .footer {
+    padding: 48px 0 24px 0;
+  }
   .footerGrid {
     grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  .bottomBar {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
   }
 }

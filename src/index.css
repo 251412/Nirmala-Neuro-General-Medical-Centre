@@ -68,6 +68,20 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-dark);
   font-weight: 700;
   line-height: 1.25;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: clamp(1.85rem, 6vw, 3.2rem);
+}
+
+h2 {
+  font-size: clamp(1.45rem, 4.5vw, 2.4rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 3.5vw, 1.75rem);
 }
 
 a {
@@ -226,12 +240,22 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
-  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .section { padding: 40px 0; }
+  .container { padding: 0 16px !important; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 20px; }
+  .section { padding: 48px 0; }
+  .section-title { margin-bottom: 32px; }
   .section-title h2 { font-size: 1.75rem; }
-  .contact-container { padding: 0 16px !important; }
-  .contact-grid { gap: 32px !important; }
-  .contact-card-mobile { padding: 20px 16px !important; }
+  .section-title p { font-size: 1rem; }
+  .btn { padding: 10px 20px; font-size: 0.95rem; }
+  .card { border-radius: var(--radius-md); }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 12px !important; }
+  .section { padding: 36px 0; }
+  .section-title h2 { font-size: 1.5rem; }
+  .btn { width: 100%; justify-content: center; }
+  .grid { gap: 16px; }
 }
 
 .card {

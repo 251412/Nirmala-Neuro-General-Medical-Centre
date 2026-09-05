@@ -432,18 +432,28 @@ export default function Appointment() {
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: '60px 0', minHeight: '80vh' }}>
+    <div className="animate-fade-in" style={{ padding: 'clamp(30px, 6vw, 60px) 0', minHeight: '80vh' }}>
       <div className="container" style={{ maxWidth: '840px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-          <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '8px' }}>Nirmala Hospital Appointments</h1>
-          <p style={{ color: 'var(--text-muted)' }}>Book a doctor consultation or check live confirmation status.</p>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', color: 'var(--primary)', marginBottom: '8px' }}>Nirmala Hospital Appointments</h1>
+          <p style={{ color: 'var(--text-muted)', fontSize: 'clamp(0.9rem, 2.5vw, 1rem)' }}>Book a doctor consultation or check live confirmation status.</p>
           
           {/* Mode Switcher */}
-          <div style={{ display: 'inline-flex', background: '#e2e8f0', borderRadius: '30px', padding: '4px', marginTop: '16px' }}>
+          <div style={{
+            display: 'inline-flex',
+            background: '#e2e8f0',
+            borderRadius: '30px',
+            padding: '4px',
+            marginTop: '16px',
+            maxWidth: '100%',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '4px'
+          }}>
             <button
               onClick={() => { setMode('book'); setErrorMsg(''); }}
               className={`btn ${mode === 'book' ? 'btn-primary' : 'btn-light'}`}
-              style={{ borderRadius: '24px', padding: '8px 24px', fontSize: '0.9rem', border: 'none' }}
+              style={{ borderRadius: '24px', padding: '8px 18px', fontSize: '0.88rem', border: 'none', flex: '1 1 auto' }}
             >
               <Calendar size={16} style={{ marginRight: '6px' }} />
               Book New Appointment
@@ -451,10 +461,10 @@ export default function Appointment() {
             <button
               onClick={() => { setMode('lookup'); setLookupError(''); }}
               className={`btn ${mode === 'lookup' ? 'btn-primary' : 'btn-light'}`}
-              style={{ borderRadius: '24px', padding: '8px 24px', fontSize: '0.9rem', border: 'none' }}
+              style={{ borderRadius: '24px', padding: '8px 18px', fontSize: '0.88rem', border: 'none', flex: '1 1 auto' }}
             >
               <Search size={16} style={{ marginRight: '6px' }} />
-              Track / Check Appointment Status
+              Track Appointment Status
             </button>
           </div>
         </div>
@@ -568,14 +578,14 @@ export default function Appointment() {
 
                 <div className={formStyles.fieldGroup}>
                   <label className={formStyles.label}>Preferred Time Slot *</label>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '12px', marginTop: '10px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(105px, 1fr))', gap: '10px', marginTop: '10px' }}>
                     {availableTimeSlots.map((slot) => (
                       <button
                         key={slot}
                         type="button"
                         onClick={() => setPreferredTime(slot)}
                         className={`btn ${preferredTime === slot ? 'btn-secondary' : 'btn-light'}`}
-                        style={{ padding: '10px', fontSize: '0.9rem' }}
+                        style={{ padding: '10px 8px', fontSize: '0.85rem' }}
                       >
                         {slot}
                       </button>

@@ -79,30 +79,30 @@ export default function Home() {
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div className="grid grid-2" style={{ alignItems: 'center' }}>
+          <div className="grid grid-2" style={{ alignItems: 'center', gap: '30px' }}>
             <div>
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                padding: '6px 16px',
+                padding: '6px 14px',
                 background: 'var(--primary-light)',
                 color: 'var(--primary)',
                 borderRadius: 'var(--radius-full)',
-                fontSize: '0.85rem',
+                fontSize: 'clamp(0.75rem, 2vw, 0.85rem)',
                 fontWeight: '700',
                 textTransform: 'uppercase',
                 letterSpacing: '1px',
-                marginBottom: '20px'
+                marginBottom: '16px'
               }}>
                 <Sparkles size={14} />
                 <span>Specialized Neuro & Medical Care</span>
               </div>
               <h1 style={{
-                fontSize: '3.5rem',
+                fontSize: 'clamp(2rem, 5.5vw, 3.5rem)',
                 color: 'var(--primary)',
                 lineHeight: '1.15',
-                marginBottom: '20px',
+                marginBottom: '16px',
                 fontWeight: '800'
               }}>
                 Compassionate Care. <br />
@@ -110,14 +110,14 @@ export default function Home() {
               </h1>
               <p style={{
                 color: 'var(--text-muted)',
-                fontSize: '1.2rem',
-                lineHeight: '1.7',
-                marginBottom: '36px',
+                fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+                lineHeight: '1.6',
+                marginBottom: '28px',
                 maxWidth: '520px'
               }}>
                 Nirmala Neuro & General Medical Centre offers state-of-the-art neurology testing and comprehensive diagnostic treatments for complete wellness.
               </p>
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <Link to="/appointment" className="btn btn-primary">
                   <Calendar size={18} />
                   <span>Book Appointment</span>
@@ -130,13 +130,15 @@ export default function Home() {
             </div>
             
             {/* Hero Image */}
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
               <div style={{
                 position: 'relative',
                 borderRadius: 'var(--radius-lg)',
                 overflow: 'hidden',
                 boxShadow: 'var(--shadow-premium)',
-                border: '8px solid white'
+                border: '4px solid white',
+                width: '100%',
+                maxWidth: '480px'
               }}>
                 <img
                   src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800"

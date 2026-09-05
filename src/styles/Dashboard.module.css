@@ -366,10 +366,9 @@
   background: #f8fafc;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .sidebar {
-    width: 72px;
+    width: 64px;
   }
   .sidebarHeader span, .menuItem span, .logoutBtn span {
     display: none;
@@ -383,12 +382,44 @@
     padding: 12px;
   }
   .mainContent {
-    margin-left: 72px;
+    margin-left: 64px;
   }
   .topbar {
-    padding: 0 20px;
+    padding: 0 16px;
+    height: 64px;
   }
   .contentBody {
-    padding: 20px 16px;
+    padding: 16px 12px;
+  }
+  .tableCard {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .statsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  .modalOverlay {
+    padding: 12px;
+  }
+  .modalHeader {
+    padding: 16px 20px;
+  }
+  .modalBody {
+    padding: 16px 20px;
+  }
+  .modalFooter {
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+  }
+  .modalFooter button {
+    width: 100%;
+    justify-content: center;
   }
 }
