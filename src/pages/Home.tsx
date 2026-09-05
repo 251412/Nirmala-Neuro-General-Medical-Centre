@@ -81,7 +81,7 @@ export default function Home() {
         <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <div className="grid grid-2" style={{ alignItems: 'center', gap: '30px' }}>
             <div>
-              <div style={{
+              <div className="float-element" style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
