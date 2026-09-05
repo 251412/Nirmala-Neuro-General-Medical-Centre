@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { MapPin, Phone, Mail, Clock, CheckCircle2, AlertCircle } from 'lucide-react';
-import formStyles from '../styles/Forms.module.css';
+import { MapPin, Phone, Mail, Clock, CheckCircle2, AlertCircle, Send } from 'lucide-react';
+import styles from '../styles/Contact.module.css';
 import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
 
 interface SiteSettings extends LocationSettings {
@@ -133,128 +133,110 @@ export default function Contact() {
   return (
     <div className="animate-fade-in">
       {/* Local Business Structured Data for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData) }} />
 
-      {/* Banner */}
-      <section style={{
-        background: 'linear-gradient(135deg, var(--primary) 0%, #0d3c66 100%)',
-        color: 'white',
-        padding: '60px 0',
-        textAlign: 'center'
-      }}>
+      {/* Hero Banner */}
+      <section className={styles.heroSection}>
         <div className="container">
-          <h1 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', color: 'white', marginBottom: '8px' }}>Contact Us</h1>
-          <p style={{ color: '#93c5fd', fontSize: '1.05rem' }}>Get in touch with our administrative desk or visit our medical center.</p>
+          <h1 className={styles.heroTitle}>Contact Us</h1>
+          <p className={styles.heroSubtitle}>We're here to assist you. Get in touch with our administrative desk or visit our medical center for world-class neurology care.</p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="section">
-        <div className="container contact-container">
-          <div className="grid grid-2 contact-grid" style={{ gap: '40px', alignItems: 'flex-start' }}>
-            {/* Col 1: Contact Details */}
-            <div>
-              <h2 style={{ fontSize: '2rem', color: 'var(--primary)', marginBottom: '16px' }}>Get In Touch</h2>
-              <p style={{ color: 'var(--text-muted)', marginBottom: '32px', lineHeight: '1.6' }}>
-                Have questions about our consultation hours, neurology tests, or general medical facilities? Reach out through any of our channels below.
-              </p>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{ display: 'flex', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--primary-light)', color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <MapPin size={22} />
-                  </div>
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>Hospital Address</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem', lineHeight: '1.5' }}>
-                      {settings?.address || DEFAULT_SETTINGS.address}
-                    </p>
-                  </div>
+      {/* Main Content Grid */}
+      <section className={styles.contactContainer}>
+        <div className="container">
+          <div className={styles.contactGrid}>
+            
+            {/* Left Column: Contact Cards */}
+            <div className={styles.infoColumn}>
+              <div className={styles.infoCard}>
+                <div className={`${styles.iconBox} ${styles.iconPrimary}`}>
+                  <MapPin size={24} />
                 </div>
-
-                <div style={{ display: 'flex', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--secondary-light)', color: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Phone size={22} />
-                  </div>
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>Phone / Desk</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem' }}>{settings?.phone || DEFAULT_SETTINGS.phone}</p>
-                    <p style={{ color: 'var(--danger)', fontSize: '0.875rem', fontWeight: '700', marginTop: '2px' }}>
-                      Emergency 24/7: {settings?.emergencyNumber || DEFAULT_SETTINGS.emergencyNumber}
-                    </p>
-                  </div>
+                <div className={styles.infoContent}>
+                  <h4>Hospital Address</h4>
+                  <p>{settings?.address || DEFAULT_SETTINGS.address}</p>
                 </div>
+              </div>
 
-                <div style={{ display: 'flex', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#e0f2fe', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Mail size={22} />
-                  </div>
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>Email Address</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem' }}>{settings?.email || DEFAULT_SETTINGS.email}</p>
-                  </div>
+              <div className={styles.infoCard}>
+                <div className={`${styles.iconBox} ${styles.iconRose}`}>
+                  <Phone size={24} />
                 </div>
+                <div className={styles.infoContent}>
+                  <h4>Phone & Emergency</h4>
+                  <p>Desk: {settings?.phone || DEFAULT_SETTINGS.phone}</p>
+                  <span className={styles.highlight}>Emergency 24/7: {settings?.emergencyNumber || DEFAULT_SETTINGS.emergencyNumber}</span>
+                </div>
+              </div>
 
-                <div style={{ display: 'flex', gap: '16px' }}>
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Clock size={22} />
-                  </div>
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem', marginBottom: '4px' }}>Working Hours</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem' }}>{settings?.workingHours || DEFAULT_SETTINGS.workingHours}</p>
-                  </div>
+              <div className={styles.infoCard}>
+                <div className={`${styles.iconBox} ${styles.iconSecondary}`}>
+                  <Mail size={24} />
+                </div>
+                <div className={styles.infoContent}>
+                  <h4>Email Address</h4>
+                  <p>{settings?.email || DEFAULT_SETTINGS.email}</p>
+                </div>
+              </div>
+
+              <div className={styles.infoCard}>
+                <div className={`${styles.iconBox} ${styles.iconAmber}`}>
+                  <Clock size={24} />
+                </div>
+                <div className={styles.infoContent}>
+                  <h4>Working Hours</h4>
+                  <p>{settings?.workingHours || DEFAULT_SETTINGS.workingHours}</p>
                 </div>
               </div>
             </div>
 
-            {/* Col 2: Contact Form */}
-            <div className={formStyles.formCard} style={{ margin: 0, width: '100%', maxWidth: '100%' }}>
-              <h3 className={formStyles.title}>Send Us a Message</h3>
-              <p className={formStyles.subtitle}>Fill out the form below for general enquiries or feedback.</p>
+            {/* Right Column: Contact Form */}
+            <div className={styles.formWrapper}>
+              <div className={styles.formHeader}>
+                <h3>Send Us a Message</h3>
+                <p>Fill out the form below for general enquiries or feedback. Our team will get back to you shortly.</p>
+              </div>
 
               {successMsg && (
-                <div className={`${formStyles.alert} ${formStyles.alertSuccess}`}>
-                  <CheckCircle2 size={20} className={formStyles.alertIcon} />
+                <div className={`${styles.alert} ${styles.alertSuccess}`}>
+                  <CheckCircle2 size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span>{successMsg}</span>
                 </div>
               )}
 
               {errorMsg && (
-                <div className={`${formStyles.alert} ${formStyles.alertError}`}>
-                  <AlertCircle size={20} className={formStyles.alertIcon} />
+                <div className={`${styles.alert} ${styles.alertError}`}>
+                  <AlertCircle size={20} style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
               <form onSubmit={handleSubmit}>
-                <div className={formStyles.fieldGroup}>
-                  <label className={formStyles.label}>Full Name *</label>
+                <div className={styles.inputField}>
+                  <label className={styles.label}>Full Name *</label>
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={formStyles.input}
+                    className={styles.input}
                     placeholder="Enter your name"
                     required
                   />
                 </div>
 
-                <div className={formStyles.fieldRow}>
+                <div className={styles.inputRow}>
                   <div>
-                    <label className={formStyles.label}>Phone Number *</label>
-                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#ffffff', overflow: 'hidden' }}>
-                      <span style={{ padding: '10px 14px', background: '#f8fafc', color: '#475569', fontWeight: '600', borderRight: '1px solid #cbd5e1', flexShrink: 0 }}>+91</span>
+                    <label className={styles.label}>Phone Number *</label>
+                    <div className={styles.phoneInputWrapper}>
+                      <span className={styles.phonePrefix}>+91</span>
                       <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className={formStyles.input}
-                        style={{ border: 'none', borderRadius: '0', flex: 1, outline: 'none' }}
                         placeholder="9876543210"
                         maxLength={10}
                         pattern="[0-9]{10}"
@@ -263,39 +245,39 @@ export default function Contact() {
                     </div>
                   </div>
                   <div>
-                    <label className={formStyles.label}>Email Address *</label>
+                    <label className={styles.label}>Email Address *</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className={formStyles.input}
+                      className={styles.input}
                       placeholder="patient@example.com"
                       required
                     />
                   </div>
                 </div>
 
-                <div className={formStyles.fieldGroup}>
-                  <label className={formStyles.label}>Subject *</label>
+                <div className={styles.inputField}>
+                  <label className={styles.label}>Subject *</label>
                   <input
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className={formStyles.input}
+                    className={styles.input}
                     placeholder="e.g. Enquiry regarding EEG test pricing"
                     required
                   />
                 </div>
 
-                <div className={formStyles.fieldGroup}>
-                  <label className={formStyles.label}>Message *</label>
+                <div className={styles.inputField}>
+                  <label className={styles.label}>Message *</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    className={formStyles.textarea}
+                    className={styles.textarea}
                     placeholder="Write your message here..."
                     required
                   />
@@ -304,33 +286,29 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="btn btn-primary"
-                  style={{ width: '100%', padding: '14px', marginTop: '10px' }}
+                  className={styles.submitBtn}
                 >
+                  <Send size={20} />
                   {submitting ? 'Sending Message...' : 'Send Message'}
                 </button>
               </form>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Interactive Google Map Section */}
-      <section className="section" style={{ backgroundColor: 'var(--bg-main, #f8fafc)', borderTop: '1px solid var(--border-color, #e2e8f0)', paddingTop: '60px', paddingBottom: '60px' }}>
+      <section className={styles.mapSection}>
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <span style={{ color: 'var(--secondary, #0284c7)', fontWeight: '700', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              Hospital Location
-            </span>
-            <h2 style={{ fontSize: '2.25rem', color: 'var(--primary, #0f2b48)', marginTop: '6px' }}>
-              Find Us on Google Maps
-            </h2>
-            <p style={{ color: 'var(--text-muted, #64748b)', maxWidth: '600px', margin: '8px auto 0 auto' }}>
-              Visit Nirmala Neuro & General Medical Centre located right opposite RTC Complex, behind INOX Multiplex in Vizianagaram.
-            </p>
+          <div className={styles.mapHeader}>
+            <span>Hospital Location</span>
+            <h2>Find Us on Google Maps</h2>
+            <p>Visit Nirmala Neuro & General Medical Centre located right opposite RTC Complex, behind INOX Multiplex in Vizianagaram.</p>
           </div>
-
-          <GoogleMapLocation settings={settings} variant="full" height="480px" showSidebar={true} />
+          <div className={styles.mapWrapper}>
+            <GoogleMapLocation settings={settings} variant="full" height="480px" showSidebar={true} />
+          </div>
         </div>
       </section>
     </div>
