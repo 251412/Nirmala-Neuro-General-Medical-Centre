@@ -321,15 +321,77 @@ button, input, select, textarea {
   to { transform: rotate(360deg); }
 }
 
-/* Animations */
+/* Animations & Scroll Reveals */
 .animate-fade-in {
-  animation: fadeIn 0.6s ease forwards;
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Scroll Reveal Base Classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.revealed {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-left.revealed {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-right.revealed {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale.revealed {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* Staggered Grid Animations */
+.grid > .card.reveal,
+.grid > div.reveal {
+  transition-duration: 0.75s;
+}
+
+.grid > *:nth-child(1) { transition-delay: 0.05s; }
+.grid > *:nth-child(2) { transition-delay: 0.15s; }
+.grid > *:nth-child(3) { transition-delay: 0.25s; }
+.grid > *:nth-child(4) { transition-delay: 0.35s; }
+.grid > *:nth-child(5) { transition-delay: 0.45s; }
+.grid > *:nth-child(6) { transition-delay: 0.55s; }
 
 /* Empty State Styling */
 .empty-state {

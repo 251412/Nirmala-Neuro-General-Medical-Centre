@@ -34,6 +34,41 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  // Universal Scroll-Reveal Intersection Observer for attractive page effects
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.08,
+      }
+    );
+
+    const timer = setTimeout(() => {
+      const elements = document.querySelectorAll(
+        'section, .section, .card, .section-title, .reveal, .reveal-left, .reveal-right, .reveal-scale'
+      );
+      elements.forEach((el) => {
+        if (!el.classList.contains('revealed')) {
+          el.classList.add('reveal');
+          observer.observe(el);
+        }
+      });
+    }, 60);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [location.pathname]);
+
   return (
     <>
       {!isAdminDashboard && <Header />}
