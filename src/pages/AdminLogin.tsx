@@ -9,8 +9,8 @@ interface AdminLoginProps {
 
 export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('nirmalaneurocare@gmail.com');
-  const [password, setPassword] = useState('NirmalaAdmin2026!');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -82,7 +82,7 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 className={formStyles.input}
                 style={{ paddingLeft: '40px' }}
-                placeholder="nirmalaneurocare@gmail.com"
+                placeholder="Enter administrator email"
                 required
               />
               <Mail size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
@@ -98,24 +98,18 @@ export default function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 className={formStyles.input}
                 style={{ paddingLeft: '40px' }}
-                placeholder="••••••••"
+                placeholder="Enter password"
                 required
               />
               <Lock size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
             </div>
           </div>
 
-          <div style={{ padding: '12px', background: '#f8fafc', borderRadius: '8px', border: '1px solid var(--border-color)', marginBottom: '24px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            <strong>Demo Credentials:</strong><br />
-            Email: <code>nirmalaneurocare@gmail.com</code><br />
-            Password: <code>NirmalaAdmin2026!</code>
-          </div>
-
           <button
             type="submit"
             disabled={loading}
             className="btn btn-primary"
-            style={{ width: '100%', padding: '12px' }}
+            style={{ width: '100%', padding: '12px', marginTop: '8px' }}
           >
             {loading ? 'Authenticating...' : 'Sign In to Dashboard'}
           </button>
