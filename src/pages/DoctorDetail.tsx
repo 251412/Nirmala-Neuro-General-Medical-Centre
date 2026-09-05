@@ -14,6 +14,7 @@ interface Doctor {
   bio: string;
   consultationTimings: string[];
   phone: string;
+  status: string;
 }
 
 export default function DoctorDetail() {
@@ -110,9 +111,23 @@ export default function DoctorDetail() {
                 <span>Enquiries: <strong>{doctor.phone}</strong></span>
               </div>
 
-              <Link to={`/appointment?doctorId=${doctor.id}`} className="btn btn-primary" style={{ width: '100%' }}>
-                Book Appointment Now
-              </Link>
+              {doctor.status === 'INACTIVE' ? (
+                <div style={{
+                  background: '#fef2f2', border: '1.5px solid #fca5a5',
+                  borderRadius: '10px', padding: '14px 16px',
+                  display: 'flex', alignItems: 'flex-start', gap: '10px'
+                }}>
+                  <span style={{ fontSize: '1.3rem', lineHeight: 1 }}>🔴</span>
+                  <div>
+                    <strong style={{ color: '#b91c1c', display: 'block', marginBottom: '2px' }}>Doctor is currently unavailable</strong>
+                    <span style={{ fontSize: '0.82rem', color: '#7f1d1d' }}>This doctor is on leave. Please contact the reception desk at <strong>+91 6305471147</strong> to reschedule or book with another doctor.</span>
+                  </div>
+                </div>
+              ) : (
+                <Link to={`/appointment?doctorId=${doctor.id}`} className="btn btn-primary" style={{ width: '100%' }}>
+                  Book Appointment Now
+                </Link>
+              )}
             </div>
           </div>
 
@@ -122,10 +137,21 @@ export default function DoctorDetail() {
               <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase' }}>
                 {deptName || 'Medical Officer'}
               </div>
-              <span className="doctor-opd-badge">
-                <span className="live-status-dot" />
-                Available Today
-              </span>
+              {doctor.status === 'INACTIVE' ? (
+                <span style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  padding: '4px 10px', borderRadius: 'var(--radius-full)',
+                  background: '#fef2f2', border: '1px solid #fecaca',
+                  color: '#b91c1c', fontSize: '0.78rem', fontWeight: '700'
+                }}>
+                  🔴 Inactive — Doctor is on leave / not available
+                </span>
+              ) : (
+                <span className="doctor-opd-badge">
+                  <span className="live-status-dot" />
+                  Available Today
+                </span>
+              )}
             </div>
             <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '6px' }}>{doctor.name}</h1>
             <span style={{ fontSize: '1.15rem', color: 'var(--secondary)', fontWeight: '600', display: 'block', marginBottom: '20px' }}>

@@ -13,6 +13,7 @@ interface Doctor {
   designation: string;
   consultationTimings: string[];
   phone: string;
+  status: string;
 }
 
 interface Department {
@@ -187,10 +188,21 @@ export default function Doctors() {
 
                     <div style={{ padding: '24px', flex: '1', display: 'flex', flexDirection: 'column' }}>
                       <div style={{ marginBottom: '8px' }}>
-                        <span className="doctor-opd-badge">
-                          <span className="live-status-dot" />
-                          Available Today
-                        </span>
+                        {doctor.status === 'INACTIVE' ? (
+                          <span style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            padding: '4px 10px', borderRadius: 'var(--radius-full)',
+                            background: '#fef2f2', border: '1px solid #fecaca',
+                            color: '#b91c1c', fontSize: '0.78rem', fontWeight: '700'
+                          }}>
+                            🔴 On Leave / Not Available
+                          </span>
+                        ) : (
+                          <span className="doctor-opd-badge">
+                            <span className="live-status-dot" />
+                            Available Today
+                          </span>
+                        )}
                       </div>
 
                       <span style={{ color: 'var(--secondary)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px', display: 'block' }}>

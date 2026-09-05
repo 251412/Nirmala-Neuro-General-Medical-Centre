@@ -18,6 +18,7 @@ interface Doctor {
   qualification: string;
   specialization: string;
   designation: string;
+  status: string;
 }
 
 interface Blog {
@@ -441,10 +442,21 @@ export default function Home() {
                   </span>
 
                   <div style={{ marginBottom: '14px' }}>
-                    <span className="doctor-opd-badge">
-                      <span className="live-status-dot" />
-                      Available for Consultation
-                    </span>
+                    {doctor.status === 'INACTIVE' ? (
+                      <span style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        padding: '4px 10px', borderRadius: 'var(--radius-full)',
+                        background: '#fef2f2', border: '1px solid #fecaca',
+                        color: '#b91c1c', fontSize: '0.78rem', fontWeight: '700'
+                      }}>
+                        🔴 On Leave / Not Available
+                      </span>
+                    ) : (
+                      <span className="doctor-opd-badge">
+                        <span className="live-status-dot" />
+                        Available for Consultation
+                      </span>
+                    )}
                   </div>
 
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '6px' }}>{doctor.qualification}</p>
@@ -457,7 +469,9 @@ export default function Home() {
 
                   <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
                     <Link to={`/doctors/${doctor.id}`} className="btn btn-light" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>View Profile</Link>
-                    <Link to="/appointment" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Book Now</Link>
+                    {doctor.status !== 'INACTIVE' && (
+                      <Link to="/appointment" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Book Now</Link>
+                    )}
                   </div>
                 </div>
               ))}
