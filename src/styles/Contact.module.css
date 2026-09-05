@@ -83,7 +83,9 @@
 .infoColumn {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  justify-content: space-between;
+  height: 100%;
+  gap: 20px;
 }
 
 .infoCard {
@@ -201,6 +203,10 @@
   margin-bottom: 24px;
 }
 
+.inputRow > div {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .inputRow {
     grid-template-columns: 1fr;
@@ -276,7 +282,7 @@
   font-size: 1rem;
   color: #0f172a;
   flex: 1;
-  width: 100%;
+  min-width: 0;
 }
 
 .phoneInputWrapper input:focus {
