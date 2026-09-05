@@ -42,8 +42,7 @@ export default function EventPopup() {
       .then((data) => {
         if (!cancelled && data) {
           setEvent(data);
-          // Slight delay so page loads first, then popup gracefully appears
-          setTimeout(() => setVisible(true), 800);
+          setTimeout(() => setVisible(true), 900);
         }
       })
       .catch(() => {});
@@ -66,107 +65,117 @@ export default function EventPopup() {
     if (e.target === e.currentTarget) handleClose();
   };
 
+  // Generate dot grid cells
+  const dots = Array.from({ length: 25 });
+
   return (
     <div className={styles.overlay} onClick={handleOverlayClick} role="dialog" aria-modal="true" aria-label="Upcoming Event">
       <div className={styles.popup}>
 
         {/* ── Header ── */}
         <div className={styles.header}>
-          {/* Decorative circles */}
-          <div className={styles.headerShape1} />
-          <div className={styles.headerShape2} />
-          <div className={styles.headerShape3} />
 
-          {/* Close button */}
-          <button
-            className={styles.closeBtn}
-            onClick={handleClose}
-            aria-label="Close popup"
-          >
-            ✕
-          </button>
+          {/* Ambient glow blobs */}
+          <div className={styles.blob1} />
+          <div className={styles.blob2} />
+          <div className={styles.blob3} />
 
-          {/* Medical badge */}
-          <div className={styles.crossBadge}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <rect x="4" y="0" width="4" height="12" rx="1.5" fill="white"/>
-              <rect x="0" y="4" width="12" height="4" rx="1.5" fill="white"/>
-            </svg>
-            <span className={styles.crossBadgeText}>Upcoming Event</span>
+          {/* Shimmer sweep */}
+          <div className={styles.headerShimmer} />
+
+          {/* Dot grid decorative */}
+          <div className={styles.dotGrid}>
+            {dots.map((_, i) => <span key={i} />)}
           </div>
 
-          {/* Event title */}
+          {/* Close button */}
+          <button className={styles.closeBtn} onClick={handleClose} aria-label="Close popup">✕</button>
+
+          {/* Live badge */}
+          <div className={styles.headerBadge}>
+            <span className={styles.badgeDot} />
+            <span className={styles.badgeText}>Upcoming Event</span>
+          </div>
+
+          {/* Title */}
           <h2 className={styles.eventTitle}>{event.title}</h2>
 
-          {/* Heartbeat SVG */}
-          <svg className={styles.heartbeatLine} viewBox="0 0 520 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          {/* EKG heartbeat animation */}
+          <svg className={styles.ekg} viewBox="0 0 520 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <polyline
               points="0,15 60,15 80,4 95,26 110,4 125,26 140,15 200,15 220,15 240,4 255,26 270,4 285,26 300,15 360,15 380,4 395,26 410,4 425,26 440,15 520,15"
-              stroke="white" strokeWidth="2" fill="none" strokeLinejoin="round"
+              stroke="white" strokeWidth="2.5" fill="none" strokeLinejoin="round"
             />
           </svg>
 
-          {/* Wave divider */}
+          {/* Wave */}
           <div className={styles.waveDivider}>
-            <svg viewBox="0 0 520 28" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <path d="M0,28 L0,14 Q130,0 260,14 Q390,28 520,14 L520,28 Z" fill="#ffffff"/>
+            <svg viewBox="0 0 520 32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <path d="M0,32 L0,16 Q130,0 260,16 Q390,32 520,16 L520,32 Z" fill="#ffffff" />
             </svg>
           </div>
         </div>
 
         {/* ── Body ── */}
         <div className={styles.body}>
-          {/* Event type chip */}
-          <div className={styles.eventTypeChip}>
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-              <rect x="4.5" y="0.5" width="4" height="12" rx="1" fill="#0e6dbf"/>
-              <rect x="0.5" y="4.5" width="12" height="4" rx="1" fill="#0e6dbf"/>
-            </svg>
-            {event.eventType || 'Medical Event'}
-          </div>
 
-          {/* Date & Time info */}
+          {/* Event type chip */}
+          {event.eventType && (
+            <div className={styles.eventTypeChip}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <rect x="4.5" y="0" width="3" height="12" rx="1" fill="#1d4ed8"/>
+                <rect x="0" y="4.5" width="12" height="3" rx="1" fill="#1d4ed8"/>
+              </svg>
+              {event.eventType}
+            </div>
+          )}
+
+          {/* Info cards grid */}
           <div className={styles.infoGrid}>
-            <div className={styles.infoRow}>
-              <span className={styles.infoIcon}>📅</span>
-              <span className={styles.infoLabel}>Date</span>
-              <span className={styles.infoValue}>{formatDisplayDate(event.eventDate)}</span>
+            <div className={styles.infoCard}>
+              <div className={styles.infoIconBox}>📅</div>
+              <div className={styles.infoCardContent}>
+                <span className={styles.infoLabel}>Date</span>
+                <span className={styles.infoValue}>{formatDisplayDate(event.eventDate)}</span>
+              </div>
             </div>
             {event.eventTime && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoIcon}>🕐</span>
-                <span className={styles.infoLabel}>Time</span>
-                <span className={styles.infoValue}>{event.eventTime}</span>
-              </div>
-            )}
-            {event.eventType && (
-              <div className={styles.infoRow}>
-                <span className={styles.infoIcon}>🏥</span>
-                <span className={styles.infoLabel}>Type</span>
-                <span className={styles.infoValue}>{event.eventType}</span>
+              <div className={styles.infoCard}>
+                <div className={styles.infoIconBox}>🕐</div>
+                <div className={styles.infoCardContent}>
+                  <span className={styles.infoLabel}>Time</span>
+                  <span className={styles.infoValue}>{event.eventTime}</span>
+                </div>
               </div>
             )}
           </div>
+
+          {/* Divider */}
+          <div className={styles.divider} />
 
           {/* Description */}
           {event.description && (
             <div className={styles.description}>
-              "{event.description}"
+              {event.description}
             </div>
           )}
 
-          {/* CTA */}
+          {/* CTA Button */}
           <button
             id="event-popup-book-btn"
             className={styles.bookBtn}
             onClick={handleBookAppointment}
           >
-            🗓️ &nbsp; Book Appointment
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Book Appointment Now
           </button>
 
-          <p className={styles.footerNote}>
-            Click outside or press × to close
-          </p>
+          <p className={styles.footerNote}>Tap outside or press × to dismiss</p>
         </div>
       </div>
     </div>
