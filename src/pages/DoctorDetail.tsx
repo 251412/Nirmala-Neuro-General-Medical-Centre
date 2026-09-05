@@ -138,13 +138,9 @@ export default function DoctorDetail() {
                 {deptName || 'Medical Officer'}
               </div>
               {doctor.status === 'INACTIVE' ? (
-                <span style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '6px',
-                  padding: '4px 10px', borderRadius: 'var(--radius-full)',
-                  background: '#fef2f2', border: '1px solid #fecaca',
-                  color: '#b91c1c', fontSize: '0.78rem', fontWeight: '700'
-                }}>
-                  🔴 Inactive — Doctor is on leave / not available
+                <span className="doctor-inactive-badge">
+                  <span className="live-status-dot-red" />
+                  Inactive — Doctor is on leave / not available
                 </span>
               ) : (
                 <span className="doctor-opd-badge">

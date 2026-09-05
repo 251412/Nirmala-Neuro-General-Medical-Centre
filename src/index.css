@@ -660,7 +660,7 @@ button, input, select, textarea {
   }
 }
 
-/* Live Status Glowing Dot */
+/* Live Status Glowing Dot — GREEN (Active) */
 .live-status-dot {
   width: 8px;
   height: 8px;
@@ -678,7 +678,26 @@ button, input, select, textarea {
   }
 }
 
-/* Doctor OPD Timing Chip */
+/* Inactive Status Pulsing Dot — RED */
+.live-status-dot-red {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ef4444;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  animation: statusPulseRed 2s infinite cubic-bezier(0.66, 0, 0, 1);
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+
+@keyframes statusPulseRed {
+  to {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+/* Doctor OPD Timing Chip — Active */
 .doctor-opd-badge {
   display: inline-flex;
   align-items: center;
@@ -690,6 +709,20 @@ button, input, select, textarea {
   padding: 4px 12px;
   font-size: 0.78rem;
   font-weight: 600;
+}
+
+/* Doctor OPD Timing Chip — Inactive */
+.doctor-inactive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 /* =========================================================

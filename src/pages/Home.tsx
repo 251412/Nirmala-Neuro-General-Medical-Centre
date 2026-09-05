@@ -443,13 +443,9 @@ export default function Home() {
 
                   <div style={{ marginBottom: '14px' }}>
                     {doctor.status === 'INACTIVE' ? (
-                      <span style={{
-                        display: 'inline-flex', alignItems: 'center', gap: '6px',
-                        padding: '4px 10px', borderRadius: 'var(--radius-full)',
-                        background: '#fef2f2', border: '1px solid #fecaca',
-                        color: '#b91c1c', fontSize: '0.78rem', fontWeight: '700'
-                      }}>
-                        🔴 On Leave / Not Available
+                      <span className="doctor-inactive-badge">
+                        <span className="live-status-dot-red" />
+                        On Leave / Not Available
                       </span>
                     ) : (
                       <span className="doctor-opd-badge">
@@ -469,7 +465,15 @@ export default function Home() {
 
                   <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
                     <Link to={`/doctors/${doctor.id}`} className="btn btn-light" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>View Profile</Link>
-                    {doctor.status !== 'INACTIVE' && (
+                    {doctor.status === 'INACTIVE' ? (
+                      <button
+                        className="btn btn-danger"
+                        style={{ padding: '8px 16px', fontSize: '0.8rem', opacity: 0.7, cursor: 'not-allowed' }}
+                        onClick={() => alert(`⚠️ Dr. ${doctor.name} is currently on leave and unavailable for appointments.\n\nPlease contact our reception desk at +91 6305471147 to book with another doctor or reschedule.`)}
+                      >
+                        Unavailable
+                      </button>
+                    ) : (
                       <Link to="/appointment" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>Book Now</Link>
                     )}
                   </div>
