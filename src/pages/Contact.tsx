@@ -61,7 +61,16 @@ export default function Contact() {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'phone') {
+      // Remove any non-digit character
+      const rawValue = e.target.value.replace(/\D/g, '');
+      // If starts with 91, it might be the prefix, but since we are locking it, we can just take the last 10 digits if they paste it, or limit it.
+      // But simpler: just allow up to 10 digits.
+      const numberPart = rawValue.slice(0, 10);
+      setFormData({ ...formData, phone: numberPart });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,15 +246,21 @@ export default function Contact() {
                 <div className={formStyles.fieldRow}>
                   <div>
                     <label className={formStyles.label}>Phone Number *</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className={formStyles.input}
-                      placeholder="+91 98765 43210"
-                      required
-                    />
+                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#ffffff', overflow: 'hidden' }}>
+                      <span style={{ padding: '10px 14px', background: '#f8fafc', color: '#475569', fontWeight: '600', borderRight: '1px solid #cbd5e1', flexShrink: 0 }}>+91</span>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className={formStyles.input}
+                        style={{ border: 'none', borderRadius: '0', flex: 1, outline: 'none' }}
+                        placeholder="9876543210"
+                        maxLength={10}
+                        pattern="[0-9]{10}"
+                        required
+                      />
+                    </div>
                   </div>
                   <div>
                     <label className={formStyles.label}>Email Address *</label>
