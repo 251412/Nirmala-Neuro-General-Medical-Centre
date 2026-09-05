@@ -423,8 +423,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* On short mobile screens, align to top with scroll */
-  padding: 16px 16px 86px; /* bottom padding clears mobile action bar (70px) */
+  padding: 16px;
   overflow-y: auto;
   animation: overlayIn 0.4s ease forwards;
 }
@@ -846,7 +845,7 @@
    ═══════════════════════════════════════ */
 @media (max-width: 600px) {
   .overlay {
-    padding: 12px 12px 80px;
+    padding: 12px;
     align-items: flex-start;
     padding-top: max(20px, env(safe-area-inset-top));
   }
@@ -936,7 +935,7 @@
    ═══════════════════════════════════════ */
 @media (max-width: 400px) {
   .overlay {
-    padding: 10px 10px 76px;
+    padding: 10px;
   }
 
   .popup {
