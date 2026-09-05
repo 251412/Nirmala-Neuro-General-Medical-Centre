@@ -74,7 +74,7 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
       {!isAdminDashboard && <Header />}
       {!isAdminDashboard && <EventPopup />}
       {!isAdminDashboard && <WhatsAppWidget />}
-      <main style={{ minHeight: '80vh' }}>
+      <main key={location.pathname} className="page-transition" style={{ minHeight: '80vh', overflow: 'hidden' }}>
         {children}
       </main>
       {!isAdminDashboard && <Footer />}
