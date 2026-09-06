@@ -11,6 +11,7 @@ export interface ImageUploadProps {
   maxSizeMB?: number;
   acceptedFormats?: string[];
   token?: string;
+  enableCrop?: boolean;
 }
 
 export default function ImageUpload({
@@ -20,7 +21,8 @@ export default function ImageUpload({
   label = "Upload Image",
   maxSizeMB = 5,
   acceptedFormats = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'],
-  token
+  token,
+  enableCrop = false
 }: ImageUploadProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -103,9 +105,38 @@ export default function ImageUpload({
       }
     }
 
-    // Open Image Editor Modal for the first file selected
-    setEditorFile(fileList[0]);
-    setIsEditorOpen(true);
+    // Open Image Editor Modal for the first file selected if cropping is enabled
+    if (enableCrop) {
+      setEditorFile(fileList[0]);
+      setIsEditorOpen(true);
+    } else {
+      // Direct upload logic
+      setIsUploading(true);
+      setUploadProgress(30);
+
+      try {
+        let uploadedUrls = [];
+        for (let i = 0; i < fileList.length; i++) {
+          const url = await uploadFileToBackend(fileList[i]);
+          uploadedUrls.push(url);
+          setUploadProgress(30 + Math.floor((70 / fileList.length) * (i + 1)));
+        }
+
+        if (!multiple) {
+          onChange(uploadedUrls[0]);
+        } else {
+          onChange([...currentUrls, ...uploadedUrls]);
+        }
+      } catch (err: any) {
+        setErrorMsg(err.message || 'Upload failed. Please try again.');
+      } finally {
+        setIsUploading(false);
+        setTimeout(() => setUploadProgress(null), 800);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
+    }
   };
 
   const handleSaveFromEditor = async (processedFile: File) => {
@@ -175,8 +206,10 @@ export default function ImageUpload({
   };
 
   const handleAdjustExisting = (url: string) => {
-    setEditorFile(url);
-    setIsEditorOpen(true);
+    if (enableCrop) {
+      setEditorFile(url);
+      setIsEditorOpen(true);
+    }
   };
 
   return (
@@ -274,15 +307,17 @@ export default function ImageUpload({
                 </div>
 
                 <div className={styles.actionButtons}>
-                  <button
-                    type="button"
-                    className={`${styles.actionBtn} ${styles.replaceBtn}`}
-                    onClick={() => handleAdjustExisting(url)}
-                    title="Adjust Zoom / Position"
-                  >
-                    <SlidersHorizontal size={14} />
-                    <span>Adjust</span>
-                  </button>
+                  {enableCrop && (
+                    <button
+                      type="button"
+                      className={`${styles.actionBtn} ${styles.replaceBtn}`}
+                      onClick={() => handleAdjustExisting(url)}
+                      title="Adjust Zoom / Position"
+                    >
+                      <SlidersHorizontal size={14} />
+                      <span>Adjust</span>
+                    </button>
+                  )}
 
                   <button
                     type="button"

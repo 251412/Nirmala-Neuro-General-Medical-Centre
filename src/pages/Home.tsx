@@ -116,7 +116,7 @@ export default function Home() {
                 marginBottom: '28px',
                 maxWidth: '520px'
               }}>
-                Nirmala Neuro & General Medical Centre offers state-of-the-art neurology testing and comprehensive diagnostic treatments for complete wellness.
+                Nirmala Neuro & General Medical Centre offers state-of-the-art care for all kinds of Neurological Problems, Epilepsy, Stroke, Migraine, Vertigo, Sleep disorders and General Medical Problems.
               </p>
               <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                 <Link to="/appointment" className="btn btn-primary">

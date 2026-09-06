@@ -184,6 +184,13 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
     }
   };
 
+  const handleDeleteMessage = async (id: string) => {
+    if (window.confirm('Are you sure you want to delete this contact message?')) {
+      await authFetch(`/api/admin/contact/${id}`, { method: 'DELETE' });
+      loadData();
+    }
+  };
+
   // Modal save handler
   const handleSaveModal = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -834,6 +841,7 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
                           <th>Name</th>
                           <th>Subject / Message</th>
                           <th>Status</th>
+                          <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -848,6 +856,11 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
                               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{m.message}</span>
                             </td>
                             <td><span className="badge badge-primary">{m.status}</span></td>
+                            <td>
+                              <button onClick={() => handleDeleteMessage(m.id)} className="btn btn-danger" style={{ padding: '4px 8px', fontSize: '0.75rem' }}>
+                                <Trash2 size={14} style={{ marginRight: '4px' }} /> Delete
+                              </button>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -1153,6 +1166,7 @@ export default function AdminDashboard({ adminUser, onLogout }: AdminDashboardPr
                         value={editItem.photo || ''}
                         onChange={(url) => setEditItem({ ...editItem, photo: Array.isArray(url) ? url[0] : url })}
                         token={token}
+                        enableCrop={true}
                       />
                     </div>
                     <div style={{ marginBottom: '16px' }}>
