@@ -53,10 +53,11 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 45);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -91,8 +92,11 @@ export default function Header() {
           <div className={styles.navContainer}>
             {/* Logo */}
             <Link to="/" className={styles.logo}>
-              <img src="/logo.png" alt="Nirmala Medical Logo" className={styles.logoImg} />
-              <span className={styles.logoText}>NIRMALA MEDICAL</span>
+              <img src="/logo.png" alt="Nirmala Neuro & General Medical Centre" className={styles.logoImg} />
+              <div className={styles.logoTextGroup}>
+                <span className={styles.logoMainText}>NIRMALA NEURO</span>
+                <span className={styles.logoSubText}>&amp; General Medical Centre</span>
+              </div>
             </Link>
 
             {/* Desktop Navigation with Animated Sliding Pill */}
@@ -122,6 +126,7 @@ export default function Header() {
             {/* Desktop CTAs */}
             <div className={styles.ctas}>
               <Link to="/emergency" className={`btn btn-danger ${styles.ctaEmergency}`} style={{ padding: '9px 18px', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
+                <span className={styles.pulseDot} aria-hidden="true" />
                 <PhoneCall size={16} />
                 <span>Emergency</span>
               </Link>
@@ -149,8 +154,11 @@ export default function Header() {
       <div className={`${styles.mobileDrawer} ${isOpen ? styles.drawerOpen : ''}`}>
         <div className={styles.drawerHeader}>
           <div className={styles.drawerLogo}>
-            <img src="/logo.png" alt="Nirmala Hospital" style={{ height: '36px', width: 'auto', marginRight: '8px', verticalAlign: 'middle' }} />
-            NIRMALA HOSPITAL
+            <img src="/logo.png" alt="Nirmala Neuro & General Medical Centre" style={{ height: '46px', width: 'auto', marginRight: '8px', verticalAlign: 'middle' }} />
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+              <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)' }}>NIRMALA NEURO</span>
+              <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-muted)' }}>&amp; General Medical Centre</span>
+            </div>
           </div>
           <button className={styles.closeBtn} onClick={() => setIsOpen(false)} aria-label="Close Menu">
             <X size={28} />
@@ -172,7 +180,8 @@ export default function Header() {
         </nav>
 
         <div className={styles.mobileCtas}>
-          <Link to="/emergency" className="btn btn-danger" onClick={() => setIsOpen(false)}>
+          <Link to="/emergency" className={`btn btn-danger ${styles.ctaEmergency}`} onClick={() => setIsOpen(false)}>
+            <span className={styles.pulseDot} aria-hidden="true" />
             <PhoneCall size={18} />
             <span>Emergency (24/7)</span>
           </Link>

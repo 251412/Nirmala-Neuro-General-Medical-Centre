@@ -275,6 +275,92 @@ button:focus-visible,
   transform: translateY(-2px);
 }
 
+/* Emergency Pulse Button & Live Beacon Indicator */
+.btn-pulse-emergency {
+  position: relative;
+  background: linear-gradient(135deg, var(--danger) 0%, #be123c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+  animation: emergencyPulseBtn 2.2s infinite ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-pulse-emergency::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  border: 2px solid rgba(225, 29, 72, 0.75);
+  animation: emergencyRingBtn 2.2s infinite cubic-bezier(0.24, 0, 0.38, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.btn-pulse-emergency:hover {
+  background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
+}
+
+@keyframes emergencyPulseBtn {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4), 0 4px 14px rgba(225, 29, 72, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(225, 29, 72, 0), 0 6px 22px rgba(225, 29, 72, 0.6);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes emergencyRingBtn {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  60% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
+
+.emergency-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  animation: beaconPulseDot 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+  flex-shrink: 0;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes beaconPulseDot {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85);
+  }
+  60% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
 .btn-light {
   background-color: var(--bg-white);
   color: var(--text-dark);
@@ -516,6 +602,51 @@ button:focus-visible,
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   HERO ROTATING BRAIN VIDEO
+   ========================================================= */
+.hero-bg-video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-animate-img {
+    min-height: 240px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-animate-img {
+    min-height: 220px !important;
   }
 }
 
@@ -953,7 +1084,199 @@ button:focus-visible,
 }
 
 /* =========================================================
-   TESTIMONIAL CARDS
+   GOOGLE REVIEWS INFINITE MARQUEE (SIDE-TO-SIDE TRANSITION)
+   ========================================================= */
+.google-reviews-section {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 90px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #f8fafc 100%);
+}
+
+.reviews-marquee-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 10px 0;
+  /* Dual gradient mask for smooth edge fade-in / fade-out across sides */
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.reviews-marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+}
+
+.reviews-marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 22px;
+  will-change: transform;
+}
+
+/* Side to side continuous uninterrupted transitions */
+.reviews-slide-left {
+  animation: reviewsMarqueeLeft 40s linear infinite;
+}
+
+.reviews-slide-right {
+  animation: reviewsMarqueeRight 44s linear infinite;
+}
+
+@keyframes reviewsMarqueeLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes reviewsMarqueeRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Individual Google Review Card */
+.google-review-card {
+  width: 390px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05),
+              0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
+  cursor: default;
+}
+
+.google-review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 38px -10px rgba(15, 76, 129, 0.16),
+              0 0 0 2px rgba(13, 148, 136, 0.28);
+  border-color: rgba(13, 148, 136, 0.4);
+}
+
+.review-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.review-stars-group {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.review-meta-badge {
+  font-size: 0.76rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.review-dept-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary, #0f4c81);
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 4px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.01em;
+}
+
+.review-quote-text {
+  font-size: 0.93rem;
+  color: #334155;
+  line-height: 1.65;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.review-avatar-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.review-author-name {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.review-verified-badge {
+  font-size: 0.78rem;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .google-review-card {
+    width: 320px;
+    padding: 18px;
+  }
+  .reviews-slide-left {
+    animation-duration: 28s;
+  }
+  .reviews-slide-right {
+    animation-duration: 32s;
+  }
+  .reviews-marquee-wrapper {
+    mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  }
+}
+
+/* =========================================================
+   LEGACY TESTIMONIAL COMPONENT (BACKWARD COMPAT)
    ========================================================= */
 .testimonial-card {
   background: #ffffff;
@@ -1155,10 +1478,6 @@ button:focus-visible,
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(225, 29, 72, 0.4);
   }
-
-  body {
-    padding-bottom: 70px;
-  }
 }
 
 /* =========================================================
@@ -1289,4 +1608,84 @@ button:focus-visible,
   html {
     scroll-behavior: auto;
   }
+}
+
+/* =========================================================
+   3D GALLERY RING SCROLL EFFECT
+   ========================================================= */
+.gallery-3d-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  perspective: 1400px;
+  perspective-origin: 50% 48%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, rgba(15, 23, 42, 0.02) 60%, transparent 80%);
+  border-radius: 28px;
+  border: 1px solid rgba(186, 230, 253, 0.4);
+  margin-bottom: 40px;
+}
+
+.gallery-3d-stage:active {
+  cursor: grabbing;
+}
+
+.gallery-3d-carousel {
+  width: 290px;
+  height: 360px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gallery-3d-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  background: #ffffff;
+  box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.18),
+              0 0 0 3px rgba(56, 189, 248, 0.6),
+              0 0 25px rgba(14, 165, 233, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  transition: box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+.gallery-3d-card:hover {
+  box-shadow: 0 24px 50px -6px rgba(15, 76, 129, 0.35),
+              0 0 0 4px #0ea5e9,
+              0 0 35px rgba(56, 189, 248, 0.6);
+  filter: brightness(1.06);
+}
+
+/* Outer ring glow for standard gallery cards */
+.gallery-outer-ring-frame {
+  position: relative;
+  border-radius: 22px;
+  padding: 3px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.75) 0%, rgba(13, 148, 136, 0.8) 50%, rgba(99, 102, 241, 0.65) 100%);
+  box-shadow: 0 10px 28px -4px rgba(2, 132, 199, 0.22), 0 0 0 1px rgba(56, 189, 248, 0.35);
+  transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+  cursor: pointer;
+}
+
+.gallery-outer-ring-frame:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 24px 48px -8px rgba(2, 132, 199, 0.35),
+              0 0 28px rgba(56, 189, 248, 0.5),
+              0 0 0 2px #38bdf8;
+}
+
+.gallery-outer-ring-inner {
+  background: #ffffff;
+  border-radius: 19px;
+  overflow: hidden;
+  height: 100%;
 }

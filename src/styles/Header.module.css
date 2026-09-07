@@ -1,30 +1,35 @@
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: var(--header-height);
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0);
   z-index: 1000;
   display: flex;
   align-items: center;
   transition:
-    background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
+    background 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.9s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    backdrop-filter 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    -webkit-backdrop-filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .scrolled {
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   box-shadow:
     0 4px 24px -4px rgba(15, 23, 42, 0.08),
-    0 1px 8px -2px rgba(15, 76, 129, 0.06);
+    0 1px 8px -2px rgba(15, 76, 129, 0.06) !important;
   height: 72px;
-  border-bottom-color: rgba(13, 148, 136, 0.15);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.85) !important;
 }
 
 .navContainer {
@@ -55,10 +60,10 @@
 }
 
 .logoImg {
-  height: 46px;
+  height: 52px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(15, 76, 129, 0.15));
+  filter: drop-shadow(0 2px 6px rgba(15, 76, 129, 0.18));
   transition: transform 0.3s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
@@ -66,13 +71,47 @@
   transform: scale(1.05) rotate(-2deg);
 }
 
-.logoText {
-  background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.logoTextGroup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.12;
+  justify-content: center;
+}
+
+.logoMainText {
+  font-family: var(--font-heading);
+  font-size: 1.38rem;
   font-weight: 800;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+  transition:
+    color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    text-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.logoSubText {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.65);
+  white-space: nowrap;
+  transition:
+    color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    text-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.scrolled .logoMainText {
+  color: var(--primary);
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.scrolled .logoSubText {
+  color: #0284c7;
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0);
 }
 
 /* ── Desktop Navigation ── */
@@ -81,10 +120,24 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(241, 245, 249, 0.78);
+  background: rgba(15, 23, 42, 0.45);
   padding: 5px 6px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transition:
+    background 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.scrolled .desktopNav {
+  background: rgba(241, 245, 249, 0.92);
+  border-color: rgba(226, 232, 240, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
@@ -109,22 +162,35 @@
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 0.9rem;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.92);
   position: relative;
   padding: 8px 16px;
   border-radius: var(--radius-full);
-  transition: color 0.2s ease;
+  transition:
+    color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    text-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1);
   white-space: nowrap;
   z-index: 2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .navLink:hover {
+  color: #38bdf8;
+}
+
+.scrolled .navLink {
+  color: #475569;
+  text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.scrolled .navLink:hover {
   color: var(--primary);
 }
 
 .activeLink {
   color: #ffffff !important;
   font-weight: 700;
+  text-shadow: none;
 }
 
 /* ── CTA buttons ── */
@@ -146,14 +212,86 @@
 
 .ctaEmergency {
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
-  animation: subtlePulse 3s infinite ease-in-out;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+  animation: emergencyPulse 2.2s infinite ease-in-out;
+  gap: 8px;
 }
 
-@keyframes subtlePulse {
-  0%, 100% { box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25); }
-  50%       { box-shadow: 0 4px 22px rgba(225, 29, 72, 0.48); }
+/* Expanding Radar Pulse Ring */
+.ctaEmergency::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  border: 2px solid rgba(225, 29, 72, 0.75);
+  animation: emergencyRing 2.2s infinite cubic-bezier(0.24, 0, 0.38, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes emergencyPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4), 0 4px 14px rgba(225, 29, 72, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(225, 29, 72, 0), 0 6px 22px rgba(225, 29, 72, 0.6);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes emergencyRing {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  60% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
+
+.ctaEmergency:hover {
+  background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 25px rgba(225, 29, 72, 0.6);
+}
+
+.pulseDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  animation: beaconPulse 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+  flex-shrink: 0;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes beaconPulse {
+  0% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.85);
+  }
+  60% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+  100% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
 }
 
 .ctaAppointment {
@@ -170,13 +308,25 @@
 /* ── Hamburger button ── */
 .mobileMenuBtn {
   display: none;
-  background: rgba(241, 245, 249, 0.85);
-  border: 1px solid var(--border-color);
-  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
   cursor: pointer;
   padding: 8px;
   border-radius: var(--radius-md);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.2s ease;
+}
+
+.scrolled .mobileMenuBtn {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: var(--border-color);
+  color: var(--text-dark);
 }
 
 .mobileMenuBtn:hover {
@@ -333,12 +483,13 @@
     gap: 8px;
   }
   .logoImg {
-    height: 36px;
+    height: 42px;
   }
-  .logoText {
-    font-size: 0.92rem;
-    white-space: nowrap;
-    letter-spacing: -0.2px;
+  .logoMainText {
+    font-size: 1.15rem;
+  }
+  .logoSubText {
+    font-size: 0.72rem;
   }
   .mobileDrawer {
     width: 280px;

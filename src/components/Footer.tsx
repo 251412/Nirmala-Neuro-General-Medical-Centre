@@ -12,8 +12,11 @@ export default function Footer() {
           {/* Col 1: About Hospital */}
           <div>
             <div className={footerStyles.brand}>
-              <img src={hospitalInfo.logo} alt={`${hospitalInfo.name} Logo`} style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
-              <span className={footerStyles.brandText}>{hospitalInfo.shortName.toUpperCase()}</span>
+              <img src={hospitalInfo.logo} alt={`${hospitalInfo.name} Logo`} style={{ height: '52px', width: 'auto', objectFit: 'contain' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+                <span style={{ fontSize: '1.35rem', fontWeight: 800, color: '#ffffff', letterSpacing: '0.4px' }}>NIRMALA NEURO</span>
+                <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#93c5fd' }}>&amp; General Medical Centre</span>
+              </div>
             </div>
             <p className={footerStyles.aboutText}>
               {hospitalInfo.description}
@@ -112,7 +115,10 @@ export default function Footer() {
             </div>
 
             <div className={footerStyles.emergencyBadge}>
-              <strong>24/7 EMERGENCY HOTLINE</strong>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span className="live-status-dot-red" style={{ margin: 0 }} />
+                <strong>24/7 EMERGENCY HOTLINE</strong>
+              </div>
               <a href={`tel:${hospitalInfo.emergencyNumberRaw}`} className={footerStyles.emergencyNumber}>
                 {hospitalInfo.emergencyNumber}
               </a>

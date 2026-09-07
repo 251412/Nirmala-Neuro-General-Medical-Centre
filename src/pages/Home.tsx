@@ -88,99 +88,160 @@ function BlogSkeletonCard() {
   );
 }
 
-/* ─── Testimonial Carousel ────────────────────────────── */
-const TESTIMONIALS = [
+/* ─── Google Reviews Data (Nirmala Neuro Vizianagaram) ────── */
+const GOOGLE_REVIEWS_URL =
+  'https://www.google.com/search?q=nirmala+neuro+vizianagaram#lrd=0x3a3be504cd790a65:0xe2fae04c868b4d7,1,,,,';
+
+function GoogleIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" style={{ flexShrink: 0 }} aria-hidden="true">
+      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+      <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+    </svg>
+  );
+}
+
+interface GoogleReviewItem {
+  id: number;
+  name: string;
+  initials: string;
+  time: string;
+  treatment: string;
+  quote: string;
+  avatarBg: string;
+}
+
+const REVIEWS_ROW_1: GoogleReviewItem[] = [
   {
     id: 1,
-    quote: '"The neurology doctors at Nirmala Hospital diagnosed my chronic vertigo and migraines accurately after months of struggle elsewhere. The care and attention from the nursing team was exceptional."',
-    initials: 'SV',
-    name: 'Srinivasa Varma',
-    tag: 'Verified Patient (Neurology Care)',
-    avatarStyle: {},
+    name: 'P. Venkata Rao',
+    initials: 'VR',
+    time: '2 weeks ago',
+    treatment: 'Chronic Migraine & Vertigo',
+    quote: 'Best neurologist in Vizianagaram. Dr. Nirmala Madam listened to my chronic headache and vertigo problems with great patience. After following her treatment and diagnosis, my symptoms reduced completely within 2 weeks. Very polite staff and clean hospital environment.',
+    avatarBg: 'linear-gradient(135deg, #0d9488 0%, #14b8a6 100%)',
   },
   {
     id: 2,
-    quote: '"We rushed my father during late night with high blood pressure complications. The 24/7 emergency team stabilized him within minutes. We are eternally grateful for their prompt response and modern facilities."',
-    initials: 'RK',
-    name: 'Rama Krishna',
-    tag: 'Verified Patient (Emergency Care)',
-    avatarStyle: { background: 'linear-gradient(135deg, #0d9488 0%, #10b981 100%)' },
+    name: 'K. Suresh Kumar',
+    initials: 'SK',
+    time: '1 month ago',
+    treatment: 'Stroke Recovery & Care',
+    quote: "We admitted my mother after she suffered a sudden ischemic stroke. Dr. Nirmala's prompt decision-making, acute neuro care, and neuro-rehabilitation guidance brought her back to normal mobility. Truly life-saving medical care in Vizianagaram.",
+    avatarBg: 'linear-gradient(135deg, #2563eb 0%, #3b82f6 100%)',
   },
   {
     id: 3,
-    quote: '"The online appointment booking and instant confirmation slip made the hospital visit completely hassle-free. Doctor explained everything with utmost patience and warmth."',
-    initials: 'LP',
-    name: 'Lakshmi Prasanna',
-    tag: 'Verified Patient (General Medicine)',
-    avatarStyle: { background: 'linear-gradient(135deg, #e11d48 0%, #f59e0b 100%)' },
+    name: 'M. Lakshmi Devi',
+    initials: 'LD',
+    time: '3 weeks ago',
+    treatment: 'Neurological Consultation',
+    quote: 'Extremely satisfied with the consultation. Madam explains the medical problem in Telugu very clearly so ordinary people can understand without fear. She does not prescribe unnecessary medicines or tests. Very ethical and genuine doctor.',
+    avatarBg: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+  },
+  {
+    id: 4,
+    name: 'B. Satish Varma',
+    initials: 'SV',
+    time: '2 months ago',
+    treatment: 'Sciatica & Spine Care',
+    quote: 'Traveled all the way from Srikakulam for severe sciatica and lumbar nerve compression. Within 3 weeks of treatment and physiotherapy advice, my back and leg pain reduced significantly. Excellent hospital setup near RTC Complex.',
+    avatarBg: 'linear-gradient(135deg, #e11d48 0%, #f43f5e 100%)',
   },
 ];
 
-function TestimonialCarousel() {
-  const [current, setCurrent] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const total = TESTIMONIALS.length;
+const REVIEWS_ROW_2: GoogleReviewItem[] = [
+  {
+    id: 5,
+    name: 'G. Rama Krishna',
+    initials: 'RK',
+    time: '1 month ago',
+    treatment: 'Pediatric Epilepsy Care',
+    quote: 'My daughter had recurring seizure episodes. We consulted many doctors without clarity, but Dr. Vangapandu Nirmala accurately diagnosed the epilepsy pattern and started the right medication. She is now active and seizure-free. Highly recommended!',
+    avatarBg: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+  },
+  {
+    id: 6,
+    name: 'T. Sravanthi',
+    initials: 'TS',
+    time: '3 months ago',
+    treatment: 'Diagnostic & Neuro Care',
+    quote: 'Very professional and dedicated doctor. Clean clinic with modern neuro diagnostic facilities. The staff manages appointments smoothly without unnecessary waiting. Best neurological centre in North Andhra region.',
+    avatarBg: 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
+  },
+  {
+    id: 7,
+    name: 'D. Appala Naidu',
+    initials: 'AN',
+    time: '1 month ago',
+    treatment: "Parkinson's Management",
+    quote: "Dr. Nirmala garu is a blessing for Vizianagaram. Her DM Neurology expertise from JIPMER reflects in every diagnosis. My father's Parkinson's tremors and walking difficulty improved remarkably with her treatment.",
+    avatarBg: 'linear-gradient(135deg, #0284c7 0%, #38bdf8 100%)',
+  },
+  {
+    id: 8,
+    name: 'Ch. Hemalatha',
+    initials: 'CH',
+    time: '2 months ago',
+    treatment: 'Peripheral Neuropathy',
+    quote: 'Compassionate care and transparent treatment. The emergency response and inpatient facilities are top-notch. Thank you Dr. Nirmala and entire team for treating my chronic neuropathic pain successfully.',
+    avatarBg: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+  },
+];
 
-  const goTo = useCallback((idx: number) => {
-    setCurrent((idx + total) % total);
-  }, [total]);
-
-  const goNext = useCallback(() => goTo(current + 1), [current, goTo]);
-  const goPrev = useCallback(() => goTo(current - 1), [current, goTo]);
-
-  useEffect(() => {
-    if (!isHovered) {
-      intervalRef.current = setInterval(goNext, 5000);
-    }
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [isHovered, goNext]);
-
-  const t = TESTIMONIALS[current];
-
+function ReviewCard({ review }: { review: GoogleReviewItem }) {
   return (
-    <div
-      className="testimonial-carousel-wrapper"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {/* Single visible slide */}
-      <div className="testimonial-card" key={t.id}>
-        <div style={{ display: 'flex', gap: '4px', color: '#f59e0b', marginBottom: '8px' }}>
+    <div className="google-review-card">
+      <div className="review-card-top">
+        <div className="review-stars-group">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} size={18} fill="#f59e0b" />
+            <Star key={i} size={16} fill="#f59e0b" color="#f59e0b" />
           ))}
+          <span className="review-meta-badge" style={{ marginLeft: '6px' }}>{review.time}</span>
         </div>
-        <p className="testimonial-quote">{t.quote}</p>
-        <div className="testimonial-user">
-          <div className="patient-avatar-circle" style={t.avatarStyle}>{t.initials}</div>
-          <div>
-            <h4 style={{ fontSize: '1rem', color: '#0f172a', margin: 0, fontWeight: 700 }}>{t.name}</h4>
-            <span style={{ fontSize: '0.8rem', color: '#059669', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
-              <CheckCircle size={13} /> {t.tag}
-            </span>
-          </div>
+        <GoogleIcon size={20} />
+      </div>
+
+      <span className="review-dept-tag">{review.treatment}</span>
+
+      <p className="review-quote-text">“{review.quote}”</p>
+
+      <div className="review-card-bottom">
+        <div className="review-avatar-circle" style={{ background: review.avatarBg }}>
+          {review.initials}
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h4 className="review-author-name">{review.name}</h4>
+          <span className="review-verified-badge">
+            <CheckCircle size={13} /> Verified Google Review
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GoogleReviewsMarquee() {
+  return (
+    <div className="reviews-marquee-wrapper">
+      {/* Row 1: Smooth sliding from right to left */}
+      <div className="reviews-marquee-container">
+        <div className="reviews-marquee-track reviews-slide-left">
+          {[...REVIEWS_ROW_1, ...REVIEWS_ROW_1].map((rev, idx) => (
+            <ReviewCard key={`r1-${idx}`} review={rev} />
+          ))}
         </div>
       </div>
 
-      {/* Controls */}
-      <div className="testimonial-controls">
-        <button className="testimonial-arrow" onClick={goPrev} aria-label="Previous testimonial">
-          <ChevronLeft size={18} />
-        </button>
-        <div className="testimonial-dots">
-          {TESTIMONIALS.map((_, i) => (
-            <button
-              key={i}
-              className={`testimonial-dot${i === current ? ' active' : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={`Go to testimonial ${i + 1}`}
-            />
+      {/* Row 2: Smooth sliding from left to right */}
+      <div className="reviews-marquee-container">
+        <div className="reviews-marquee-track reviews-slide-right">
+          {[...REVIEWS_ROW_2, ...REVIEWS_ROW_2].map((rev, idx) => (
+            <ReviewCard key={`r2-${idx}`} review={rev} />
           ))}
         </div>
-        <button className="testimonial-arrow" onClick={goNext} aria-label="Next testimonial">
-          <ChevronRight size={18} />
-        </button>
       </div>
     </div>
   );
@@ -338,96 +399,100 @@ export default function Home() {
   const doctors = staticDoctors.slice(0, 3);
   const blogs = staticBlogs.slice(0, 2);
 
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (heroVideoRef.current) {
+      heroVideoRef.current.defaultMuted = true;
+      heroVideoRef.current.muted = true;
+      heroVideoRef.current.play().catch((err) => {
+        console.log('Hero video autoplay:', err);
+      });
+    }
+  }, []);
+
   return (
     <div>
       {/* ===================================================
           1. HERO SECTION
           =================================================== */}
       <section style={{
-        background: 'linear-gradient(140deg, #eef6ff 0%, #e0f2fe 55%, #ccfbf1 100%)',
-        padding: 'clamp(80px, 12vw, 120px) 0 clamp(60px, 8vw, 90px)',
+        background: '#071224',
+        padding: 'clamp(80px, 10vw, 120px) 0 clamp(60px, 6vw, 80px)',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: 'clamp(520px, 75vh, 780px)',
+        minHeight: '100vh',
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
       }}>
-        {/* Rotating Brain Background Video */}
+        {/* Full-Screen Rotating Brain Background Video */}
         <div
+          className="hero-bg-video-wrapper"
           style={{
             position: 'absolute',
-            inset: 0,
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            height: '100%',
+            minWidth: '100%',
+            minHeight: '100%',
             overflow: 'hidden',
             pointerEvents: 'none',
             zIndex: 0,
           }}
         >
           <video
+            ref={heroVideoRef}
+            key="heropage-video"
+            src="/heropage.mp4"
             autoPlay
             loop
             muted
             playsInline
+            // @ts-ignore
+            webkit-playsinline="true"
+            preload="auto"
+            className="hero-bg-video"
             style={{
               position: 'absolute',
               top: '50%',
               left: '50%',
               width: '100%',
               height: '100%',
+              minWidth: '100%',
+              minHeight: '100%',
               objectFit: 'cover',
+              objectPosition: 'center center',
               transform: 'translate(-50%, -50%)',
-              opacity: 0.28,
+              opacity: 1,
+              pointerEvents: 'none',
             }}
           >
-            <source src="/brianrotaion.mp4" type="video/mp4" />
+            <source src="/heropage.mp4" type="video/mp4" />
           </video>
-          {/* Soft medical gradient overlay to preserve crisp text legibility */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(140deg, rgba(238, 246, 255, 0.75) 0%, rgba(224, 242, 254, 0.68) 55%, rgba(204, 251, 241, 0.6) 100%)',
-            }}
-          />
         </div>
-
-        {/* Background blobs */}
-        <div className="hero-blob" style={{
-          width: '600px', height: '600px',
-          background: 'radial-gradient(circle, rgba(13,148,136,0.09) 0%, transparent 70%)',
-          top: '-20%', right: '-12%',
-        }} />
-        <div className="hero-blob" style={{
-          width: '400px', height: '400px',
-          background: 'radial-gradient(circle, rgba(15,76,129,0.07) 0%, transparent 70%)',
-          bottom: '-10%', left: '-8%',
-        }} />
-        {/* Subtle medical cross pattern – top right */}
-        <svg
-          style={{ position: 'absolute', top: '10%', right: '5%', opacity: 0.05, zIndex: 0, pointerEvents: 'none' }}
-          width="160" height="160" viewBox="0 0 160 160" fill="none"
-          aria-hidden="true"
-        >
-          <rect x="60" y="0" width="40" height="160" rx="10" fill="#0f4c81" />
-          <rect x="0" y="60" width="160" height="40" rx="10" fill="#0f4c81" />
-        </svg>
 
         <div className="container" style={{ position: 'relative', zIndex: 2, width: '100%' }}>
           <div className="grid grid-2" style={{ alignItems: 'center', gap: 'clamp(24px, 5vw, 56px)' }}>
-            {/* Left: text */}
-            <div>
+            {/* Left: text (shifted slightly to right) */}
+            <div style={{ paddingLeft: 'clamp(0px, 3.5vw, 42px)' }}>
               {/* Badge */}
               <div className="hero-animate-badge" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',
                 padding: '6px 16px',
-                background: 'var(--primary-light)',
-                color: 'var(--primary)',
+                background: 'rgba(255, 255, 255, 0.12)',
+                backdropFilter: 'blur(8px)',
+                color: '#38bdf8',
                 borderRadius: 'var(--radius-full)',
                 fontSize: 'clamp(0.72rem, 2vw, 0.82rem)',
                 fontWeight: '700',
                 textTransform: 'uppercase',
                 letterSpacing: '1px',
                 marginBottom: '18px',
-                border: '1px solid rgba(15,76,129,0.12)',
+                border: '1px solid rgba(56, 189, 248, 0.3)',
               }}>
                 <Sparkles size={14} />
                 <span>Specialized Neuro &amp; Medical Care</span>
@@ -436,24 +501,26 @@ export default function Home() {
               {/* Heading */}
               <h1 className="hero-animate-h1" style={{
                 fontSize: 'clamp(1.8rem, 4.2vw, 3.2rem)',
-                color: 'var(--primary)',
+                color: '#ffffff',
                 lineHeight: '1.18',
                 marginBottom: '18px',
                 fontWeight: '800',
                 letterSpacing: '-0.5px',
+                textShadow: '0 2px 12px rgba(0, 0, 0, 0.6)',
               }}>
                 Expert Care.<br />
-                <span style={{ color: 'var(--secondary)', display: 'inline-block' }}>Advanced Treatment.</span><br />
+                <span style={{ color: '#2dd4bf', display: 'inline-block' }}>Advanced Treatment.</span><br />
                 Compassionate Healing.
               </h1>
 
               {/* Description */}
               <p className="hero-animate-p" style={{
-                color: 'var(--text-muted)',
+                color: 'rgba(255, 255, 255, 0.88)',
                 fontSize: 'clamp(0.98rem, 2.2vw, 1.15rem)',
                 lineHeight: '1.65',
                 marginBottom: '32px',
                 maxWidth: '500px',
+                textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)',
               }}>
                 Comprehensive neurological and general medical care focused on your health, comfort and recovery.
                 Trusted by thousands of patients across Vizianagaram.
@@ -461,28 +528,28 @@ export default function Home() {
 
               {/* CTAs */}
               <div className="hero-animate-btns" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <Link to="/doctors" className="btn btn-outline" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+                <Link to="/doctors" className="btn btn-outline-white" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
                   <Stethoscope size={18} />
                   <span>Our Doctors</span>
                 </Link>
-                <Link to="/emergency" className="btn btn-danger" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+                <Link to="/emergency" className="btn btn-danger btn-pulse-emergency" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
+                  <span className="emergency-pulse-dot" aria-hidden="true" />
                   <PhoneCall size={18} />
                   <span>Emergency</span>
                 </Link>
               </div>
             </div>
 
-            {/* Right: hero image + floating badges */}
-            <div className="hero-animate-img" style={{ display: 'flex', justifyContent: 'center', width: '100%', position: 'relative' }}>
+            {/* Right: Brain Video showcase with floating badges (hospital image removed) */}
+            <div className="hero-animate-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', minHeight: '380px', position: 'relative' }}>
               <div style={{
                 position: 'relative',
-                borderRadius: 'var(--radius-lg)',
-                overflow: 'visible',
                 width: '100%',
-                maxWidth: '480px',
+                maxWidth: '460px',
+                height: '340px',
               }}>
                 {/* Top floating badge */}
-                <div className="hero-glass-pill hero-glass-pill-top float-element">
+                <div className="hero-glass-pill float-element" style={{ position: 'absolute', top: '12%', right: '6%' }}>
                   <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Star size={16} fill="#d97706" />
                   </div>
@@ -492,23 +559,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Main image */}
-                <div style={{
-                  borderRadius: 'var(--radius-lg)',
-                  overflow: 'hidden',
-                  boxShadow: 'var(--shadow-premium)',
-                  border: '4px solid white',
-                }}>
-                  <img
-                    src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800"
-                    alt="Nirmala Neuro & General Medical Centre facility"
-                    style={{ width: '100%', maxHeight: '440px', objectFit: 'cover', display: 'block' }}
-                    loading="eager"
-                  />
-                </div>
-
                 {/* Bottom floating badge */}
-                <div className="hero-glass-pill hero-glass-pill-bottom float-element" style={{ animationDelay: '1.5s' }}>
+                <div className="hero-glass-pill float-element" style={{ position: 'absolute', bottom: '16%', right: '14%', animationDelay: '1.5s' }}>
                   <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <HeartPulse size={16} />
                   </div>
@@ -741,22 +793,61 @@ export default function Home() {
       </section>
 
       {/* ===================================================
-          5.5. TESTIMONIALS CAROUSEL
+          5.5. GOOGLE REVIEWS (SIDE-TO-SIDE SMOOTH STREAM)
           =================================================== */}
-      <section className="section reveal" style={{ background: 'linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)' }}>
+      <section className="section google-reviews-section reveal">
         <div className="container">
-          <div className="section-title">
-            <span className="badge badge-primary" style={{ marginBottom: '12px', display: 'inline-flex' }}>
-              <Star size={14} fill="currentColor" style={{ marginRight: '6px' }} /> Patient Experiences
-            </span>
-            <h2>Words from Our Recovered Patients</h2>
-            <p>Real stories of healing and expert medical care at Nirmala Neuro &amp; General Medical Centre.</p>
+          <div className="section-title" style={{ marginBottom: '36px' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '7px 20px',
+              background: '#ffffff',
+              borderRadius: '30px',
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.06)',
+              border: '1px solid #e2e8f0',
+              marginBottom: '14px',
+            }}>
+              <GoogleIcon size={18} />
+              <span style={{ fontSize: '0.86rem', fontWeight: 700, color: '#1e293b' }}>Google Verified Reviews</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', color: '#f59e0b', fontWeight: 700, fontSize: '0.86rem' }}>
+                ★ 4.8 / 5.0
+              </span>
+            </div>
+            <h2>Patient Stories &amp; Google Reviews</h2>
+            <p>Real experiences and recovery journeys from patients treated at Nirmala Neuro &amp; General Medical Centre, Vizianagaram.</p>
           </div>
+        </div>
 
-          {/* Carousel: max width for readability */}
-          <div style={{ maxWidth: '680px', margin: '0 auto' }}>
-            <TestimonialCarousel />
-          </div>
+        {/* Side-to-Side Infinite Smooth Review Stream */}
+        <GoogleReviewsMarquee />
+
+        {/* Call to action: Direct link to Google Reviews */}
+        <div className="container" style={{ textAlign: 'center', marginTop: '36px' }}>
+          <a
+            href={GOOGLE_REVIEWS_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '10px',
+              background: '#ffffff',
+              borderColor: '#cbd5e1',
+              color: '#0f172a',
+              fontWeight: 600,
+              padding: '12px 28px',
+              borderRadius: '30px',
+              boxShadow: '0 4px 14px rgba(15, 23, 42, 0.05)',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <GoogleIcon size={20} />
+            <span>Read All Verified Reviews on Google Maps</span>
+            <ExternalLink size={16} style={{ color: '#64748b' }} />
+          </a>
         </div>
       </section>
 

@@ -13,7 +13,7 @@ export default function Emergency() {
       <section style={{
         backgroundColor: 'var(--danger)',
         color: 'white',
-        padding: '60px 0',
+        padding: 'clamp(105px, 12vw, 130px) 0 clamp(45px, 5vw, 60px)',
         textAlign: 'center'
       }}>
         <div className="container">
@@ -22,13 +22,14 @@ export default function Emergency() {
             alignItems: 'center',
             gap: '8px',
             padding: '6px 16px',
-            background: 'rgba(0, 0, 0, 0.2)',
+            background: 'rgba(0, 0, 0, 0.25)',
             borderRadius: 'var(--radius-full)',
             fontSize: '0.85rem',
             fontWeight: '700',
             textTransform: 'uppercase',
             marginBottom: '16px'
           }}>
+            <span className="live-status-dot-red" style={{ margin: 0 }} />
             <AlertTriangle size={16} />
             <span>Emergency Medical Services</span>
           </div>
@@ -49,9 +50,10 @@ export default function Emergency() {
               borderRadius: 'var(--radius-full)',
               fontSize: '1.75rem',
               fontWeight: '800',
-              boxShadow: 'var(--shadow-premium)',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 255, 255, 0.5)',
               marginTop: '12px',
-              transition: 'transform 0.2s ease'
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              animation: 'beaconPulseDot 2s infinite cubic-bezier(0.66, 0, 0, 1)'
             }}
             onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
