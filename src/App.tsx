@@ -46,22 +46,34 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
         });
       },
       {
-        rootMargin: '0px 0px -40px 0px',
-        threshold: 0.08,
+        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.06,
       }
     );
 
     const timer = setTimeout(() => {
-      const elements = document.querySelectorAll(
-        'section, .section, .card, .section-title, .reveal, .reveal-left, .reveal-right, .reveal-scale'
+      // Observe elements that already have a reveal class
+      const revealElements = document.querySelectorAll(
+        '.reveal, .reveal-left, .reveal-right, .reveal-scale'
       );
-      elements.forEach((el) => {
+      revealElements.forEach((el) => {
         if (!el.classList.contains('revealed')) {
+          observer.observe(el);
+        }
+      });
+
+      // For generic sections and cards that don't yet have a reveal class,
+      // add .reveal so they animate in when scrolled to
+      const genericElements = document.querySelectorAll(
+        'section:not(.reveal):not(.reveal-left):not(.reveal-right):not(.reveal-scale), .section-title:not(.reveal)'
+      );
+      genericElements.forEach((el) => {
+        if (!el.classList.contains('revealed') && !el.closest('[class*="reveal"]')) {
           el.classList.add('reveal');
           observer.observe(el);
         }
       });
-    }, 60);
+    }, 80);
 
     return () => {
       clearTimeout(timer);

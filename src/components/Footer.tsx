@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Stethoscope, MapPin, Phone, Mail, Clock, ArrowUpRight, Shield, Globe, Share2, Camera } from 'lucide-react';
+import { Stethoscope, MapPin, Phone, Mail, Clock, ArrowUpRight, Globe, Share2, Camera } from 'lucide-react';
 import footerStyles from '../styles/Footer.module.css';
 
 interface Department {
@@ -146,12 +146,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} Nirmala Neuro & General Medical Centre. All rights reserved.
             Powered By WIN WIN
           </p>
-          <div className={footerStyles.legalLinks}>
-            <Link to="/admin/login" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              <Shield size={14} />
-              <span>Admin Portal Login</span>
-            </Link>
-          </div>
+
         </div>
       </div>
     </footer>

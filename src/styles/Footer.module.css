@@ -1,8 +1,29 @@
 .footer {
-  background-color: #0b1727;
+  background: linear-gradient(180deg, #0b1727 0%, #080f1c 100%);
   color: #94a3b8;
   padding: 80px 0 30px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle background glow */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(13, 148, 136, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer > * {
+  position: relative;
+  z-index: 1;
 }
 
 .footerGrid {
@@ -12,6 +33,7 @@
   margin-bottom: 60px;
 }
 
+/* ── Brand / Logo ── */
 .brand {
   display: flex;
   align-items: center;
@@ -32,75 +54,90 @@
 
 .brandText {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: white;
   letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff 20%, #a5f3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .aboutText {
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.7;
   margin-bottom: 24px;
   color: #94a3b8;
 }
 
+/* ── Social icons ── */
 .socialLinks {
   display: flex;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .socialIcon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.06);
   color: #cbd5e1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .socialIcon:hover {
   background-color: var(--secondary);
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.3);
+  border-color: transparent;
 }
 
 .instagram:hover {
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  box-shadow: 0 8px 20px rgba(214, 36, 159, 0.35);
   color: white;
 }
 
 .facebook:hover {
   background-color: #1877f2;
+  box-shadow: 0 8px 20px rgba(24, 119, 242, 0.35);
   color: white;
 }
 
 .twitter:hover {
   background-color: #1da1f2;
+  box-shadow: 0 8px 20px rgba(29, 161, 242, 0.35);
   color: white;
 }
 
 .youtube:hover {
   background-color: #ff0000;
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
   color: white;
 }
 
 .linkedin:hover {
   background-color: #0a66c2;
+  box-shadow: 0 8px 20px rgba(10, 102, 194, 0.35);
   color: white;
 }
 
+/* ── Column titles ── */
 .columnTitle {
   font-family: var(--font-heading);
   color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   margin-bottom: 20px;
   position: relative;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 .columnTitle::after {
@@ -110,35 +147,64 @@
   bottom: 0;
   width: 28px;
   height: 2px;
-  background-color: var(--secondary);
+  background: linear-gradient(90deg, var(--secondary), transparent);
   border-radius: 2px;
+  transition: width 0.4s ease;
 }
 
+div:hover > .columnTitle::after {
+  width: 50px;
+}
+
+/* ── Link lists ── */
 .linkList {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .linkList a {
   color: #94a3b8;
-  font-size: 0.9rem;
-  transition: color 0.2s ease;
+  font-size: 0.88rem;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.linkList a::before {
+  content: '›';
+  opacity: 0;
+  font-size: 1rem;
+  color: var(--secondary);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateX(-4px);
 }
 
 .linkList a:hover {
   color: white;
-  padding-left: 4px;
+  padding-left: 6px;
 }
 
+.linkList a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Contact items ── */
 .contactItem {
   display: flex;
   gap: 12px;
   align-items: flex-start;
   margin-bottom: 14px;
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  transition: color 0.2s ease;
+}
+
+.contactItem:hover {
+  color: #cbd5e1;
 }
 
 .contactIcon {
@@ -147,49 +213,68 @@
   margin-top: 2px;
 }
 
+/* ── Emergency badge ── */
 .emergencyBadge {
   margin-top: 24px;
-  padding: 16px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 16px 18px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: var(--radius-md);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.emergencyBadge:hover {
+  background: rgba(239, 68, 68, 0.13);
+  border-color: rgba(239, 68, 68, 0.38);
 }
 
 .emergencyBadge strong {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #ef4444;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .emergencyNumber {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: white;
+  transition: color 0.2s ease;
 }
 
+.emergencyNumber:hover {
+  color: #fca5a5;
+}
+
+/* ── Footer bottom bar ── */
 .bottomBar {
   padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: 0.83rem;
   flex-wrap: wrap;
   gap: 16px;
+  color: #64748b;
 }
 
 .legalLinks a {
-  color: #94a3b8;
+  color: #64748b;
   transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .legalLinks a:hover {
-  color: white;
+  color: var(--secondary);
 }
 
+/* ── Responsive ── */
 @media (max-width: 992px) {
   .footerGrid {
     grid-template-columns: 1fr 1fr;
@@ -209,6 +294,6 @@
   .bottomBar {
     flex-direction: column;
     text-align: center;
-    gap: 12px;
+    gap: 10px;
   }
 }

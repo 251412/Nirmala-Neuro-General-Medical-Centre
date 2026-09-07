@@ -5,18 +5,24 @@
   width: 100%;
   height: var(--header-height);
   background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
   z-index: 1000;
   display: flex;
   align-items: center;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    background 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
 }
 
 .scrolled {
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.1), 0 4px 12px -2px rgba(15, 76, 129, 0.05);
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow:
+    0 4px 24px -4px rgba(15, 23, 42, 0.08),
+    0 1px 8px -2px rgba(15, 76, 129, 0.06);
   height: 72px;
   border-bottom-color: rgba(13, 148, 136, 0.15);
 }
@@ -29,6 +35,7 @@
   gap: 20px;
 }
 
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
@@ -40,6 +47,7 @@
   text-decoration: none;
   letter-spacing: -0.3px;
   transition: transform 0.25s ease;
+  flex-shrink: 0;
 }
 
 .logo:hover {
@@ -51,33 +59,36 @@
   width: auto;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(15, 76, 129, 0.15));
-  transition: transform 0.3s ease;
+  transition: transform 0.3s var(--ease-spring, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .logo:hover .logoImg {
-  transform: scale(1.04) rotate(-2deg);
+  transform: scale(1.05) rotate(-2deg);
 }
 
 .logoText {
   background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-weight: 800;
   letter-spacing: 0.2px;
 }
 
+/* ── Desktop Navigation ── */
 .desktopNav {
   position: relative;
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(241, 245, 249, 0.75);
+  background: rgba(241, 245, 249, 0.78);
   padding: 5px 6px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
+/* Sliding active pill */
 .slidingPill {
   position: absolute;
   top: 5px;
@@ -85,8 +96,11 @@
   left: 0;
   background: linear-gradient(135deg, var(--primary) 0%, #1d6fa5 100%);
   border-radius: var(--radius-full);
-  box-shadow: 0 4px 14px rgba(15, 76, 129, 0.35);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+  box-shadow: 0 4px 14px rgba(15, 76, 129, 0.3);
+  transition:
+    transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease;
   pointer-events: none;
   z-index: 1;
 }
@@ -99,7 +113,7 @@
   position: relative;
   padding: 8px 16px;
   border-radius: var(--radius-full);
-  transition: color 0.25s ease;
+  transition: color 0.2s ease;
   white-space: nowrap;
   z-index: 2;
 }
@@ -113,6 +127,7 @@
   font-weight: 700;
 }
 
+/* ── CTA buttons ── */
 .ctas {
   display: flex;
   align-items: center;
@@ -137,12 +152,8 @@
 }
 
 @keyframes subtlePulse {
-  0%, 100% {
-    box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
-  }
-  50% {
-    box-shadow: 0 4px 20px rgba(225, 29, 72, 0.45);
-  }
+  0%, 100% { box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25); }
+  50%       { box-shadow: 0 4px 22px rgba(225, 29, 72, 0.48); }
 }
 
 .ctaAppointment {
@@ -152,27 +163,29 @@
 }
 
 .ctaAppointment:hover {
-  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.35);
+  box-shadow: 0 6px 22px rgba(13, 148, 136, 0.38);
   transform: translateY(-2px);
 }
 
+/* ── Hamburger button ── */
 .mobileMenuBtn {
   display: none;
-  background: rgba(241, 245, 249, 0.8);
+  background: rgba(241, 245, 249, 0.85);
   border: 1px solid var(--border-color);
   color: var(--text-dark);
   cursor: pointer;
   padding: 8px;
   border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .mobileMenuBtn:hover {
   background: var(--primary-light);
   color: var(--primary);
+  transform: scale(1.05);
 }
 
-/* Mobile Nav Drawer */
+/* ── Mobile Drawer ── */
 .mobileDrawer {
   position: fixed;
   top: 0;
@@ -181,13 +194,14 @@
   max-width: 85vw;
   height: 100vh;
   background: var(--bg-white);
-  box-shadow: -10px 0 30px rgba(15, 23, 42, 0.15);
+  box-shadow: -10px 0 40px rgba(15, 23, 42, 0.15);
   z-index: 2000;
   display: flex;
   flex-direction: column;
   padding: 28px 24px;
   gap: 28px;
   transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
 }
 
 .drawerOpen {
@@ -207,13 +221,13 @@
   align-items: center;
   gap: 10px;
   font-family: var(--font-heading);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--primary);
 }
 
 .closeBtn {
-  background: rgba(241, 245, 249, 0.8);
+  background: rgba(241, 245, 249, 0.85);
   border: none;
   color: var(--text-dark);
   cursor: pointer;
@@ -223,7 +237,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .closeBtn:hover {
@@ -234,7 +248,7 @@
 .mobileNav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   overflow-y: auto;
 }
 
@@ -245,12 +259,13 @@
   color: var(--text-muted);
   padding: 12px 16px;
   border-radius: var(--radius-md);
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
 }
 
 .mobileLink:hover {
   background: var(--bg-main);
   color: var(--primary);
+  padding-left: 22px;
 }
 
 .mobileActive {
@@ -269,6 +284,7 @@
   border-top: 1px solid var(--border-color);
 }
 
+/* ── Overlay ── */
 .overlay {
   position: fixed;
   top: 0;
@@ -281,7 +297,7 @@
   z-index: 1500;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .overlayVisible {
@@ -289,13 +305,14 @@
   visibility: visible;
 }
 
+/* ── Responsive breakpoints ── */
 @media (max-width: 1100px) {
   .desktopNav {
     gap: 2px;
     padding: 4px 6px;
   }
   .navLink {
-    padding: 6px 12px;
+    padding: 6px 11px;
     font-size: 0.85rem;
   }
 }
@@ -329,4 +346,3 @@
     gap: 20px;
   }
 }
-
