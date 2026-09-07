@@ -763,30 +763,8 @@ export default function Home() {
                     {doctor.designation}
                   </span>
 
-                  <div style={{ marginBottom: '14px' }}>
-                    {doctor.status === 'INACTIVE' ? (
-                      <span className="doctor-inactive-badge">
-                        <span className="live-status-dot-red" />
-                        On Leave / Not Available
-                      </span>
-                    ) : (
-                      <span className="doctor-opd-badge">
-                        <span className="live-status-dot" />
-                        Available for Consultation
-                      </span>
-                    )}
-                  </div>
-
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '6px' }}>{doctor.qualification}</p>
-                  <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '14px' }}>{doctor.specialization}</p>
-
-                  <div style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    gap: '6px', fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '22px',
-                  }}>
-                    <Clock size={13} style={{ color: 'var(--secondary)' }} />
-                    <span>Mon – Sat: 10:00 AM – 7:00 PM</span>
-                  </div>
+                  <p style={{ color: 'var(--text-dark)', fontSize: '0.9rem', fontWeight: '600', marginBottom: '22px' }}>{doctor.specialization}</p>
 
                   <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
                     <Link to={`/doctors/${doctor.id}`} className="btn btn-light" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>

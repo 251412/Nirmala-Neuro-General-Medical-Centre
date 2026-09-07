@@ -56,15 +56,6 @@ export default function DoctorDetail() {
             
             {/* Consultation Card */}
             <div className="card" style={{ padding: '24px', backgroundColor: 'var(--bg-main)' }}>
-              <h3 style={{ fontSize: '1.15rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)' }}>
-                <Clock size={18} />
-                <span>Consultation Timings</span>
-              </h3>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.925rem', color: 'var(--text-dark)', marginBottom: '20px' }}>
-                {doctor.consultationTimings.map((t, idx) => (
-                  <li key={idx} style={{ paddingBottom: '8px', borderBottom: '1px solid rgba(15,23,42,0.05)' }}>{t}</li>
-                ))}
-              </ul>
               
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
                 <Phone size={16} />
@@ -97,17 +88,6 @@ export default function DoctorDetail() {
               <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase' }}>
                 {deptName || 'Medical Officer'}
               </div>
-              {doctor.status === 'INACTIVE' ? (
-                <span className="doctor-inactive-badge">
-                  <span className="live-status-dot-red" />
-                  Inactive — Doctor is on leave / not available
-                </span>
-              ) : (
-                <span className="doctor-opd-badge">
-                  <span className="live-status-dot" />
-                  Available Today
-                </span>
-              )}
             </div>
             <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '6px' }}>{doctor.name}</h1>
             <span style={{ fontSize: '1.15rem', color: 'var(--secondary)', fontWeight: '600', display: 'block', marginBottom: '20px' }}>

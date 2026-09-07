@@ -157,20 +157,6 @@ export default function Doctors() {
                     </div>
 
                     <div style={{ padding: '24px', flex: '1', display: 'flex', flexDirection: 'column' }}>
-                      <div style={{ marginBottom: '8px' }}>
-                        {doctor.status === 'INACTIVE' ? (
-                          <span className="doctor-inactive-badge">
-                            <span className="live-status-dot-red" />
-                            On Leave / Not Available
-                          </span>
-                        ) : (
-                          <span className="doctor-opd-badge">
-                            <span className="live-status-dot" />
-                            Available Today
-                          </span>
-                        )}
-                      </div>
-
                       <span style={{ color: 'var(--secondary)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px', display: 'block' }}>
                         {doctor.designation}
                       </span>
@@ -184,16 +170,6 @@ export default function Doctors() {
                       </p>
 
                       <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '16px', marginTop: 'auto' }}>
-                        <div style={{ display: 'flex', gap: '8px', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '10px' }}>
-                          <Clock size={14} style={{ marginTop: '2px', flexShrink: 0 }} />
-                          <div>
-                            <span style={{ fontWeight: '600', color: 'var(--text-dark)', display: 'block', marginBottom: '2px' }}>Consultation Hours:</span>
-                            {doctor.consultationTimings.map((t, idx) => (
-                              <span key={idx} style={{ display: 'block' }}>{t}</span>
-                            ))}
-                          </div>
-                        </div>
-
                         <div style={{ display: 'flex', gap: '8px', color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '24px' }}>
                           <Phone size={14} />
                           <span>{doctor.phone}</span>
