@@ -352,6 +352,44 @@ export default function Home() {
         display: 'flex',
         alignItems: 'center',
       }}>
+        {/* Rotating Brain Background Video */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transform: 'translate(-50%, -50%)',
+              opacity: 0.28,
+            }}
+          >
+            <source src="/brianrotaion.mp4" type="video/mp4" />
+          </video>
+          {/* Soft medical gradient overlay to preserve crisp text legibility */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(140deg, rgba(238, 246, 255, 0.75) 0%, rgba(224, 242, 254, 0.68) 55%, rgba(204, 251, 241, 0.6) 100%)',
+            }}
+          />
+        </div>
+
         {/* Background blobs */}
         <div className="hero-blob" style={{
           width: '600px', height: '600px',
