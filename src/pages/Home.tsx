@@ -4,7 +4,7 @@ import {
   Calendar, PhoneCall, Stethoscope, Building2, MapPin, Award,
   ShieldCheck, HeartPulse, Sparkles, Navigation, ExternalLink,
   Star, CheckCircle, Clock, ChevronLeft, ChevronRight, Users,
-  Activity
+  Activity, ArrowRight, RotateCw
 } from 'lucide-react';
 import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
 import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
@@ -186,32 +186,157 @@ function TestimonialCarousel() {
   );
 }
 
-/* ─── Main Home Component ─────────────────────────────── */
-export default function Home() {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [settings, setSettings] = useState<LocationSettings | null>(null);
-  const [loading, setLoading] = useState(true);
+/* ─── 3D Flip Card Component ───────────────────────────── */
+interface QuickAction3DCardProps {
+  theme: 'teal' | 'purple' | 'red';
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  frontActionText: string;
+  iconBg: string;
+  iconColor: string;
+  backTagline: string;
+  backDetails: string;
+  backCtaText: string;
+  backCtaLink: string;
+}
 
-  useEffect(() => {
-    Promise.all([
-      fetch('/api/public/departments').then(r => r.json()),
-      fetch('/api/public/doctors').then(r => r.json()),
-      fetch('/api/public/blogs').then(r => r.json()),
-      fetch('/api/public/settings').then(r => r.json()),
-    ])
-      .then(([deptsData, doctorsData, blogsData, settingsData]) => {
-        setDepartments(deptsData.slice(0, 3));
-        setDoctors(doctorsData.slice(0, 3));
-        setBlogs(blogsData.slice(0, 2));
-        if (settingsData && settingsData.address) {
-          setSettings(settingsData);
-        }
-      })
-      .catch((err) => console.error('Error loading home page details', err))
-      .finally(() => setLoading(false));
-  }, []);
+function QuickAction3DCard({
+  theme,
+  icon,
+  title,
+  description,
+  frontActionText,
+  iconBg,
+  iconColor,
+  backTagline,
+  backDetails,
+  backCtaText,
+  backCtaLink,
+}: QuickAction3DCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsFlipped(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsFlipped(false);
+  };
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <div
+      className={`flip-card-container flip-card-${theme} ${isFlipped ? 'is-flipped' : ''}`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={() => setIsFlipped((prev) => !prev)}
+    >
+      <div className="flip-card-inner">
+        {/* FRONT SIDE */}
+        <div className="flip-card-front">
+          <div>
+            <div
+              className="quick-action-icon"
+              style={{
+                background: iconBg,
+                color: iconColor,
+                width: '44px',
+                height: '44px',
+                borderRadius: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '14px',
+              }}
+            >
+              {icon}
+            </div>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '8px' }}>
+              {title}
+            </h3>
+            <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5, margin: 0 }}>
+              {description}
+            </p>
+          </div>
+
+          <div style={{ marginTop: '16px' }}>
+            <span className="quick-action-arrow" style={{ color: iconColor, fontWeight: 600, fontSize: '0.88rem' }}>
+              {frontActionText}
+            </span>
+          </div>
+        </div>
+
+        {/* BACK SIDE */}
+        <div className="flip-card-back">
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+              <div style={{ background: 'rgba(255, 255, 255, 0.2)', padding: '6px', borderRadius: '8px', display: 'flex' }}>
+                {icon}
+              </div>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#ffffff', margin: 0 }}>{title}</h4>
+            </div>
+
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.18)',
+              borderRadius: '6px',
+              padding: '6px 10px',
+              marginBottom: '10px',
+              fontSize: '0.76rem',
+              fontWeight: 700,
+              letterSpacing: '0.3px',
+              textTransform: 'uppercase',
+              color: '#ffffff',
+            }}>
+              {backTagline}
+            </div>
+
+            <p style={{ fontSize: '0.81rem', lineHeight: 1.45, color: 'rgba(255, 255, 255, 0.92)', margin: 0 }}>
+              {backDetails}
+            </p>
+          </div>
+
+          <div style={{ marginTop: '14px' }}>
+            <Link
+              to={backCtaLink}
+              onClick={handleCtaClick}
+              className="btn"
+              style={{
+                width: '100%',
+                background: '#ffffff',
+                color: '#064A78',
+                fontWeight: 700,
+                fontSize: '0.82rem',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                textDecoration: 'none',
+              }}
+            >
+              <span>{backCtaText}</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Home Component ─────────────────────────────── */
+import { homeContent, hospitalInfo, doctorsData as staticDoctors, departmentsData as staticDepts, blogsData as staticBlogs } from '../data';
+
+export default function Home() {
+  const departments = staticDepts.slice(0, 3);
+  const doctors = staticDoctors.slice(0, 3);
+  const blogs = staticBlogs.slice(0, 2);
 
   return (
     <div>
@@ -272,16 +397,15 @@ export default function Home() {
 
               {/* Heading */}
               <h1 className="hero-animate-h1" style={{
-                fontSize: 'clamp(2rem, 5vw, 3.4rem)',
+                fontSize: 'clamp(1.8rem, 4.2vw, 3.2rem)',
                 color: 'var(--primary)',
-                lineHeight: '1.13',
+                lineHeight: '1.18',
                 marginBottom: '18px',
                 fontWeight: '800',
                 letterSpacing: '-0.5px',
               }}>
-                Expert Care.{' '}
-                <span style={{ color: 'var(--secondary)' }}>Advanced Treatment.</span>
-                <br />
+                Expert Care.<br />
+                <span style={{ color: 'var(--secondary)', display: 'inline-block' }}>Advanced Treatment.</span><br />
                 Compassionate Healing.
               </h1>
 
@@ -325,7 +449,7 @@ export default function Home() {
                     <Star size={16} fill="#d97706" />
                   </div>
                   <div>
-                    <strong style={{ fontSize: '0.87rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>15+ Years</strong>
+                    <strong style={{ fontSize: '0.87rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>9+ Years</strong>
                     <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Clinical Excellence</span>
                   </div>
                 </div>
@@ -362,77 +486,70 @@ export default function Home() {
       </section>
 
       {/* ===================================================
-          2. QUICK ACTION CARDS
+          2. QUICK ACTION CARDS (3D FLIP)
           =================================================== */}
-      <section style={{ marginTop: '-44px', position: 'relative', zIndex: 10, padding: '0 0 48px 0' }}>
+      <section style={{
+        marginTop: '-44px',
+        position: 'relative',
+        zIndex: 10,
+        padding: '24px 0 48px 0',
+        background: 'linear-gradient(180deg, #e0f2fe 0%, #f0f9ff 100%)',
+        borderTop: '1px solid rgba(186, 230, 253, 0.8)',
+        borderBottom: '1px solid rgba(186, 230, 253, 0.8)',
+      }}>
         <div className="container">
-          {/* 5-card grid: auto-fit for responsiveness */}
+          {/* 3-card grid: Find a Doctor, Our Departments, Emergency Care */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(175px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '24px',
           }}
             className="reveal reveal-stagger"
           >
-            {/* Book Appointment */}
-            <Link to="/appointment" className="quick-action-card">
-              <div className="quick-action-icon" style={{ background: 'var(--primary-light)', color: 'var(--primary)' }}>
-                <Calendar size={24} />
-              </div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Book Appointment</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                Schedule a visit with our specialist doctors online.
-              </p>
-              <span className="quick-action-arrow" style={{ color: 'var(--primary)' }}>Book Now →</span>
-            </Link>
-
             {/* Find a Doctor */}
-            <Link to="/doctors" className="quick-action-card">
-              <div className="quick-action-icon" style={{ background: 'var(--secondary-light)', color: 'var(--secondary)' }}>
-                <Stethoscope size={24} />
-              </div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Find a Doctor</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                Search and connect with our experienced specialists.
-              </p>
-              <span className="quick-action-arrow" style={{ color: 'var(--secondary)' }}>Search →</span>
-            </Link>
+            <QuickAction3DCard
+              theme="teal"
+              icon={<Stethoscope size={22} />}
+              title="Find a Doctor"
+              description="Search and connect with our experienced specialists."
+              frontActionText="Search →"
+              iconBg="var(--secondary-light)"
+              iconColor="var(--secondary)"
+              backTagline="Browse OPD Specialists"
+              backDetails="Consult with Dr. V. Nirmala (DM Neuro) & experienced clinical specialists."
+              backCtaText="Explore Doctors Directory"
+              backCtaLink="/doctors"
+            />
 
             {/* Departments */}
-            <Link to="/departments" className="quick-action-card">
-              <div className="quick-action-icon" style={{ background: '#ede9fe', color: '#7c3aed' }}>
-                <Building2 size={24} />
-              </div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Our Departments</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                Explore our specialized medical departments.
-              </p>
-              <span className="quick-action-arrow" style={{ color: '#7c3aed' }}>View →</span>
-            </Link>
+            <QuickAction3DCard
+              theme="purple"
+              icon={<Building2 size={22} />}
+              title="Our Departments"
+              description="Explore our specialized medical departments."
+              frontActionText="View →"
+              iconBg="#ede9fe"
+              iconColor="#7c3aed"
+              backTagline="Specialized Care Units"
+              backDetails="Neurology, Neurosurgery, General Medicine & Comprehensive Diagnostics."
+              backCtaText="View All Departments"
+              backCtaLink="/departments"
+            />
 
             {/* Emergency Care */}
-            <Link to="/emergency" className="quick-action-card">
-              <div className="quick-action-icon" style={{ background: '#ffe4e6', color: 'var(--danger)' }}>
-                <Activity size={24} />
-              </div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Emergency Care</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                24/7 emergency assistance &amp; rapid trauma response.
-              </p>
-              <span className="quick-action-arrow" style={{ color: 'var(--danger)' }}>Call Now →</span>
-            </Link>
-
-            {/* Contact & Location */}
-            <Link to="/contact" className="quick-action-card">
-              <div className="quick-action-icon" style={{ background: '#fef9c3', color: '#a16207' }}>
-                <MapPin size={24} />
-              </div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>Contact &amp; Location</h3>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.84rem', lineHeight: 1.5 }}>
-                Find our hospital address, map directions &amp; timings.
-              </p>
-              <span className="quick-action-arrow" style={{ color: '#a16207' }}>Locate Us →</span>
-            </Link>
+            <QuickAction3DCard
+              theme="red"
+              icon={<Activity size={22} />}
+              title="Emergency Care"
+              description="24/7 emergency assistance & rapid trauma response."
+              frontActionText="Call Now →"
+              iconBg="#ffe4e6"
+              iconColor="var(--danger)"
+              backTagline="24/7 Trauma Hotline"
+              backDetails="Immediate care for acute neurological emergencies & critical medical alerts."
+              backCtaText="Emergency Info"
+              backCtaLink="/emergency"
+            />
           </div>
         </div>
       </section>
@@ -486,13 +603,7 @@ export default function Home() {
             <p>Comprehensive diagnostics and care through our major medical divisions.</p>
           </div>
 
-          {loading ? (
-            <div className="grid grid-3">
-              <DeptSkeletonCard />
-              <DeptSkeletonCard />
-              <DeptSkeletonCard />
-            </div>
-          ) : departments.length > 0 ? (
+          {departments.length > 0 ? (
             <div className="grid grid-3 reveal-stagger">
               {departments.map((dept) => (
                 <div key={dept.id} className="card reveal">
@@ -621,13 +732,7 @@ export default function Home() {
             <p>Our clinics are managed by board-certified healthcare professionals.</p>
           </div>
 
-          {loading ? (
-            <div className="grid grid-3">
-              <DoctorSkeletonCard />
-              <DoctorSkeletonCard />
-              <DoctorSkeletonCard />
-            </div>
-          ) : doctors.length > 0 ? (
+          {doctors.length > 0 ? (
             <div className="grid grid-3 reveal-stagger">
               {doctors.map((doctor) => (
                 <div key={doctor.id} className="card reveal" style={{ textAlign: 'center', padding: '30px' }}>
@@ -769,12 +874,7 @@ export default function Home() {
             <p>Stay updated with health guidelines written by our senior medical officers.</p>
           </div>
 
-          {loading ? (
-            <div className="grid grid-2">
-              <BlogSkeletonCard />
-              <BlogSkeletonCard />
-            </div>
-          ) : blogs.length > 0 ? (
+          {blogs.length > 0 ? (
             <div className="grid grid-2 reveal-stagger">
               {blogs.map((blog) => (
                 <div key={blog.id} className="card reveal" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '0' }}>
@@ -819,15 +919,15 @@ export default function Home() {
               </span>
               <h2 style={{ fontSize: '2.1rem', color: 'var(--primary)', marginBottom: '16px' }}>Our Location</h2>
               <h3 style={{ fontSize: '1.2rem', color: '#0f172a', fontWeight: '700', marginBottom: '10px' }}>
-                {settings?.hospitalName || 'Nirmala Neuro & General Medical Centre'}
+                {hospitalInfo.name}
               </h3>
               <p style={{ color: 'var(--text-muted)', fontSize: '1rem', lineHeight: '1.7', marginBottom: '28px' }}>
-                {settings?.address || 'Back of INOX Multiplex, Opposite RTC Complex, Fort Area, Vizianagaram, Andhra Pradesh - 535003'}
+                {hospitalInfo.address}
               </p>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                 <a
-                  href={settings?.googleMapsDirectionsUrl || 'https://www.google.com/maps/dir/?api=1&destination=18.1068468,83.3980718&destination_place_id=ChIJZQq5zUT1OzoR102LhkzA-uI'}
+                  href={hospitalInfo.googleMapsDirectionsUrl}
                   target="_blank" rel="noopener noreferrer"
                   className="btn btn-primary" style={{ gap: '8px' }}
                 >
@@ -835,7 +935,7 @@ export default function Home() {
                   <span>Get Directions</span>
                 </a>
                 <a
-                  href={settings?.googleMapsUrl || settings?.mapLink || 'https://www.google.com/maps/place/Nirmala+Neuro+%26+General+Medical+Centre/@18.1068518,83.3932009,17z/data=!4m14!1m7!3m6!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!2sNirmala+Neuro+%26+General+Medical+Centre!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7!3m5!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7?entry=ttu'}
+                  href={hospitalInfo.googleMapsUrl}
                   target="_blank" rel="noopener noreferrer"
                   className="btn btn-outline" style={{ gap: '8px' }}
                 >
@@ -851,7 +951,7 @@ export default function Home() {
 
             {/* Right: map */}
             <div className="reveal-right">
-              <GoogleMapLocation settings={settings} variant="compact" height="340px" showSidebar={false} />
+              <GoogleMapLocation variant="compact" height="340px" showSidebar={false} />
             </div>
           </div>
         </div>

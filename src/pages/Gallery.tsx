@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image as ImageIcon, ZoomIn } from 'lucide-react';
 import Lightbox from '../components/Lightbox';
-
-interface GalleryItem {
-  id: string;
-  image: string;
-  title: string;
-  caption: string;
-  category: string;
-}
+import { galleryData } from '../data';
 
 export default function Gallery() {
-  const [items, setItems] = useState<GalleryItem[]>([]);
+  const items = galleryData;
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [loading, setLoading] = useState(true);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    fetch('/api/public/gallery')
-      .then((r) => r.json())
-      .then((data) => setItems(data))
-      .catch((e) => console.error("Error loading gallery", e))
-      .finally(() => setLoading(false));
-  }, []);
 
   const categories = ['All', ...Array.from(new Set(items.map((i) => i.category)))];
 
@@ -72,24 +56,36 @@ export default function Gallery() {
             ))}
           </div>
 
-          {loading ? (
-            <div className="spinner-container"><div className="spinner" /></div>
-          ) : filteredItems.length === 0 ? (
+          {filteredItems.length === 0 ? (
             <div className="empty-state">
               <ImageIcon size={48} />
               <h3>No Images Found</h3>
               <p style={{ marginTop: '8px' }}>There are currently no gallery photographs in this category.</p>
             </div>
           ) : (
-            <div className="grid grid-3">
+            <div className="grid grid-2" style={{ gap: '30px' }}>
               {filteredItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className="card"
                   onClick={() => setLightboxIndex(index)}
-                  style={{ cursor: 'pointer', overflow: 'hidden', position: 'relative' }}
+                  style={{
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    borderRadius: '20px',
+                    boxShadow: 'var(--shadow-md)',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+                  }}
                 >
-                  <div style={{ position: 'relative', overflow: 'hidden', height: '260px' }}>
+                  <div style={{ position: 'relative', overflow: 'hidden', height: '300px' }}>
                     <img
                       src={item.image}
                       alt={item.title}
@@ -97,26 +93,54 @@ export default function Gallery() {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        transition: 'transform 0.5s ease'
+                        display: 'block',
+                        transition: 'transform 0.6s ease'
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
                       onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
                     />
                     <div style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(to top, rgba(15,23,42,0.8) 0%, transparent 60%)',
+                      background: 'linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 50%, transparent 100%)',
                       display: 'flex',
                       alignItems: 'flex-end',
-                      padding: '20px',
+                      justifyContent: 'space-between',
+                      padding: '24px',
                       color: 'white'
                     }}>
-                      <div style={{ width: '100%' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                          <span className="badge badge-secondary" style={{ fontSize: '0.7rem' }}>{item.category}</span>
-                          <ZoomIn size={18} style={{ opacity: 0.8 }} />
-                        </div>
-                        <h4 style={{ color: 'white', fontSize: '1.1rem', fontWeight: '600' }}>{item.title}</h4>
+                      <div style={{ flex: 1, paddingRight: '16px' }}>
+                        <span style={{
+                          display: 'inline-block',
+                          backgroundColor: '#99f6e4',
+                          color: '#0f766e',
+                          fontWeight: 700,
+                          fontSize: '0.75rem',
+                          padding: '6px 16px',
+                          borderRadius: '9999px',
+                          letterSpacing: '0.5px',
+                          textTransform: 'uppercase',
+                          marginBottom: '10px'
+                        }}>
+                          {item.category}
+                        </span>
+                        <h3 style={{ color: '#ffffff', fontSize: '1.25rem', fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
+                          {item.title}
+                        </h3>
+                      </div>
+                      <div style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.25)',
+                        backdropFilter: 'blur(6px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        flexShrink: 0
+                      }}>
+                        <ZoomIn size={20} />
                       </div>
                     </div>
                   </div>

@@ -1,54 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, ShieldAlert, Calendar, Stethoscope, User } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE } from '../utils/imageUtils';
-
-interface Department {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  image: string;
-  services: string[];
-}
-
-interface Doctor {
-  id: string;
-  name: string;
-  photo: string;
-  qualification: string;
-  specialization: string;
-  designation: string;
-}
+import { departmentsData, doctorsData } from '../data';
 
 export default function DepartmentDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [department, setDepartment] = useState<Department | null>(null);
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    setError(false);
-    fetch(`/api/public/departments/${slug}`)
-      .then((res) => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then((data) => {
-        setDepartment(data.department);
-        setDoctors(data.doctors);
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [slug]);
+  const department = departmentsData.find((d) => d.slug === slug || d.id === slug);
+  const doctors = doctorsData.filter((doc) => doc.departmentId === department?.id || doc.departmentName.toLowerCase().includes(department?.slug.toLowerCase() || ''));
 
-  if (loading) {
-    return <div className="spinner-container"><div className="spinner" /></div>;
-  }
-
-  if (error || !department) {
+  if (!department) {
     return (
       <div className="container" style={{ padding: '80px 24px', textAlign: 'center' }}>
         <ShieldAlert size={48} style={{ color: 'var(--danger)', marginBottom: '16px' }} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Calendar, Clock, User, CheckCircle2, AlertCircle, Building2, Stethoscope, ArrowRight, ArrowLeft, Search, RefreshCw, XCircle, ShieldCheck } from 'lucide-react';
 import formStyles from '../styles/Forms.module.css';
+import { departmentsData as staticDepts, doctorsData as staticDoctors } from '../data';
 
 interface Department {
   id: string;
@@ -16,6 +17,7 @@ interface Doctor {
   consultationTimings: string[];
 }
 
+
 export default function Appointment() {
   const [searchParams, setSearchParams] = useSearchParams();
   const initialDoctorId = searchParams.get('doctorId') || '';
@@ -27,8 +29,8 @@ export default function Appointment() {
   const [mode, setMode] = useState<'book' | 'lookup'>(refId ? 'lookup' : 'book');
 
   // Data State
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [departments, setDepartments] = useState<Department[]>(staticDepts);
+  const [doctors, setDoctors] = useState<Doctor[]>(staticDoctors);
   
   // Wizard Step State (1: Doctor/Dept, 2: Date & Time, 3: Patient Details, 4: Success)
   const [step, setStep] = useState(1);
@@ -57,22 +59,26 @@ export default function Appointment() {
   const [lookupLoading, setLookupLoading] = useState(false);
   const [lookupError, setLookupError] = useState('');
 
-  // Fetch departments & doctors
+  // Fetch departments & doctors as fallback
   useEffect(() => {
     fetch('/api/public/departments')
       .then((r) => r.json())
-      .then((data) => setDepartments(data))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) setDepartments(data);
+      })
       .catch(() => {});
 
     fetch('/api/public/doctors')
       .then((r) => r.json())
       .then((data) => {
-        setDoctors(data);
-        if (initialDoctorId) {
-          const doc = data.find((d: Doctor) => d.id === initialDoctorId);
-          if (doc) {
-            setDepartmentId(doc.departmentId);
-            setDoctorId(doc.id);
+        if (Array.isArray(data) && data.length > 0) {
+          setDoctors(data);
+          if (initialDoctorId) {
+            const doc = data.find((d: Doctor) => d.id === initialDoctorId);
+            if (doc) {
+              setDepartmentId(doc.departmentId);
+              setDoctorId(doc.id);
+            }
           }
         }
       })

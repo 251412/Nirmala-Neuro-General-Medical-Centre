@@ -1,58 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Clock, Phone, Award, ShieldAlert, Heart } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE } from '../utils/imageUtils';
-
-interface Doctor {
-  id: string;
-  name: string;
-  photo: string;
-  qualification: string;
-  specialization: string;
-  departmentId: string;
-  experience: string;
-  designation: string;
-  bio: string;
-  consultationTimings: string[];
-  phone: string;
-  status: string;
-}
+import { doctorsData, departmentsData } from '../data';
 
 export default function DoctorDetail() {
   const { id } = useParams<{ id: string }>();
-  const [doctor, setDoctor] = useState<Doctor | null>(null);
-  const [deptName, setDeptName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    setError(false);
-    fetch(`/api/public/doctors/${id}`)
-      .then((res) => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then((data: Doctor) => {
-        setDoctor(data);
-        // Fetch department name
-        fetch(`/api/public/departments`)
-          .then((r) => r.json())
-          .then((depts: any[]) => {
-            const match = depts.find((d) => d.id === data.departmentId);
-            if (match) setDeptName(match.name);
-          })
-          .catch(() => {});
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const doctor = doctorsData.find((d) => d.id === id || d.name.toLowerCase().replace(/[^a-z0-9]/g, '-').includes(id?.toLowerCase() || ''));
+  const deptName = departmentsData.find((dept) => dept.id === doctor?.departmentId)?.name || doctor?.departmentName || 'Specialized Clinic';
 
-  if (loading) {
-    return <div className="spinner-container"><div className="spinner" /></div>;
-  }
-
-  if (error || !doctor) {
+  if (!doctor) {
     return (
       <div className="container" style={{ padding: '80px 24px', textAlign: 'center' }}>
         <ShieldAlert size={48} style={{ color: 'var(--danger)', marginBottom: '16px' }} />

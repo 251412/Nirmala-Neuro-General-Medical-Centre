@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Navigation, ExternalLink, AlertCircle } from 'lucide-react';
 import styles from '../styles/GoogleMapLocation.module.css';
+import { hospitalInfo } from '../data/hospital';
 
 export interface LocationSettings {
   hospitalName?: string;
@@ -34,23 +35,13 @@ export default function GoogleMapLocation({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
 
-  // Constants verified from hospital Google Maps listing
-  const DEFAULT_LAT = 18.1068468;
-  const DEFAULT_LNG = 83.3980718;
-  const DEFAULT_NAME = "Nirmala Neuro & General Medical Centre";
-  const DEFAULT_ADDRESS = "Back of INOX Multiplex, Opposite RTC Complex, Fort Area, Vizianagaram, Andhra Pradesh - 535003";
-  const DEFAULT_MAPS_URL = "https://www.google.com/maps/place/Nirmala+Neuro+%26+General+Medical+Centre/@18.1068518,83.3932009,17z/data=!4m14!1m7!3m6!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!2sNirmala+Neuro+%26+General+Medical+Centre!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7!3m5!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7?entry=ttu";
-  const DEFAULT_DIRECTIONS_URL = "https://www.google.com/maps/dir/?api=1&destination=18.1068468,83.3980718&destination_place_id=ChIJZQq5zUT1OzoR102LhkzA-uI";
-
-  const hospitalName = settings?.hospitalName || DEFAULT_NAME;
-  const address = settings?.address || DEFAULT_ADDRESS;
-  const lat = settings?.latitude || DEFAULT_LAT;
-  const lng = settings?.longitude || DEFAULT_LNG;
-  const googleMapsUrl = settings?.googleMapsUrl || settings?.mapLink || DEFAULT_MAPS_URL;
-  const googleMapsDirectionsUrl = settings?.googleMapsDirectionsUrl || DEFAULT_DIRECTIONS_URL;
-
-  // Exact Google Maps embed URL centered on exact coordinates 18.1068468, 83.3980718
-  const embedUrl = settings?.mapInformation || `https://maps.google.com/maps?q=${lat},${lng}+(${encodeURIComponent(hospitalName)})&t=m&z=17&ie=UTF8&iwloc=B&output=embed`;
+  const hospitalName = settings?.hospitalName || hospitalInfo.name;
+  const address = settings?.address || hospitalInfo.address;
+  const lat = settings?.latitude || hospitalInfo.latitude;
+  const lng = settings?.longitude || hospitalInfo.longitude;
+  const googleMapsUrl = settings?.googleMapsUrl || settings?.mapLink || hospitalInfo.googleMapsUrl;
+  const googleMapsDirectionsUrl = settings?.googleMapsDirectionsUrl || hospitalInfo.googleMapsDirectionsUrl;
+  const embedUrl = settings?.mapInformation || hospitalInfo.mapEmbedUrl;
 
   return (
     <div className={styles.mapSectionContainer}>

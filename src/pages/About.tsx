@@ -1,5 +1,6 @@
 import React from 'react';
 import { Target, Eye, ShieldCheck, Heart, Award, Users } from 'lucide-react';
+import { hospitalInfo } from '../data';
 
 export default function About() {
   return (
@@ -25,13 +26,13 @@ export default function About() {
               <span style={{ color: 'var(--secondary)', fontWeight: '700', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Our History</span>
               <h2 style={{ fontSize: '2.25rem', color: 'var(--primary)', marginTop: '8px', marginBottom: '20px' }}>Serving Patients With Honor & Skill</h2>
               <p style={{ color: 'var(--text-muted)', marginBottom: '16px', lineHeight: '1.7' }}>
-                Dr. Vangapandu Nirmala has more than 9 years of experience in this medical field and is currently practicing at her own medical center, Nirmala Neuro & General Medical Centre, Opposite RTC Complex, INOX Back Side, Vizianagaram, Andhra Pradesh.
+                {hospitalInfo.aboutUs}
               </p>
               <p style={{ color: 'var(--text-muted)', marginBottom: '16px', lineHeight: '1.7' }}>
-                She completed her MBBS, MD General Medicine and DM Neurology at JIPMER. She has a special interest in Stroke, Epilepsy, Migraine, Vertigo, Dementia, Paralysis and other neurological problems.
+                Dr. Vangapandu Nirmala completed her MBBS, MD General Medicine and DM Neurology at JIPMER. She has a special interest in Stroke, Epilepsy, Migraine, Vertigo, Dementia, Paralysis and other neurological problems.
               </p>
               <p style={{ color: 'var(--text-muted)', lineHeight: '1.7' }}>
-                Our medical team operates under the direct guidance of senior specialists, ensuring that every diagnostics review and pharmacological plan is robust, sound, and accurate.
+                Our medical team operates under the direct guidance of senior specialists, ensuring that every diagnostic review and treatment plan is accurate, ethical, and effective.
               </p>
             </div>
             <div style={{

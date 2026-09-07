@@ -1,44 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PhoneCall, AlertTriangle, MapPin, Clock, ShieldAlert, CheckCircle, Navigation, ExternalLink } from 'lucide-react';
-import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
-
-interface EmergencyInfo {
-  emergencyNumber: string;
-  description: string;
-  address: string;
-  availability: string;
-  instructions: string[];
-}
+import GoogleMapLocation from '../components/GoogleMapLocation';
+import { emergencyContent, hospitalInfo } from '../data';
 
 export default function Emergency() {
-  const [info, setInfo] = useState<EmergencyInfo | null>(null);
-  const [settings, setSettings] = useState<LocationSettings | null>(null);
-
-  useEffect(() => {
-    fetch('/api/public/emergency')
-      .then((r) => r.json())
-      .then((data) => setInfo(data))
-      .catch(() => {
-        setInfo({
-          emergencyNumber: '6305471147 / 6302963312',
-          description: 'For immediate assistance during a neurological episode or medical emergency, reach our emergency desk.',
-          address: 'Back of INOX Multiplex, Opposite RTC Complex, Fort Area, Vizianagaram, Andhra Pradesh - 535003',
-          availability: '24 Hours a Day, 7 Days a Week',
-          instructions: [
-            'Do not panic. Stay calm and assess the situation.',
-            'If the patient is unconscious, turn them onto their side (recovery position).',
-            'Call our hotline 6305471147 / 6302963312 directly. State the patient condition and exact location.',
-            'Do not offer water or food to an unconscious patient.',
-            'Keep any medical history or prescription files ready for the arriving paramedics.'
-          ]
-        });
-      });
-
-    fetch('/api/public/settings')
-      .then((r) => r.json())
-      .then((data) => setSettings(data))
-      .catch(() => {});
-  }, []);
+  const info = emergencyContent;
+  const settings = hospitalInfo;
 
   return (
     <div className="animate-fade-in">
@@ -153,7 +120,7 @@ export default function Emergency() {
                 <Navigation size={18} /> Get Directions Now
               </a>
               <a
-                href={settings?.googleMapsUrl || settings?.mapLink || "https://www.google.com/maps/place/Nirmala+Neuro+%26+General+Medical+Centre/@18.1068518,83.3932009,17z/data=!4m14!1m7!3m6!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!2sNirmala+Neuro+%26+General+Medical+Centre!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7!3m5!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7?entry=ttu"}
+                href={settings.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-outline"

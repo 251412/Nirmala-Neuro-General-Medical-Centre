@@ -1,28 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, Building2, CheckCircle } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_DEPARTMENT_IMAGE } from '../utils/imageUtils';
-
-interface Department {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  image: string;
-  services: string[];
-}
+import { departmentsData } from '../data';
 
 export default function Departments() {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/public/departments')
-      .then((res) => res.json())
-      .then((data) => setDepartments(data))
-      .catch((e) => console.error("Error loading departments", e))
-      .finally(() => setLoading(false));
-  }, []);
+  const departments = departmentsData;
 
   return (
     <div className="animate-fade-in">
@@ -42,9 +25,7 @@ export default function Departments() {
       {/* Departments Grid */}
       <section className="section">
         <div className="container">
-          {loading ? (
-            <div className="spinner-container"><div className="spinner" /></div>
-          ) : departments.length === 0 ? (
+          {departments.length === 0 ? (
             <div className="empty-state">
               <Building2 size={48} />
               <h3>No Departments Found</h3>

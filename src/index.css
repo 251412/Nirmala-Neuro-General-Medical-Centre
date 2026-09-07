@@ -325,8 +325,10 @@ button:focus-visible,
 .card {
   background: var(--bg-card);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(203, 213, 225, 0.6);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
+              0 4px 10px -2px rgba(15, 23, 42, 0.04),
+              0 0 0 1px rgba(15, 76, 129, 0.05);
   overflow: hidden;
   transition: transform var(--dur-slow) var(--ease-out-expo),
               box-shadow var(--dur-slow) var(--ease-out-expo),
@@ -336,8 +338,10 @@ button:focus-visible,
 
 .card:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 24px 40px -12px rgba(15, 76, 129, 0.18), 0 0 0 1px rgba(13, 148, 136, 0.2);
-  border-color: rgba(13, 148, 136, 0.25);
+  box-shadow: 0 24px 48px -12px rgba(15, 76, 129, 0.2),
+              0 8px 20px -4px rgba(13, 148, 136, 0.12),
+              0 0 0 2px rgba(13, 148, 136, 0.35);
+  border-color: rgba(13, 148, 136, 0.4);
 }
 
 .card img {
@@ -673,78 +677,80 @@ button:focus-visible,
 }
 
 /* =========================================================
-   QUICK ACTION CARDS
+   3D FLIP QUICK ACTION CARDS
    ========================================================= */
-.quick-action-card {
-  background: var(--bg-white);
+.flip-card-container {
+  perspective: 1000px;
+  height: 240px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
-  padding: 28px 24px;
+}
+
+.flip-card-container:hover .flip-card-inner,
+.flip-card-container.is-flipped .flip-card-inner {
+  transform: rotateY(180deg) translateY(-6px) scale(1.02);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  text-decoration: none;
-  color: var(--text-dark);
-  transition: transform var(--dur-slow) var(--ease-out-expo),
-              box-shadow var(--dur-slow) var(--ease-out-expo),
-              border-color var(--dur-normal) ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-.quick-action-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-normal) var(--ease-out-expo);
-  border-radius: 0;
+/* Front face styling */
+.flip-card-front {
+  background: var(--bg-white);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
+              0 4px 10px -2px rgba(15, 23, 42, 0.04),
+              0 0 0 1px rgba(15, 76, 129, 0.06);
+  transform: rotateY(0deg);
+  z-index: 2;
 }
 
-.quick-action-card:hover {
-  transform: translateY(-7px);
-  box-shadow: 0 20px 40px -10px rgba(15, 76, 129, 0.16), 0 0 0 1px rgba(13, 148, 136, 0.18);
-  border-color: rgba(13, 148, 136, 0.2);
+.flip-card-container:hover .flip-card-front {
+  box-shadow: 0 24px 48px -12px rgba(15, 76, 129, 0.2),
+              0 8px 20px -4px rgba(13, 148, 136, 0.12),
+              0 0 0 2px rgba(13, 148, 136, 0.35);
+  border-color: rgba(13, 148, 136, 0.4);
 }
 
-.quick-action-card:hover::before {
-  transform: scaleX(1);
+/* Card Back Theme - Professional Light/Medical Blue Gradient */
+.flip-card-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  box-shadow: 0 20px 45px -8px rgba(2, 132, 199, 0.45),
+              0 0 0 2px rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  z-index: 1;
 }
 
-.quick-action-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--dur-normal) var(--ease-spring);
-  flex-shrink: 0;
-}
-
-.quick-action-card:hover .quick-action-icon {
-  transform: scale(1.12) rotate(-3deg);
-}
-
-.quick-action-arrow {
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-top: auto;
+.flip-hint-badge {
+  font-size: 0.72rem;
+  opacity: 0.8;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: gap var(--dur-fast) ease;
-}
-
-.quick-action-card:hover .quick-action-arrow {
-  gap: 8px;
 }
 
 /* =========================================================
@@ -953,8 +959,10 @@ button:focus-visible,
   background: #ffffff;
   border-radius: var(--radius-lg);
   padding: 32px;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(203, 213, 225, 0.7);
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08),
+              0 4px 10px -2px rgba(15, 23, 42, 0.04),
+              0 0 0 1px rgba(15, 76, 129, 0.05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -967,8 +975,9 @@ button:focus-visible,
 
 .testimonial-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 35px -8px rgba(15, 76, 129, 0.12);
-  border-color: rgba(13, 148, 136, 0.3);
+  box-shadow: 0 24px 48px -12px rgba(15, 76, 129, 0.2),
+              0 0 0 2px rgba(13, 148, 136, 0.35);
+  border-color: rgba(13, 148, 136, 0.4);
 }
 
 .testimonial-quote {

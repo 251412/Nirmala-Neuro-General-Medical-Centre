@@ -1,55 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Calendar, User, BookOpen, Clock, Phone } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE } from '../utils/imageUtils';
-
-interface Doctor {
-  id: string;
-  name: string;
-  photo: string;
-  qualification: string;
-  specialization: string;
-  departmentId: string;
-  experience: string;
-  designation: string;
-  consultationTimings: string[];
-  phone: string;
-  status: string;
-}
-
-interface Department {
-  id: string;
-  name: string;
-}
+import { doctorsData, departmentsData } from '../data';
 
 export default function Doctors() {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [departments, setDepartments] = useState<Department[]>([]);
   const [search, setSearch] = useState('');
   const [selectedDept, setSelectedDept] = useState('');
-  const [loading, setLoading] = useState(true);
 
-  // Fetch departments and doctors
-  useEffect(() => {
-    fetch('/api/public/departments')
-      .then((r) => r.json())
-      .then((data) => setDepartments(data))
-      .catch((e) => console.error("Error loading departments", e));
-  }, []);
+  const departments = departmentsData;
 
-  // Re-fetch doctors on search or department changes
-  useEffect(() => {
-    setLoading(true);
-    let url = '/api/public/doctors?';
-    if (selectedDept) url += `departmentId=${selectedDept}&`;
-    if (search) url += `search=${encodeURIComponent(search)}&`;
+  const filteredDoctors = doctorsData.filter((doc) => {
+    const matchesDept = !selectedDept || doc.departmentId === selectedDept || doc.departmentName.toLowerCase().includes(selectedDept.toLowerCase());
+    const matchesSearch = !search ||
+      doc.name.toLowerCase().includes(search.toLowerCase()) ||
+      doc.specialization.toLowerCase().includes(search.toLowerCase()) ||
+      doc.qualification.toLowerCase().includes(search.toLowerCase());
+    return matchesDept && matchesSearch;
+  });
 
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => setDoctors(data))
-      .catch((e) => console.error("Error loading doctors", e))
-      .finally(() => setLoading(false));
-  }, [selectedDept, search]);
+  const doctors = filteredDoctors;
 
   const handleClearFilters = () => {
     setSearch('');
@@ -135,9 +105,7 @@ export default function Doctors() {
       {/* Doctor Listings */}
       <section className="section">
         <div className="container">
-          {loading ? (
-            <div className="spinner-container"><div className="spinner" /></div>
-          ) : doctors.length === 0 ? (
+          {doctors.length === 0 ? (
             <div className="empty-state">
               <User size={48} />
               <h3>No Doctors Found</h3>

@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, CheckCircle2, AlertCircle, Send } from 'lucide-react';
 import styles from '../styles/Contact.module.css';
-import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
-
-interface SiteSettings extends LocationSettings {
-  phone: string;
-  email: string;
-  workingHours?: string;
-  emergencyNumber: string;
-}
+import GoogleMapLocation from '../components/GoogleMapLocation';
+import { hospitalInfo } from '../data';
 
 export default function Contact() {
-  const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const settings = hospitalInfo;
 
   // Form State
   const [formData, setFormData] = useState({
@@ -25,40 +19,6 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-
-  const DEFAULT_SETTINGS: SiteSettings = {
-    hospitalName: 'Nirmala Neuro & General Medical Centre',
-    address: 'Back of INOX Multiplex, Opposite RTC Complex, Fort Area, Vizianagaram, Andhra Pradesh - 535003',
-    city: 'Vizianagaram',
-    state: 'Andhra Pradesh',
-    country: 'India',
-    pincode: '535003',
-    latitude: 18.1068468,
-    longitude: 83.3980718,
-    phone: '6305471147 / 6302963312',
-    email: 'nirmalaneurocare@gmail.com',
-    workingHours: 'Sunday to Friday: 09:30 AM to 6:30 PM | Saturday: Closed',
-    googleMapsUrl: 'https://www.google.com/maps/place/Nirmala+Neuro+%26+General+Medical+Centre/@18.1068518,83.3932009,17z/data=!4m14!1m7!3m6!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!2sNirmala+Neuro+%26+General+Medical+Centre!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7!3m5!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7?entry=ttu',
-    googleMapsDirectionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=18.1068468,83.3980718&destination_place_id=ChIJZQq5zUT1OzoR102LhkzA-uI',
-    mapInformation: 'https://maps.google.com/maps?q=18.1068468,83.3980718+(Nirmala+Neuro+%26+General+Medical+Centre)&t=m&z=17&ie=UTF8&iwloc=B&output=embed',
-    mapLink: 'https://www.google.com/maps/place/Nirmala+Neuro+%26+General+Medical+Centre/@18.1068518,83.3932009,17z/data=!4m14!1m7!3m6!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!2sNirmala+Neuro+%26+General+Medical+Centre!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7!3m5!1s0x3a3be504cd790a65:0xe2fae04c868b4d7!8m2!3d18.1068468!4d83.3980718!16s%2Fg%2F11shr_nqs7?entry=ttu',
-    emergencyNumber: '6305471147 / 6302963312'
-  };
-
-  useEffect(() => {
-    fetch('/api/public/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.address) {
-          setSettings({ ...DEFAULT_SETTINGS, ...data });
-        } else {
-          setSettings(DEFAULT_SETTINGS);
-        }
-      })
-      .catch(() => {
-        setSettings(DEFAULT_SETTINGS);
-      });
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.target.name === 'phone') {
@@ -109,7 +69,7 @@ export default function Contact() {
   const jsonLdData = {
     "@context": "https://schema.org",
     "@type": "MedicalBusiness",
-    "name": settings?.hospitalName || DEFAULT_SETTINGS.hospitalName,
+    "name": settings.name,
     "image": "https://nirmalaneuro.com/logo.png",
     "address": {
       "@type": "PostalAddress",
@@ -125,9 +85,9 @@ export default function Contact() {
       "longitude": 83.3980718
     },
     "url": "https://nirmalaneuro.com",
-    "telephone": settings?.phone || DEFAULT_SETTINGS.phone,
-    "email": settings?.email || DEFAULT_SETTINGS.email,
-    "hasMap": settings?.googleMapsUrl || DEFAULT_SETTINGS.googleMapsUrl
+    "telephone": settings.phone,
+    "email": settings.email,
+    "hasMap": settings.googleMapsUrl
   };
 
   return (
@@ -156,7 +116,7 @@ export default function Contact() {
                 </div>
                 <div className={styles.infoContent}>
                   <h4>Hospital Address</h4>
-                  <p>{settings?.address || DEFAULT_SETTINGS.address}</p>
+                  <p>{settings.address}</p>
                 </div>
               </div>
 
@@ -166,8 +126,8 @@ export default function Contact() {
                 </div>
                 <div className={styles.infoContent}>
                   <h4>Phone & Emergency</h4>
-                  <p>Desk: {settings?.phone || DEFAULT_SETTINGS.phone}</p>
-                  <span className={styles.highlight}>Emergency 24/7: {settings?.emergencyNumber || DEFAULT_SETTINGS.emergencyNumber}</span>
+                  <p>Desk: {settings.phone}</p>
+                  <span className={styles.highlight}>Emergency 24/7: {settings.emergencyNumber}</span>
                 </div>
               </div>
 
@@ -177,7 +137,7 @@ export default function Contact() {
                 </div>
                 <div className={styles.infoContent}>
                   <h4>Email Address</h4>
-                  <p>{settings?.email || DEFAULT_SETTINGS.email}</p>
+                  <p>{settings.email}</p>
                 </div>
               </div>
 
@@ -187,7 +147,7 @@ export default function Contact() {
                 </div>
                 <div className={styles.infoContent}>
                   <h4>Working Hours</h4>
-                  <p>{settings?.workingHours || DEFAULT_SETTINGS.workingHours}</p>
+                  <p>{settings.workingHours}</p>
                 </div>
               </div>
             </div>

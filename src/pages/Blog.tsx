@@ -1,37 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Calendar, User, BookOpen } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
-
-interface Blog {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage: string;
-  author: string;
-  publishedAt: string;
-  category: string;
-  content: string;
-}
+import { blogsData } from '../data';
 
 export default function Blog() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    setLoading(true);
-    let url = '/api/public/blogs?';
-    if (selectedCategory) url += `category=${encodeURIComponent(selectedCategory)}&`;
-    if (search) url += `search=${encodeURIComponent(search)}&`;
+  const filteredBlogs = blogsData.filter((b) => {
+    const matchesCat = !selectedCategory || b.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesSearch = !search ||
+      b.title.toLowerCase().includes(search.toLowerCase()) ||
+      b.content.toLowerCase().includes(search.toLowerCase()) ||
+      b.author.toLowerCase().includes(search.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
 
-    fetch(url)
-      .then((r) => r.json())
-      .then((data) => setBlogs(data))
-      .catch((e) => console.error("Error loading blogs", e))
-      .finally(() => setLoading(false));
-  }, [search, selectedCategory]);
+  const blogs = filteredBlogs;
 
   const categories = ['Neurology', 'General Health', 'Cardiology', 'Wellness'];
 
@@ -107,9 +93,7 @@ export default function Blog() {
       {/* Blog Cards */}
       <section className="section">
         <div className="container">
-          {loading ? (
-            <div className="spinner-container"><div className="spinner" /></div>
-          ) : blogs.length === 0 ? (
+          {blogs.length === 0 ? (
             <div className="empty-state">
               <BookOpen size={48} />
               <h3>No Blog Articles Found</h3>

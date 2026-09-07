@@ -1,49 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, BookOpen, ShieldAlert, Share2 } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
-
-interface Blog {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage: string;
-  content: string;
-  author: string;
-  category: string;
-  seoTitle: string;
-  seoDescription: string;
-  publishedAt: string;
-}
+import { blogsData } from '../data';
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+
+  const blog = blogsData.find((b) => b.slug === slug || b.id === slug);
 
   useEffect(() => {
-    setLoading(true);
-    setError(false);
-    fetch(`/api/public/blogs/${slug}`)
-      .then((res) => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then((data) => {
-        setBlog(data);
-        // Dynamically update document title for SEO
-        if (data.seoTitle) document.title = `${data.seoTitle} | Nirmala Hospital`;
-      })
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, [slug]);
+    if (blog?.seoTitle) {
+      document.title = blog.seoTitle;
+    }
+  }, [blog]);
 
-  if (loading) {
-    return <div className="spinner-container"><div className="spinner" /></div>;
-  }
-
-  if (error || !blog) {
+  if (!blog) {
     return (
       <div className="container" style={{ padding: '80px 24px', textAlign: 'center' }}>
         <ShieldAlert size={48} style={{ color: 'var(--danger)', marginBottom: '16px' }} />
