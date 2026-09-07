@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Clock, Phone, Award, ShieldAlert, Heart } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE } from '../utils/imageUtils';
 
 interface Doctor {
   id: string;
@@ -88,9 +89,10 @@ export default function DoctorDetail() {
               minHeight: '380px'
             }}>
               <img
-                src={doctor.photo}
+                src={getImageUrl(doctor.photo, DEFAULT_DOCTOR_IMAGE)}
                 alt={doctor.name}
                 style={{ width: '100%', maxHeight: '480px', objectFit: 'contain', display: 'block' }}
+                onError={(e) => handleImageError(e, DEFAULT_DOCTOR_IMAGE)}
               />
             </div>
             

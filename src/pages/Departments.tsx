@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, Building2, CheckCircle } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_DEPARTMENT_IMAGE } from '../utils/imageUtils';
 
 interface Department {
   id: string;
@@ -54,9 +55,10 @@ export default function Departments() {
               {departments.map((dept) => (
                 <div key={dept.id} className="card" style={{ display: 'flex', flexDirection: 'column' }}>
                   <img
-                    src={dept.image}
+                    src={getImageUrl(dept.image, DEFAULT_DEPARTMENT_IMAGE)}
                     alt={dept.name}
                     style={{ width: '100%', height: '220px', objectFit: 'cover' }}
+                    onError={(e) => handleImageError(e, DEFAULT_DEPARTMENT_IMAGE)}
                   />
                   
                   <div style={{ padding: '28px', flex: '1', display: 'flex', flexDirection: 'column' }}>

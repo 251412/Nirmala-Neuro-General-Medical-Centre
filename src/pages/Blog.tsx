@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Calendar, User, BookOpen } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
 
 interface Blog {
   id: string;
@@ -119,9 +120,10 @@ export default function Blog() {
               {blogs.map((blog) => (
                 <div key={blog.id} className="card" style={{ display: 'flex', flexDirection: 'column' }}>
                   <img
-                    src={blog.featuredImage}
+                    src={getImageUrl(blog.featuredImage, DEFAULT_BLOG_IMAGE)}
                     alt={blog.title}
                     style={{ width: '100%', height: '240px', objectFit: 'cover' }}
+                    onError={(e) => handleImageError(e, DEFAULT_BLOG_IMAGE)}
                   />
                   <div style={{ padding: '28px', flex: '1', display: 'flex', flexDirection: 'column' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>

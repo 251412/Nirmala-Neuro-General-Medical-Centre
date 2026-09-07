@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Calendar, User, BookOpen, Clock, Phone } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE } from '../utils/imageUtils';
 
 interface Doctor {
   id: string;
@@ -161,9 +162,10 @@ export default function Doctors() {
                       overflow: 'hidden'
                     }}>
                       <img
-                        src={doctor.photo}
+                        src={getImageUrl(doctor.photo, DEFAULT_DOCTOR_IMAGE)}
                         alt={doctor.name}
                         style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '6px' }}
+                        onError={(e) => handleImageError(e, DEFAULT_DOCTOR_IMAGE)}
                       />
                       <span className="badge badge-primary" style={{ position: 'absolute', top: '14px', right: '14px', boxShadow: 'var(--shadow-sm)' }}>
                         {deptName}

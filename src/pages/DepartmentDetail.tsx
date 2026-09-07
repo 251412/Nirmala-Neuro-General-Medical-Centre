@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, ShieldAlert, Calendar, Stethoscope, User } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE } from '../utils/imageUtils';
 
 interface Department {
   id: string;
@@ -94,9 +95,10 @@ export default function DepartmentDetail() {
               border: '1px solid var(--border-color)'
             }}>
               <img
-                src={department.image}
+                src={getImageUrl(department.image, DEFAULT_DEPARTMENT_IMAGE)}
                 alt={department.name}
                 style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+                onError={(e) => handleImageError(e, DEFAULT_DEPARTMENT_IMAGE)}
               />
             </div>
           </div>
@@ -133,9 +135,10 @@ export default function DepartmentDetail() {
                     justifyContent: 'center'
                   }}>
                     <img
-                      src={doctor.photo}
+                      src={getImageUrl(doctor.photo, DEFAULT_DOCTOR_IMAGE)}
                       alt={doctor.name}
                       style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }}
+                      onError={(e) => handleImageError(e, DEFAULT_DOCTOR_IMAGE)}
                     />
                   </div>
                   <h3 style={{ fontSize: '1.2rem', marginBottom: '4px' }}>{doctor.name}</h3>

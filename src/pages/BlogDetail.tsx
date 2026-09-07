@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, BookOpen, ShieldAlert, Share2 } from 'lucide-react';
+import { getImageUrl, handleImageError, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
 
 interface Blog {
   id: string;
@@ -83,9 +84,10 @@ export default function BlogDetail() {
         {/* Featured Image */}
         <div style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: '40px', boxShadow: 'var(--shadow-md)' }}>
           <img
-            src={blog.featuredImage}
+            src={getImageUrl(blog.featuredImage, DEFAULT_BLOG_IMAGE)}
             alt={blog.title}
             style={{ width: '100%', maxHeight: '420px', objectFit: 'cover' }}
+            onError={(e) => handleImageError(e, DEFAULT_BLOG_IMAGE)}
           />
         </div>
 

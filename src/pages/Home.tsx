@@ -7,6 +7,7 @@ import {
   Activity
 } from 'lucide-react';
 import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
+import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
 
 interface Department {
   id: string;
@@ -497,10 +498,11 @@ export default function Home() {
                 <div key={dept.id} className="card reveal">
                   <div style={{ overflow: 'hidden' }}>
                     <img
-                      src={dept.image}
+                      src={getImageUrl(dept.image, DEFAULT_DEPARTMENT_IMAGE)}
                       alt={dept.name}
                       style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }}
                       loading="lazy"
+                      onError={(e) => handleImageError(e, DEFAULT_DEPARTMENT_IMAGE)}
                     />
                   </div>
                   <div style={{ padding: '24px' }}>
@@ -640,10 +642,11 @@ export default function Home() {
                     transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
                   }}>
                     <img
-                      src={doctor.photo}
+                      src={getImageUrl(doctor.photo, DEFAULT_DOCTOR_IMAGE)}
                       alt={`Dr. ${doctor.name}`}
                       style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '6px' }}
                       loading="lazy"
+                      onError={(e) => handleImageError(e, DEFAULT_DOCTOR_IMAGE)}
                     />
                   </div>
 
@@ -777,10 +780,11 @@ export default function Home() {
                 <div key={blog.id} className="card reveal" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '0' }}>
                   <div style={{ flex: '1 1 260px', overflow: 'hidden' }}>
                     <img
-                      src={blog.featuredImage}
+                      src={getImageUrl(blog.featuredImage, DEFAULT_BLOG_IMAGE)}
                       alt={blog.title}
                       style={{ width: '100%', height: '100%', minHeight: '220px', objectFit: 'cover', display: 'block' }}
                       loading="lazy"
+                      onError={(e) => handleImageError(e, DEFAULT_BLOG_IMAGE)}
                     />
                   </div>
                   <div style={{ flex: '1.2 1 260px', padding: '28px', display: 'flex', flexDirection: 'column' }}>
