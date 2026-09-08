@@ -553,7 +553,7 @@ export default function Home() {
                     <Star size={16} fill="#d97706" />
                   </div>
                   <div>
-                    <strong style={{ fontSize: '0.87rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>9+ Years</strong>
+                    <strong style={{ fontSize: '0.87rem', color: '#0f172a', display: 'block', lineHeight: 1.1 }}>12+ Years</strong>
                     <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Clinical Excellence</span>
                   </div>
                 </div>

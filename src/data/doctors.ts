@@ -24,7 +24,7 @@ export const doctorsData: Doctor[] = [
     specialization: 'Stroke Care, Brain Tumors, Epilepsy Treatment & Neurological Disorders',
     departmentId: 'neurology',
     departmentName: 'Neurology & Neurosurgery',
-    experience: '9+ Years',
+    experience: '12+ Years',
     designation: 'Director & Chief Neurologist',
     bio: 'Dr Vangapandu Nirmala is a highly distinguished neurologist with nearly two decades of clinical experience treating complex brain, spinal cord, and neuromuscular conditions. She specializes in acute stroke management, epilepsy management, headache therapy, and comprehensive neuro-rehabilitation.',
     consultationTimings: [

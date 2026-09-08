@@ -55,7 +55,7 @@ export const homeContent: HomePageContent = {
   hero: {
     badge: 'Nirmala Neuro & General Medical Centre',
     title: 'Expert Neurological Care & Advanced General Medicine',
-    subtitle: 'Combining 9+ years of specialized neurological expertise with compassionate primary healthcare and 24/7 emergency response in Vizianagaram.',
+    subtitle: 'Combining 12+ years of specialized neurological expertise with compassionate primary healthcare and 24/7 emergency response in Vizianagaram.',
     image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=800',
     primaryCtaText: 'Book Appointment',
     primaryCtaLink: '/appointment',
@@ -89,7 +89,7 @@ export const homeContent: HomePageContent = {
     }
   ],
   stats: [
-    { number: '9+', label: 'Years Neurological Experience', iconName: 'Award' },
+    { number: '12+', label: 'Years Neurological Experience', iconName: 'Award' },
     { number: '15,000+', label: 'Patients Treated Successfully', iconName: 'Users' },
     { number: '24/7', label: 'Emergency & Ambulance Desk', iconName: 'Activity' },
     { number: '100%', label: 'Dedicated Medical Care', iconName: 'ShieldCheck' }
@@ -115,7 +115,7 @@ export const homeContent: HomePageContent = {
     items: [
       {
         title: 'Experienced Specialist Leadership',
-        description: 'Guided by senior DM Neurologist Dr. Vangapandu Nirmala with over 9 years of clinical practice.'
+        description: 'Guided by senior DM Neurologist Dr. Vangapandu Nirmala with over 12 years of clinical practice.'
       },
       {
         title: 'Immediate Stroke & Emergency Response',
