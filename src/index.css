@@ -565,15 +565,24 @@ button:focus-visible,
 }
 
 /* =========================================================
-   FLOATING ANIMATION
+   FLOATING ANIMATION (UP & DOWN 2CM)
    ========================================================= */
 @keyframes floatSlow {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-10px); }
+  0%, 100% {
+    transform: translateY(-1cm);
+  }
+  50% {
+    transform: translateY(1cm);
+  }
 }
 
 .float-element {
-  animation: floatSlow 5.5s ease-in-out infinite;
+  animation: floatSlow 3.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.float-element:hover {
+  animation-play-state: paused;
 }
 
 /* =========================================================
