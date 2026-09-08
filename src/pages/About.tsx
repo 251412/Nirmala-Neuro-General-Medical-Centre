@@ -38,19 +38,16 @@ export default function About() {
             <div style={{
               borderRadius: 'var(--radius-lg)',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              border: '1px solid var(--border-color)',
-              backgroundColor: '#f8fafc',
-              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+              boxShadow: '0 20px 40px -15px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.08)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              maxHeight: '450px'
+              backgroundColor: '#ffffff'
             }}>
               <img
                 src="/dr_nirmala_vangapandu.png"
                 alt="Dr. Vangapandu Nirmala - DM Neurology"
-                style={{ width: '100%', maxHeight: '450px', objectFit: 'contain', display: 'block' }}
+                style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
               />
             </div>
           </div>
