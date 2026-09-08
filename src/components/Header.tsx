@@ -179,13 +179,13 @@ export default function Header() {
         </nav>
 
         <div className={styles.mobileCtas}>
-          <Link to="/emergency" className="btn btn-danger" onClick={() => setIsOpen(false)}>
-            <PhoneCall size={18} />
-            <span>Emergency (24/7)</span>
-          </Link>
           <Link to="/appointment" className="btn btn-primary" onClick={() => setIsOpen(false)}>
             <Calendar size={18} />
             <span>Book Appointment</span>
+          </Link>
+          <Link to="/emergency" className="btn btn-danger" onClick={() => setIsOpen(false)}>
+            <PhoneCall size={18} />
+            <span>Emergency (24/7)</span>
           </Link>
         </div>
       </div>
