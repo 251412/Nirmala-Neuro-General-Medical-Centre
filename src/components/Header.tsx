@@ -126,7 +126,6 @@ export default function Header() {
             {/* Desktop CTAs */}
             <div className={styles.ctas}>
               <Link to="/emergency" className={`btn btn-danger ${styles.ctaEmergency}`} style={{ padding: '9px 18px', fontSize: '0.88rem', whiteSpace: 'nowrap' }}>
-                <span className={styles.pulseDot} aria-hidden="true" />
                 <PhoneCall size={16} />
                 <span>Emergency</span>
               </Link>
@@ -180,8 +179,7 @@ export default function Header() {
         </nav>
 
         <div className={styles.mobileCtas}>
-          <Link to="/emergency" className={`btn btn-danger ${styles.ctaEmergency}`} onClick={() => setIsOpen(false)}>
-            <span className={styles.pulseDot} aria-hidden="true" />
+          <Link to="/emergency" className="btn btn-danger" onClick={() => setIsOpen(false)}>
             <PhoneCall size={18} />
             <span>Emergency (24/7)</span>
           </Link>

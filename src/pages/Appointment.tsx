@@ -438,7 +438,7 @@ export default function Appointment() {
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: 'clamp(30px, 6vw, 60px) 0', minHeight: '80vh' }}>
+    <div className="animate-fade-in" style={{ padding: 'clamp(110px, 12vw, 135px) 0 clamp(40px, 6vw, 60px)', minHeight: '80vh' }}>
       <div className="container" style={{ maxWidth: '840px' }}>
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <h1 style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', color: 'var(--primary)', marginBottom: '8px' }}>Nirmala Hospital Appointments</h1>

@@ -115,10 +115,7 @@ export default function Footer() {
             </div>
 
             <div className={footerStyles.emergencyBadge}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <span className="live-status-dot-red" style={{ margin: 0 }} />
-                <strong>24/7 EMERGENCY HOTLINE</strong>
-              </div>
+              <strong>24/7 EMERGENCY HOTLINE</strong>
               <a href={`tel:${hospitalInfo.emergencyNumberRaw}`} className={footerStyles.emergencyNumber}>
                 {hospitalInfo.emergencyNumber}
               </a>

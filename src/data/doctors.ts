@@ -57,7 +57,7 @@ export const doctorsData: Doctor[] = [
   {
     id: 'doctor-003',
     name: 'Dr. Anjali Sharma',
-    photo: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?auto=format&fit=crop&q=80&w=600',
+    photo: '/default_doctor_avatar.svg',
     qualification: 'MD, DM (Cardiology)',
     specialization: 'Preventive Cardiology, Echocardiography & Heart Failure Management',
     departmentId: 'cardiology',

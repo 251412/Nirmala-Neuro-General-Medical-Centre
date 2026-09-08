@@ -22,7 +22,7 @@ export default function DoctorDetail() {
   }
 
   return (
-    <div className="animate-fade-in" style={{ backgroundColor: 'white', padding: '60px 0' }}>
+    <div className="animate-fade-in" style={{ backgroundColor: 'white', padding: 'clamp(105px, 11vw, 130px) 0 60px 0' }}>
       <div className="container">
         {/* Back Link */}
         <Link to="/doctors" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '32px' }}>

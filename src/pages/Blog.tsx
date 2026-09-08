@@ -35,7 +35,7 @@ export default function Blog() {
       <section style={{
         background: 'linear-gradient(135deg, var(--primary) 0%, #0d3c66 100%)',
         color: 'white',
-        padding: '60px 0',
+        padding: 'clamp(105px, 12vw, 130px) 0 clamp(45px, 5vw, 60px)',
         textAlign: 'center'
       }}>
         <div className="container">

@@ -532,8 +532,7 @@ export default function Home() {
                   <Stethoscope size={18} />
                   <span>Our Doctors</span>
                 </Link>
-                <Link to="/emergency" className="btn btn-danger btn-pulse-emergency" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                  <span className="emergency-pulse-dot" aria-hidden="true" />
+                <Link to="/emergency" className="btn btn-danger" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
                   <PhoneCall size={18} />
                   <span>Emergency</span>
                 </Link>

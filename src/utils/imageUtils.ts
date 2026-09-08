@@ -1,4 +1,4 @@
-export const DEFAULT_DOCTOR_IMAGE = '/dr_nirmala_vangapandu.png';
+export const DEFAULT_DOCTOR_IMAGE = '/default_doctor_avatar.svg';
 export const DEFAULT_DEPARTMENT_IMAGE = 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800';
 export const DEFAULT_BLOG_IMAGE = 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=800';
 

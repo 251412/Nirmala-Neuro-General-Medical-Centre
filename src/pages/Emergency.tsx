@@ -22,14 +22,13 @@ export default function Emergency() {
             alignItems: 'center',
             gap: '8px',
             padding: '6px 16px',
-            background: 'rgba(0, 0, 0, 0.25)',
+            background: 'rgba(0, 0, 0, 0.2)',
             borderRadius: 'var(--radius-full)',
             fontSize: '0.85rem',
             fontWeight: '700',
             textTransform: 'uppercase',
             marginBottom: '16px'
           }}>
-            <span className="live-status-dot-red" style={{ margin: 0 }} />
             <AlertTriangle size={16} />
             <span>Emergency Medical Services</span>
           </div>
@@ -50,10 +49,9 @@ export default function Emergency() {
               borderRadius: 'var(--radius-full)',
               fontSize: '1.75rem',
               fontWeight: '800',
-              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.25), 0 0 0 0 rgba(255, 255, 255, 0.5)',
+              boxShadow: 'var(--shadow-premium)',
               marginTop: '12px',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              animation: 'beaconPulseDot 2s infinite cubic-bezier(0.66, 0, 0, 1)'
+              transition: 'transform 0.2s ease'
             }}
             onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.04)'; }}
             onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}

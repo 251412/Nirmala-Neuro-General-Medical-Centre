@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import EventPopup from './components/EventPopup';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import NeuralPageTransition from './components/NeuralPageTransition';
 
 // Public Pages
 import Home from './pages/Home';
@@ -83,6 +84,7 @@ function LayoutWrapper({ children, adminUser, onLogout }: { children: React.Reac
 
   return (
     <>
+      <NeuralPageTransition duration={2000} />
       {!isAdminDashboard && <Header />}
       {!isAdminDashboard && <EventPopup />}
       {!isAdminDashboard && <WhatsAppWidget />}
