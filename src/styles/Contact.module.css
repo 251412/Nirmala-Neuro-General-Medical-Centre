@@ -5,9 +5,9 @@
 /* ── Hero Banner ── */
 .heroSection {
   position: relative;
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0369a1 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #0d3c66 100%);
   color: #ffffff;
-  padding: clamp(110px, 12vw, 135px) 0 clamp(50px, 5vw, 70px);
+  padding: clamp(105px, 12vw, 130px) 0 clamp(45px, 5vw, 60px);
   text-align: center;
   overflow: hidden;
 }
@@ -399,13 +399,13 @@
 
 @media (max-width: 768px) {
   .heroSection {
-    padding: 60px 0;
+    padding: clamp(105px, 12vw, 130px) 0 clamp(40px, 5vw, 55px);
   }
   .heroTitle {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 3.5vw, 2.4rem);
   }
   .heroSubtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 0 16px;
   }
   .contactContainer {
