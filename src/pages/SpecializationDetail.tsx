@@ -67,6 +67,31 @@ export default function SpecializationDetail() {
 
   return (
     <div className="animate-fade-in" style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
+      <style>{`
+        .spec-mobile-visual-card {
+          display: none;
+          border-radius: 16px;
+          overflow: hidden;
+          border: 1px solid #e2e8f0;
+          box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+          margin-bottom: 28px;
+          background: #ffffff;
+        }
+
+        .spec-desktop-visual-card {
+          display: block;
+        }
+
+        @media (max-width: 991px) {
+          .spec-mobile-visual-card {
+            display: block;
+          }
+          .spec-desktop-visual-card {
+            display: none;
+          }
+        }
+      `}</style>
+
       {/* ── Hero Section ── */}
       <section style={{
         background: 'linear-gradient(135deg, #0b2545 0%, #0f4c81 60%, #175d97 100%)',
@@ -227,6 +252,28 @@ export default function SpecializationDetail() {
           }}>
             {/* Left Content Column */}
             <div style={{ minWidth: 0 }}>
+              {/* Mobile Visual Card (Shown directly above "What is [Service]?" on mobile devices) */}
+              <div className="spec-mobile-visual-card">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }}
+                  onError={(e) => handleImageError(e, DEFAULT_SPECIALIZATION_IMAGE)}
+                />
+                <div style={{ padding: '18px 20px', background: '#ffffff' }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--secondary)', textTransform: 'uppercase', letterSpacing: '0.6px', display: 'block', marginBottom: '4px' }}>
+                    Specialization
+                  </span>
+                  <h4 style={{ fontSize: '1.25rem', color: '#0f172a', margin: '0 0 6px 0', fontFamily: 'var(--font-heading)', fontWeight: 700 }}>
+                    {service.title}
+                  </h4>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#64748b' }}>
+                    <Brain size={15} style={{ color: 'var(--primary)' }} />
+                    <span>Department: <strong>{service.department}</strong></span>
+                  </div>
+                </div>
+              </div>
+
               {/* 1. What is [Service]? */}
               <article style={{ marginBottom: '42px' }}>
                 <h2 style={{
@@ -401,8 +448,8 @@ export default function SpecializationDetail() {
 
             {/* Right Sidebar Column */}
             <div style={{ maxWidth: '400px', width: '100%' }}>
-              {/* Visual Card */}
-              <div style={{
+              {/* Visual Card (Desktop Only) */}
+              <div className="spec-desktop-visual-card" style={{
                 borderRadius: '16px',
                 overflow: 'hidden',
                 border: '1px solid #e2e8f0',
@@ -424,7 +471,7 @@ export default function SpecializationDetail() {
                   </h4>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: '#64748b' }}>
                     <Brain size={15} style={{ color: 'var(--primary)' }} />
-                    <span>Department: <strong>Neurology</strong></span>
+                    <span>Department: <strong>{service.department}</strong></span>
                   </div>
                 </div>
               </div>
