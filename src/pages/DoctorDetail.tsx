@@ -29,43 +29,173 @@ export default function DoctorDetail() {
 
   return (
     <div className="animate-fade-in" style={{ backgroundColor: 'white', padding: 'clamp(105px, 11vw, 130px) 0 60px 0' }}>
+      <style>{`
+        .doctor-detail-grid {
+          display: grid;
+          grid-template-columns: 380px 1fr;
+          grid-template-areas:
+            "photo details"
+            "booking details"
+            ". details";
+          gap: 28px 50px;
+          align-items: start;
+        }
+
+        .doctor-photo-col {
+          grid-area: photo;
+        }
+
+        .doctor-booking-col {
+          grid-area: booking;
+        }
+
+        .doctor-details-col {
+          grid-area: details;
+        }
+
+        /* Mobile & Tablet (< 992px): Stack in exact requested order:
+           1. Doctor Image
+           2. Doctor Details
+           3. Book Appointment Now (Consultation Card)
+        */
+        @media (max-width: 991px) {
+          .doctor-detail-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+          }
+          .doctor-photo-col {
+            order: 1;
+            width: 100%;
+          }
+          .doctor-details-col {
+            order: 2;
+            width: 100%;
+          }
+          .doctor-booking-col {
+            order: 3;
+            width: 100%;
+          }
+        }
+
+        .doctor-photo-card {
+          border-radius: var(--radius-lg);
+          overflow: hidden;
+          box-shadow: var(--shadow-lg);
+          border: 1px solid var(--border-color);
+          background: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .doctor-detail-img {
+          width: 100%;
+          height: auto;
+          max-height: 480px;
+          object-fit: cover;
+          display: block;
+        }
+      `}</style>
+
       <div className="container">
         {/* Back Link */}
-        <Link to="/doctors" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '32px' }}>
+        <Link to="/doctors" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '28px' }}>
           <ArrowLeft size={16} />
           <span>Back to Doctors Directory</span>
         </Link>
 
-        <div className="grid grid-2" style={{ gap: '60px', alignItems: 'flex-start' }}>
-          {/* Col 1: Photo and Quick info */}
-          <div style={{ position: 'sticky', top: '100px' }}>
-            <div style={{
-              borderRadius: 'var(--radius-lg)',
-              overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              border: '1px solid var(--border-color)',
-              marginBottom: '30px',
-              backgroundColor: '#f8fafc',
-              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: '380px'
-            }}>
+        <div className="doctor-detail-grid">
+          {/* 1. Doctor Photo */}
+          <div className="doctor-photo-col">
+            <div className="doctor-photo-card">
               <img
                 src={getImageUrl(doctor.photo, DEFAULT_DOCTOR_IMAGE)}
                 alt={doctor.name}
-                style={{ width: '100%', maxHeight: '480px', objectFit: 'contain', display: 'block' }}
+                className="doctor-detail-img"
                 onError={(e) => handleImageError(e, DEFAULT_DOCTOR_IMAGE)}
               />
             </div>
-            
-            {/* Consultation Card */}
+          </div>
+
+          {/* 2. Doctor Details */}
+          <div className="doctor-details-col">
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
+              <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase' }}>
+                {deptName || 'Medical Officer'}
+              </div>
+            </div>
+            <h1 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', color: 'var(--primary)', marginBottom: '6px', lineHeight: 1.2 }}>{doctor.name}</h1>
+            <span style={{ fontSize: '1.12rem', color: 'var(--secondary)', fontWeight: '600', display: 'block', marginBottom: '20px' }}>
+              {doctor.designation}
+            </span>
+
+            {/* Quick stats banner */}
+            <div style={{
+              display: 'flex',
+              gap: '24px',
+              padding: '16px 20px',
+              background: 'var(--bg-main)',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid var(--border-color)',
+              marginBottom: '28px',
+              flexWrap: 'wrap'
+            }}>
+              <div>
+                <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>Experience</span>
+                <strong style={{ color: 'var(--text-dark)', fontSize: '1.05rem' }}>{doctor.experience}</strong>
+              </div>
+              <div style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '20px' }}>
+                <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>Qualification</span>
+                <strong style={{ color: 'var(--text-dark)', fontSize: '1.05rem' }}>{doctor.qualification}</strong>
+              </div>
+            </div>
+
+            {/* Full Biography */}
+            <div style={{ marginBottom: '28px' }}>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--primary)', marginBottom: '10px', paddingBottom: '8px', borderBottom: '2px solid var(--bg-main)' }}>
+                Biography
+              </h3>
+              <p style={{ color: 'var(--text-muted)', lineHeight: '1.75', fontSize: '0.98rem', whiteSpace: 'pre-line' }}>
+                {doctor.bio}
+              </p>
+            </div>
+
+            {/* Area of specialization */}
+            <div style={{ marginBottom: '28px' }}>
+              <h3 style={{ fontSize: '1.25rem', color: 'var(--primary)', marginBottom: '10px', paddingBottom: '8px', borderBottom: '2px solid var(--bg-main)' }}>
+                Specializations &amp; Interests
+              </h3>
+              <p style={{ color: 'var(--text-dark)', lineHeight: '1.75', fontSize: '0.98rem', fontWeight: '500' }}>
+                {doctor.specialization}
+              </p>
+            </div>
+
+            {/* Credentials / trust checklist */}
+            <div className="card" style={{ padding: '20px', borderStyle: 'dashed' }}>
+              <h4 style={{ fontSize: '1rem', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Award size={18} style={{ color: 'var(--secondary)' }} />
+                <span>Professional Care Standards</span>
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                <li style={{ display: 'flex', gap: '8px' }}>
+                  <Heart size={14} style={{ color: 'var(--danger)', flexShrink: 0, marginTop: '3px' }} />
+                  <span>Licensed medical practitioner registered with State Medical Councils.</span>
+                </li>
+                <li style={{ display: 'flex', gap: '8px' }}>
+                  <Heart size={14} style={{ color: 'var(--danger)', flexShrink: 0, marginTop: '3px' }} />
+                  <span>Follows modern Evidence-Based Medicine courses and neuro-trauma protocols.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* 3. Consultation Card & Book Appointment Now */}
+          <div className="doctor-booking-col">
             <div className="card" style={{ padding: '24px', backgroundColor: 'var(--bg-main)' }}>
-              
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
-                <Phone size={16} />
-                <span>Enquiries: <strong>{doctor.phone}</strong></span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
+                <Phone size={16} style={{ color: 'var(--secondary)' }} />
+                <span>Enquiries: <strong style={{ color: 'var(--text-dark)' }}>{doctor.phone}</strong></span>
               </div>
 
               {doctor.status === 'INACTIVE' ? (
@@ -81,81 +211,25 @@ export default function DoctorDetail() {
                   </div>
                 </div>
               ) : (
-                <Link to={`/appointment?doctorId=${doctor.id}`} className="btn btn-primary" style={{ width: '100%' }}>
+                <Link
+                  to={`/appointment?doctorId=${doctor.id}`}
+                  className="btn btn-primary"
+                  style={{
+                    width: '100%',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '12px 20px',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(15, 76, 129, 0.25)'
+                  }}
+                >
                   Book Appointment Now
                 </Link>
               )}
-            </div>
-          </div>
-
-          {/* Col 2: Profile biography */}
-          <div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center', marginBottom: '12px' }}>
-              <div style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 'var(--radius-full)', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase' }}>
-                {deptName || 'Medical Officer'}
-              </div>
-            </div>
-            <h1 style={{ fontSize: '2.5rem', color: 'var(--primary)', marginBottom: '6px' }}>{doctor.name}</h1>
-            <span style={{ fontSize: '1.15rem', color: 'var(--secondary)', fontWeight: '600', display: 'block', marginBottom: '20px' }}>
-              {doctor.designation}
-            </span>
-
-            {/* Quick stats banner */}
-            <div style={{
-              display: 'flex',
-              gap: '24px',
-              padding: '16px 24px',
-              background: 'var(--bg-main)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-color)',
-              marginBottom: '32px'
-            }}>
-              <div>
-                <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>Experience</span>
-                <strong style={{ color: 'var(--text-dark)', fontSize: '1.1rem' }}>{doctor.experience}</strong>
-              </div>
-              <div style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '24px' }}>
-                <span style={{ fontSize: '0.75rem', textTransform: 'uppercase', fontWeight: '700', color: 'var(--text-muted)', display: 'block', marginBottom: '2px' }}>Qualification</span>
-                <strong style={{ color: 'var(--text-dark)', fontSize: '1.1rem' }}>{doctor.qualification}</strong>
-              </div>
-            </div>
-
-            {/* Full Biography */}
-            <div style={{ marginBottom: '32px' }}>
-              <h3 style={{ fontSize: '1.35rem', color: 'var(--primary)', marginBottom: '12px', paddingBottom: '8px', borderBottom: '2px solid var(--bg-main)' }}>
-                Biography
-              </h3>
-              <p style={{ color: 'var(--text-muted)', lineHeight: '1.8', fontSize: '1rem', whiteSpace: 'pre-line' }}>
-                {doctor.bio}
-              </p>
-            </div>
-
-            {/* Area of specialization */}
-            <div style={{ marginBottom: '32px' }}>
-              <h3 style={{ fontSize: '1.35rem', color: 'var(--primary)', marginBottom: '12px', paddingBottom: '8px', borderBottom: '2px solid var(--bg-main)' }}>
-                Specializations & Interests
-              </h3>
-              <p style={{ color: 'var(--text-dark)', lineHeight: '1.8', fontSize: '1rem', fontWeight: '500' }}>
-                {doctor.specialization}
-              </p>
-            </div>
-
-            {/* Credentials / trust checklist */}
-            <div className="card" style={{ padding: '24px', borderStyle: 'dashed' }}>
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Award size={18} style={{ color: 'var(--secondary)' }} />
-                <span>Professional Care Standards</span>
-              </h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-                <li style={{ display: 'flex', gap: '8px' }}>
-                  <Heart size={14} style={{ color: 'var(--danger)', flexShrink: 0, marginTop: '3px' }} />
-                  <span>Licensed medical practitioner registered with State Medical Councils.</span>
-                </li>
-                <li style={{ display: 'flex', gap: '8px' }}>
-                  <Heart size={14} style={{ color: 'var(--danger)', flexShrink: 0, marginTop: '3px' }} />
-                  <span>Follows modern Evidence-Based Medicine courses and neuro-trauma protocols.</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
