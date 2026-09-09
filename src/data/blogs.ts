@@ -43,7 +43,7 @@ export const blogsData: BlogPost[] = [
     id: 'blog-002',
     title: 'Managing Hypertension: Essential Lifestyle Tips and Medical Control',
     slug: 'managing-hypertension-lifestyle-tips',
-    featuredImage: 'https://images.unsplash.com/photo-1530026405186-ed1ea0ac7a63?auto=format&fit=crop&q=80&w=800',
+    featuredImage: '/images/blogs/managing-hypertension.webp',
     content: `
       <h2>Living with High Blood Pressure</h2>
       <p>Hypertension is often called the silent killer because it usually develops without obvious warning symptoms. Uncontrolled high blood pressure significantly increases the risk of heart disease, stroke, and renal dysfunction.</p>
