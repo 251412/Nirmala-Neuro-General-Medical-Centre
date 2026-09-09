@@ -15,6 +15,8 @@ import Doctors from './pages/Doctors';
 import DoctorDetail from './pages/DoctorDetail';
 import Departments from './pages/Departments';
 import DepartmentDetail from './pages/DepartmentDetail';
+import SpecializationServices from './pages/SpecializationServices';
+import SpecializationDetail from './pages/SpecializationDetail';
 import Gallery from './pages/Gallery';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
@@ -124,7 +126,13 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/doctors" element={<Doctors />} />
           <Route path="/doctors/:id" element={<DoctorDetail />} />
-          <Route path="/departments" element={<Departments />} />
+          <Route path="/specialization-services" element={<SpecializationServices />} />
+          <Route path="/specialization-services/:slug" element={<SpecializationDetail />} />
+          <Route path="/specializations" element={<SpecializationServices />} />
+          <Route path="/specializations/:slug" element={<SpecializationDetail />} />
+          <Route path="/services" element={<SpecializationServices />} />
+          <Route path="/services/:slug" element={<SpecializationDetail />} />
+          <Route path="/departments" element={<SpecializationServices />} />
           <Route path="/departments/:slug" element={<DepartmentDetail />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/blog" element={<Blog />} />

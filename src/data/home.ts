@@ -72,12 +72,12 @@ export const homeContent: HomePageContent = {
       linkText: 'Search →'
     },
     {
-      id: 'departments',
-      title: 'Our Departments',
-      description: 'Explore our specialized medical departments.',
-      iconName: 'Building2',
-      link: '/departments',
-      linkText: 'View →'
+      id: 'specializations',
+      title: 'Our Specialization & Services',
+      description: 'Specialized neurological care for brain, spine & nerve conditions.',
+      iconName: 'Brain',
+      link: '/specialization-services',
+      linkText: 'Explore →'
     },
     {
       id: 'emergency-care',

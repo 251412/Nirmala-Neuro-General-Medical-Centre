@@ -1,11 +1,17 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, ShieldAlert, Calendar, Stethoscope, User } from 'lucide-react';
 import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE } from '../utils/imageUtils';
-import { departmentsData, doctorsData } from '../data';
+import { departmentsData, doctorsData, specializationServicesData } from '../data';
 
 export default function DepartmentDetail() {
   const { slug } = useParams<{ slug: string }>();
+
+  // If slug corresponds to a specialization service, redirect to it
+  const specMatch = specializationServicesData.find((s) => s.slug === slug || s.id === slug);
+  if (specMatch) {
+    return <Navigate to={`/specialization-services/${specMatch.slug}`} replace />;
+  }
 
   const department = departmentsData.find((d) => d.slug === slug || d.id === slug);
   const doctors = doctorsData.filter((doc) => doc.departmentId === department?.id || doc.departmentName.toLowerCase().includes(department?.slug.toLowerCase() || ''));
@@ -14,9 +20,9 @@ export default function DepartmentDetail() {
     return (
       <div className="container" style={{ padding: '80px 24px', textAlign: 'center' }}>
         <ShieldAlert size={48} style={{ color: 'var(--danger)', marginBottom: '16px' }} />
-        <h2>Department Not Found</h2>
-        <p style={{ color: 'var(--text-muted)', marginTop: '8px', marginBottom: '24px' }}>The medical division you are looking for might have been renamed or removed.</p>
-        <Link to="/departments" className="btn btn-primary">Back to Departments</Link>
+        <h2>Specialization Not Found</h2>
+        <p style={{ color: 'var(--text-muted)', marginTop: '8px', marginBottom: '24px' }}>The medical division or specialization you are looking for might have been renamed or moved.</p>
+        <Link to="/specialization-services" className="btn btn-primary">Back to Specialization &amp; Services</Link>
       </div>
     );
   }
@@ -25,9 +31,9 @@ export default function DepartmentDetail() {
     <div className="animate-fade-in" style={{ backgroundColor: 'white', padding: 'clamp(105px, 11vw, 130px) 0 60px 0' }}>
       <div className="container">
         {/* Back Link */}
-        <Link to="/departments" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '32px' }}>
+        <Link to="/specialization-services" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontWeight: '600', marginBottom: '32px' }}>
           <ArrowLeft size={16} />
-          <span>Back to Departments</span>
+          <span>Back to Specialization &amp; Services</span>
         </Link>
 
         {/* Hero section inside page */}

@@ -7,7 +7,13 @@ import { doctorsData, departmentsData } from '../data';
 export default function DoctorDetail() {
   const { id } = useParams<{ id: string }>();
 
-  const doctor = doctorsData.find((d) => d.id === id || d.name.toLowerCase().replace(/[^a-z0-9]/g, '-').includes(id?.toLowerCase() || ''));
+  const doctor = doctorsData.find((d) => 
+    d.id === id || 
+    d.name.toLowerCase().replace(/[^a-z0-9]/g, '-').includes(id?.toLowerCase() || '') ||
+    (id?.toLowerCase().includes('nirmala') && d.id === 'doctor-001') ||
+    (id?.toLowerCase().includes('rajesh') && d.id === 'doctor-002') ||
+    (id?.toLowerCase().includes('anjali') && d.id === 'doctor-003')
+  );
   const deptName = departmentsData.find((dept) => dept.id === doctor?.departmentId)?.name || doctor?.departmentName || 'Specialized Clinic';
 
   if (!doctor) {

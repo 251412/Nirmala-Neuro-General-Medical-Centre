@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const BACKEND_URL = process.env.VITE_BACKEND_URL || 'https://nirmala-backend-p672.onrender.com';
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -8,15 +10,16 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:8088',
+        target: BACKEND_URL,
         changeOrigin: true,
         secure: false,
       },
       '/uploads': {
-        target: 'http://localhost:8088',
+        target: BACKEND_URL,
         changeOrigin: true,
         secure: false,
       },
     },
   },
 })
+

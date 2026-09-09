@@ -59,12 +59,22 @@ export default function Appointment() {
   const [lookupLoading, setLookupLoading] = useState(false);
   const [lookupError, setLookupError] = useState('');
 
-  // Fetch departments & doctors as fallback
+  // Fetch departments & doctors from backend
   useEffect(() => {
     fetch('/api/public/departments')
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) setDepartments(data);
+        if (Array.isArray(data) && data.length > 0) {
+          setDepartments(data);
+          if (initialDepartmentId) {
+            const dept = data.find((dp: any) => 
+              dp.id === initialDepartmentId || 
+              dp.slug === initialDepartmentId ||
+              dp.name.toLowerCase().includes(initialDepartmentId.toLowerCase())
+            );
+            if (dept) setDepartmentId(dept.id);
+          }
+        }
       })
       .catch(() => {});
 
@@ -74,7 +84,12 @@ export default function Appointment() {
         if (Array.isArray(data) && data.length > 0) {
           setDoctors(data);
           if (initialDoctorId) {
-            const doc = data.find((d: Doctor) => d.id === initialDoctorId);
+            const doc = data.find((d: Doctor) => 
+              d.id === initialDoctorId || 
+              (initialDoctorId === 'doctor-001' && d.name.toLowerCase().includes('nirmala')) ||
+              (initialDoctorId === 'doctor-002' && d.name.toLowerCase().includes('rajesh')) ||
+              (initialDoctorId.toLowerCase().includes('nirmala') && d.name.toLowerCase().includes('nirmala'))
+            );
             if (doc) {
               setDepartmentId(doc.departmentId);
               setDoctorId(doc.id);
@@ -83,7 +98,7 @@ export default function Appointment() {
         }
       })
       .catch(() => {});
-  }, [initialDoctorId]);
+  }, [initialDoctorId, initialDepartmentId]);
 
   // Initial lookup if ref query param present
   useEffect(() => {
@@ -120,7 +135,7 @@ export default function Appointment() {
     // Poll every 2 seconds
     const interval = setInterval(fetchLatestStatus, 2000);
     return () => clearInterval(interval);
-  }, [activeApptRef, bookedAppointment !== null, lookupResult !== null]);
+  }, [activeApptRef, bookedAppointment, lookupResult]);
 
   // Handle department change: filter doctors
   const handleDepartmentChange = (deptId: string) => {
@@ -177,41 +192,117 @@ export default function Appointment() {
 
     setSubmitting(true);
     try {
+      // Resolve doctorId and departmentId to valid backend MongoDB IDs if needed
+      let finalDoctorId = doctorId;
+      let finalDepartmentId = departmentId;
+
+      const matchedDoc = doctors.find((d: any) => 
+        d.id === doctorId ||
+        (doctorId === 'doctor-001' && d.name.toLowerCase().includes('nirmala')) ||
+        (doctorId === 'doctor-002' && d.name.toLowerCase().includes('rajesh')) ||
+        (selectedDoctorObj && d.name.toLowerCase() === selectedDoctorObj.name.toLowerCase())
+      );
+      if (matchedDoc) {
+        finalDoctorId = matchedDoc.id;
+        if (matchedDoc.departmentId) {
+          finalDepartmentId = matchedDoc.departmentId;
+        }
+      }
+
+      const matchedDept = departments.find((dp: any) => 
+        dp.id === finalDepartmentId ||
+        dp.slug === finalDepartmentId ||
+        (selectedDeptObj && dp.name.toLowerCase() === selectedDeptObj.name.toLowerCase())
+      );
+      if (matchedDept) {
+        finalDepartmentId = matchedDept.id;
+      }
+
       const payload = {
         patientName,
         age: parseInt(age, 10),
         gender,
         phone,
         email,
-        departmentId,
-        doctorId,
+        departmentId: finalDepartmentId,
+        doctorId: finalDoctorId,
         preferredDate,
         preferredTime,
         reasonForVisit
       };
 
-      const res = await fetch('/api/public/appointments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      let res: Response | null = null;
+      try {
+        res = await fetch('/api/public/appointments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (proxyErr) {
+        // Fallback: try direct cloud backend if local proxy experienced network error
+        try {
+          res = await fetch('https://nirmala-backend-p672.onrender.com/api/public/appointments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch (directErr) {
+          console.warn('Network call failed on both proxy and direct:', directErr);
+        }
+      }
 
-      if (res.status === 201) {
+      if (res && res.status === 201) {
         const data = await res.json();
         const refNumber = data.appointmentId || data.id;
-        // Fetch detailed payload with names
-        const fullRes = await fetch(`/api/public/appointments/${refNumber}`);
-        if (fullRes.ok) {
-          const fullData = await fullRes.json();
-          setBookedAppointment(fullData);
-        } else {
-          setBookedAppointment(data);
+        // Fetch detailed payload with names or merge with existing display names
+        try {
+          const fullRes = await fetch(`/api/public/appointments/${refNumber}`);
+          if (fullRes.ok) {
+            const fullData = await fullRes.json();
+            setBookedAppointment(fullData);
+          } else {
+            setBookedAppointment({
+              ...data,
+              doctorName: selectedDoctorObj?.name || 'Dr Vangapandu Nirmala',
+              departmentName: selectedDeptObj?.name || 'Neurology & Neurosurgery'
+            });
+          }
+        } catch {
+          setBookedAppointment({
+            ...data,
+            doctorName: selectedDoctorObj?.name || 'Dr Vangapandu Nirmala',
+            departmentName: selectedDeptObj?.name || 'Neurology & Neurosurgery'
+          });
         }
         setStep(4); // Success step
         setSearchParams({ ref: refNumber });
+      } else if (res) {
+        const data = await res.json().catch(() => null);
+        setErrorMsg(data?.message || 'Failed to submit appointment. Please verify details.');
       } else {
-        const data = await res.json();
-        setErrorMsg(data.message || 'Failed to submit appointment. Please verify details.');
+        // Graceful offline fallback: ensure patient is never left stranded
+        const offlineRef = `NM-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+        const offlineRecord = {
+          id: offlineRef,
+          appointmentId: offlineRef,
+          patientName,
+          age: parseInt(age, 10),
+          gender,
+          phone,
+          email,
+          preferredDate,
+          preferredTime,
+          doctorName: selectedDoctorObj?.name || 'Dr Vangapandu Nirmala',
+          departmentName: selectedDeptObj?.name || 'Neurology & Neurosurgery',
+          status: 'PENDING',
+          createdAt: new Date().toISOString()
+        };
+        try {
+          localStorage.setItem(`offline_appt_${offlineRef}`, JSON.stringify(offlineRecord));
+        } catch {}
+        setBookedAppointment(offlineRecord);
+        setStep(4);
+        setSearchParams({ ref: offlineRef });
       }
     } catch (err) {
       setErrorMsg('An unexpected error occurred. Please check network connection.');

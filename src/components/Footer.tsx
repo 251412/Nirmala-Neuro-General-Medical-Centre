@@ -66,24 +66,26 @@ export default function Footer() {
             <ul className={footerStyles.linkList}>
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/doctors">Find a Doctor</Link></li>
-              <li><Link to="/departments">Medical Specialties</Link></li>
+              <li><Link to="/specialization-services">Specialization &amp; Services</Link></li>
               <li><Link to="/appointment">Book Appointment</Link></li>
-              <li><Link to="/blog">Health Library & News</Link></li>
+              <li><Link to="/blog">Health Library &amp; News</Link></li>
               <li><Link to="/gallery">Hospital Gallery</Link></li>
               <li><Link to="/emergency">24/7 Emergency</Link></li>
-              <li><Link to="/contact">Contact & Location</Link></li>
+              <li><Link to="/contact">Contact &amp; Location</Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Clinical Specialties */}
+          {/* Col 3: Specialization Services */}
           <div>
-            <h4 className={footerStyles.columnTitle}>Our Specialties</h4>
+            <h4 className={footerStyles.columnTitle}>Specialization Services</h4>
             <ul className={footerStyles.linkList}>
-              {departmentsData.map((dept) => (
-                <li key={dept.id}>
-                  <Link to={`/departments/${dept.slug}`}>{dept.name}</Link>
-                </li>
-              ))}
+              <li><Link to="/specialization-services/migraine-headache">Migraine Headache</Link></li>
+              <li><Link to="/specialization-services/stroke-treatment">Stroke Treatment</Link></li>
+              <li><Link to="/specialization-services/epilepsy">Epilepsy &amp; Seizures</Link></li>
+              <li><Link to="/specialization-services/parkinsons-disease">Parkinson's Disease</Link></li>
+              <li><Link to="/specialization-services/paralysis">Paralysis Care</Link></li>
+              <li><Link to="/specialization-services/brain-disorders">Brain Disorders</Link></li>
+              <li><Link to="/specialization-services" style={{ color: '#38bdf8', fontWeight: 600 }}>All Specializations →</Link></li>
             </ul>
           </div>
 

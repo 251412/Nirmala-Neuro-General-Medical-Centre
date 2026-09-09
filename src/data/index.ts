@@ -1,6 +1,7 @@
 export * from './hospital';
 export * from './doctors';
 export * from './departments';
+export * from './specializationServices';
 export * from './gallery';
 export * from './blogs';
 export * from './home';

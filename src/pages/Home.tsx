@@ -4,10 +4,10 @@ import {
   Calendar, PhoneCall, Stethoscope, Building2, MapPin, Award,
   ShieldCheck, HeartPulse, Sparkles, Navigation, ExternalLink,
   Star, CheckCircle, Clock, ChevronLeft, ChevronRight, Users,
-  Activity, ArrowRight, RotateCw
+  Activity, ArrowRight, RotateCw, Brain, AlertTriangle
 } from 'lucide-react';
 import GoogleMapLocation, { type LocationSettings } from '../components/GoogleMapLocation';
-import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE, DEFAULT_BLOG_IMAGE } from '../utils/imageUtils';
+import { getImageUrl, handleImageError, DEFAULT_DOCTOR_IMAGE, DEFAULT_DEPARTMENT_IMAGE, DEFAULT_BLOG_IMAGE, DEFAULT_SPECIALIZATION_IMAGE } from '../utils/imageUtils';
 
 interface Department {
   id: string;
@@ -392,9 +392,17 @@ function QuickAction3DCard({
 }
 
 /* ─── Main Home Component ─────────────────────────────── */
-import { homeContent, hospitalInfo, doctorsData as staticDoctors, departmentsData as staticDepts, blogsData as staticBlogs } from '../data';
+import { homeContent, hospitalInfo, doctorsData as staticDoctors, departmentsData as staticDepts, blogsData as staticBlogs, specializationServicesData } from '../data';
 
 export default function Home() {
+  const featuredSpecializations = [
+    'migraine-headache',
+    'stroke-treatment',
+    'epilepsy',
+    'parkinsons-disease',
+    'brain-tumor',
+    'neuropathic-pain'
+  ].map(slug => specializationServicesData.find(s => s.slug === slug)).filter(Boolean) as typeof specializationServicesData;
   const departments = staticDepts.slice(0, 3);
   const doctors = staticDoctors.slice(0, 3);
   const blogs = staticBlogs.slice(0, 2);
@@ -587,7 +595,7 @@ export default function Home() {
         borderBottom: '1px solid rgba(186, 230, 253, 0.8)',
       }}>
         <div className="container">
-          {/* 3-card grid: Find a Doctor, Our Departments, Emergency Care */}
+          {/* 3-card grid: Find a Doctor, Specialization & Services, Emergency Care */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
@@ -610,19 +618,19 @@ export default function Home() {
               backCtaLink="/doctors"
             />
 
-            {/* Departments */}
+            {/* Specialization & Services */}
             <QuickAction3DCard
               theme="purple"
-              icon={<Building2 size={22} />}
-              title="Our Departments"
-              description="Explore our specialized medical departments."
-              frontActionText="View →"
+              icon={<Brain size={22} />}
+              title="Specialization & Services"
+              description="Specialized neurological care for brain, spine & nerves."
+              frontActionText="Explore →"
               iconBg="#ede9fe"
               iconColor="#7c3aed"
-              backTagline="Specialized Care Units"
-              backDetails="Neurology, Neurosurgery, General Medicine & Comprehensive Diagnostics."
-              backCtaText="View All Departments"
-              backCtaLink="/departments"
+              backTagline="Neurology Specializations"
+              backDetails="Migraine, Stroke, Epilepsy, Parkinson's, Paralysis & Brain Disorders care."
+              backCtaText="View All Specializations"
+              backCtaLink="/specialization-services"
             />
 
             {/* Emergency Care */}
@@ -683,56 +691,131 @@ export default function Home() {
       </section>
 
       {/* ===================================================
-          4. DEPARTMENTS SECTION
+          4. SPECIALIZATION SERVICES SECTION
           =================================================== */}
-      <section className="section reveal">
+      <section className="section reveal" style={{ backgroundColor: '#f8fafc' }}>
         <div className="container">
           <div className="section-title">
-            <h2>Our Specialties</h2>
-            <p>Comprehensive diagnostics and care through our major medical divisions.</p>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              background: '#e0f2fe',
+              color: 'var(--primary)',
+              padding: '4px 14px',
+              borderRadius: '9999px',
+              fontSize: '0.8rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.6px',
+              marginBottom: '10px'
+            }}>
+              <Brain size={15} />
+              <span>Department: Neurology</span>
+            </div>
+            <h2>Specialization Services</h2>
+            <p>Specialized neurological care for a wide range of brain, nerve and nervous system conditions.</p>
           </div>
 
-          {departments.length > 0 ? (
-            <div className="grid grid-3 reveal-stagger">
-              {departments.map((dept) => (
-                <div key={dept.id} className="card reveal">
-                  <div style={{ overflow: 'hidden' }}>
-                    <img
-                      src={getImageUrl(dept.image, DEFAULT_DEPARTMENT_IMAGE)}
-                      alt={dept.name}
-                      style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }}
-                      loading="lazy"
-                      onError={(e) => handleImageError(e, DEFAULT_DEPARTMENT_IMAGE)}
-                    />
+          <div className="grid grid-3 reveal-stagger" style={{ gap: '24px' }}>
+            {featuredSpecializations.map((service: any) => (
+              <div
+                key={service.id}
+                className="card reveal"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                  borderRadius: '16px',
+                  boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
+                  transition: 'transform 0.28s ease, box-shadow 0.28s ease',
+                  background: '#ffffff'
+                }}
+              >
+                <div style={{ position: 'relative', height: '180px', overflow: 'hidden', background: '#0b2545' }}>
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    loading="lazy"
+                    onError={(e) => handleImageError(e, DEFAULT_SPECIALIZATION_IMAGE)}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '10px',
+                    left: '12px',
+                    background: 'rgba(15, 23, 42, 0.82)',
+                    backdropFilter: 'blur(6px)',
+                    color: '#ffffff',
+                    padding: '3px 10px',
+                    borderRadius: '9999px',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}>
+                    <span style={{ color: '#38bdf8' }}>Dept:</span>
+                    <span>{service.department}</span>
                   </div>
-                  <div style={{ padding: '24px' }}>
-                    <h3 style={{ fontSize: '1.2rem', marginBottom: '10px' }}>{dept.name}</h3>
-                    <p style={{
-                      color: 'var(--text-muted)', fontSize: '0.85rem',
-                      display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden', lineHeight: '1.6', marginBottom: '20px',
+                  {service.isEmergencyAlert && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '12px',
+                      background: 'rgba(225, 29, 72, 0.95)',
+                      color: '#ffffff',
+                      padding: '3px 8px',
+                      borderRadius: '5px',
+                      fontSize: '0.72rem',
+                      fontWeight: 700
                     }}>
-                      {dept.description}
-                    </p>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <Link to={`/departments/${dept.slug}`} style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '0.88rem' }}>
-                        View Department →
-                      </Link>
-                      <Link to="/appointment" className="btn btn-primary" style={{ padding: '6px 16px', fontSize: '0.8rem' }}>Book</Link>
+                      URGENT
                     </div>
+                  )}
+                </div>
+                <div style={{ padding: '22px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <h3 style={{ fontSize: '1.25rem', marginBottom: '8px', color: '#0f172a' }}>{service.title}</h3>
+                  <p style={{
+                    color: '#64748b', fontSize: '0.88rem',
+                    display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden', lineHeight: '1.6', marginBottom: '20px',
+                  }}>
+                    {service.description}
+                  </p>
+                  <div style={{
+                    marginTop: 'auto',
+                    paddingTop: '16px',
+                    borderTop: '1px solid #f1f5f9',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}>
+                    <Link
+                      to={`/specialization-services/${service.slug}`}
+                      style={{ color: 'var(--primary)', fontWeight: '600', fontSize: '0.88rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <span>Learn More</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                    <Link
+                      to={`/appointment?service=${service.slug}&departmentId=neurology`}
+                      className="btn btn-primary"
+                      style={{ padding: '6px 14px', fontSize: '0.8rem' }}
+                    >
+                      Book
+                    </Link>
                   </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <Building2 size={40} />
-              <p>Departments information coming soon.</p>
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
 
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Link to="/departments" className="btn btn-secondary">Explore All Departments</Link>
+            <Link to="/specialization-services" className="btn btn-secondary" style={{ padding: '12px 28px', fontSize: '0.95rem' }}>
+              View All Our Specialization &amp; Services
+            </Link>
           </div>
         </div>
       </section>

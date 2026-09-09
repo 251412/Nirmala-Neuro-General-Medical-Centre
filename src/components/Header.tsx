@@ -12,7 +12,7 @@ export default function Header() {
     { path: '/', label: 'Home' },
     { path: '/about', label: 'About Us' },
     { path: '/doctors', label: 'Our Doctors' },
-    { path: '/departments', label: 'Our Departments' },
+    { path: '/specialization-services', label: 'Specialization & Services' },
     { path: '/gallery', label: 'Gallery' },
     { path: '/blog', label: 'Blog' },
     { path: '/contact', label: 'Contact Us' },
@@ -31,10 +31,14 @@ export default function Header() {
   // Function to calculate and update active indicator position
   const updatePillPosition = () => {
     const currentPath = location.pathname;
-    // Find active element or fallback to exact path match
-    const activeItem = navItems.find((item) =>
-      item.path === '/' ? currentPath === '/' : currentPath.startsWith(item.path)
-    );
+    // Find active element or fallback to exact path match (including backward compatible /departments)
+    const activeItem = navItems.find((item) => {
+      if (item.path === '/') return currentPath === '/';
+      if (item.path === '/specialization-services') {
+        return currentPath.startsWith('/specialization-services') || currentPath.startsWith('/departments');
+      }
+      return currentPath.startsWith(item.path);
+    });
 
     if (activeItem && itemRefs.current[activeItem.path] && navRef.current) {
       const activeEl = itemRefs.current[activeItem.path]!;
