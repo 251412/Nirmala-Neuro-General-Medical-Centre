@@ -11,7 +11,7 @@ export interface GalleryItem {
 export const galleryData: GalleryItem[] = [
   {
     id: 'gallery-001',
-    image: '/dr_nirmala_consultation.jpg',
+    image: '/dr_nirmala_vangapandu_desk.png',
     title: 'Dr. Vangapandu Nirmala Consultation Suite',
     caption: 'Chief Neurologist Dr. Vangapandu Nirmala in her consultation chamber providing patient-centered care.',
     category: 'Specialists',

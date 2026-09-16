@@ -48,9 +48,9 @@ export default function About() {
               maxHeight: '450px'
             }}>
               <img
-                src="/dr_nirmala_vangapandu.png"
+                src="/dr_nirmala_vangapandu_desk.png"
                 alt="Dr. Vangapandu Nirmala - DM Neurology"
-                style={{ width: '100%', maxHeight: '450px', objectFit: 'contain', display: 'block' }}
+                style={{ width: '100%', height: 'auto', maxHeight: '450px', objectFit: 'cover', display: 'block' }}
               />
             </div>
           </div>

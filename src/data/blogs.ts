@@ -58,11 +58,11 @@ export const blogsData: BlogPost[] = [
       
       <p>Always consult your physician before altering your medication regimens or starting intense physical workout programs.</p>
     `,
-    author: 'Dr. Rajesh Kumar',
+    author: 'Dr Vangapandu Nirmala',
     category: 'General Health',
     publishedAt: '2026-09-02',
     status: 'PUBLISHED',
     seoTitle: 'How to Manage High Blood Pressure (Hypertension) | Nirmala Medical',
-    seoDescription: 'Discover actionable lifestyle changes and medical advice to manage high blood pressure effectively. Written by Dr. Rajesh Kumar.'
+    seoDescription: 'Discover actionable lifestyle changes and medical advice to manage high blood pressure effectively. Reviewed by Dr Vangapandu Nirmala.'
   }
 ];

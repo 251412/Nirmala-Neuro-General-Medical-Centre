@@ -7,10 +7,12 @@ interface WhatsAppWidgetProps {
 }
 
 export default function WhatsAppWidget({
-  phoneNumber = '9347455187',
+  phoneNumber = '6305471147',
   message = 'Hello! I would like to inquire about hospital services.'
 }: WhatsAppWidgetProps) {
-  const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`;
+  const digitsOnly = phoneNumber.replace(/[^0-9]/g, '');
+  const internationalPhone = digitsOnly.length === 10 ? `91${digitsOnly}` : digitsOnly;
+  const whatsappUrl = `https://wa.me/${internationalPhone}?text=${encodeURIComponent(message)}`;
 
   return (
     <a

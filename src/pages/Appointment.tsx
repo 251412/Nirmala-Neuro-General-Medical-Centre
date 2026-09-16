@@ -87,7 +87,6 @@ export default function Appointment() {
             const doc = data.find((d: Doctor) => 
               d.id === initialDoctorId || 
               (initialDoctorId === 'doctor-001' && d.name.toLowerCase().includes('nirmala')) ||
-              (initialDoctorId === 'doctor-002' && d.name.toLowerCase().includes('rajesh')) ||
               (initialDoctorId.toLowerCase().includes('nirmala') && d.name.toLowerCase().includes('nirmala'))
             );
             if (doc) {
@@ -199,7 +198,6 @@ export default function Appointment() {
       const matchedDoc = doctors.find((d: any) => 
         d.id === doctorId ||
         (doctorId === 'doctor-001' && d.name.toLowerCase().includes('nirmala')) ||
-        (doctorId === 'doctor-002' && d.name.toLowerCase().includes('rajesh')) ||
         (selectedDoctorObj && d.name.toLowerCase() === selectedDoctorObj.name.toLowerCase())
       );
       if (matchedDoc) {
