@@ -45,12 +45,12 @@ export default function About() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              maxHeight: '450px'
+              maxHeight: '480px'
             }}>
               <img
-                src="/dr_nirmala_vangapandu_desk.png"
+                src="/dr_nirmala_portrait.jpg"
                 alt="Dr. Vangapandu Nirmala - DM Neurology"
-                style={{ width: '100%', height: 'auto', maxHeight: '450px', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', height: 'auto', maxHeight: '480px', objectFit: 'cover', display: 'block' }}
               />
             </div>
           </div>

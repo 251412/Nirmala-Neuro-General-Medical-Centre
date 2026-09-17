@@ -19,7 +19,7 @@ export const doctorsData: Doctor[] = [
   {
     id: 'doctor-001',
     name: 'Dr Vangapandu Nirmala',
-    photo: '/dr_nirmala_vangapandu_desk.png',
+    photo: '/dr_nirmala_portrait.jpg',
     qualification: 'MD, DM (Neurology)',
     specialization: 'Stroke Care, Brain Tumors, Epilepsy Treatment & Neurological Disorders',
     departmentId: 'neurology',

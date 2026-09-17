@@ -36,7 +36,7 @@ export default function Doctors() {
         textAlign: 'center'
       }}>
         <div className="container">
-          <h1 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', color: 'white', marginBottom: '8px' }}>Our Medical Officers</h1>
+          <h1 style={{ fontSize: '2.5rem', fontFamily: 'var(--font-heading)', color: 'white', marginBottom: '8px' }}>Our Doctors</h1>
           <p style={{ color: '#93c5fd', fontSize: '1.05rem' }}>Search and connect with our expert general clinicians and neurologists.</p>
         </div>
       </section>
